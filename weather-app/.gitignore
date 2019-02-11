@@ -5,5 +5,3 @@
 /coverage
 /.idea
 yarn.lock
-package.json
-package-lock.json
