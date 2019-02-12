@@ -18,9 +18,12 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		// button display state
 		this.setState({ display: true });
+		//set icon to null
+		this.state.icon = NULL;
 	}
 
 	//update icon
+	//if(conditions == "clear sky") { this.state.icon}
 
 	// a call to fetch weather data (five days)
 	fetchWeatherData = () => {
@@ -67,7 +70,6 @@ export default class Iphone extends Component {
 		locate: location,
 		temp: temp_c,
 		cond : conditions,
-		
 	});  
 	}
 }
