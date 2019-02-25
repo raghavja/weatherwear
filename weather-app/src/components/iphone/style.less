@@ -1,5 +1,9 @@
 @import '~style/helpers';
 
+.homepage{
+	display:flex;
+	flex-direction: column;
+}
 .container { 
 	display: flex;
 	flex-direction: column;
@@ -11,6 +15,59 @@
 	padding-top: 80px;
 	margin: 0 auto;
 }
+.clothes{
+	flex: 2;
+	width: 230px;
+	height: 264px;
+	left: 92px;
+	top: 349px;
+	align-self: center;
+	margin-top: 100px;
+
+	background: #FFFFFF;
+	box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.08);
+	border-radius: 5px; 
+}
+.weekly{
+	width: 414px;
+	height: 100px;
+	display: block;
+	bottom: 0;
+	position: fixed;
+	border-style: solid;
+	border-width: 1px;
+}
+.weekOne{
+	float: left;
+	font-size: 12px;
+	width: 20%;
+	height: 100px;
+}
+.weekTwo{
+	float: left;
+	font-size: 12px;
+	width: 20%;
+	height: 100px;
+}
+.weekThree{
+	float: left;
+	font-size: 12px;
+	width: 20%;
+	height: 100px;
+}
+.weekFour{
+	float: left;
+	font-size: 12px;
+	width: 20%;
+	height: 100px;
+}
+.weekFive{
+	float: left;
+	font-size: 12px;
+	width: 20%;
+	height: 100px;
+}
+
 .header {
 	display: flex;
 	flex-direction: column;
@@ -43,4 +100,38 @@
 	display: inline-block;
 	padding-top: 10px;
 	vertical-align: top;
+}
+.temp_min{
+/* min 1 */
+flex: 1;
+width: 42px;
+height: 18px;
+left: 104px;
+top: 200px;
+
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+line-height: normal;
+font-size: 18px;
+font-variant: small-caps;
+
+color: #FFFFFF;
+}
+
+.temp_max{
+flex: 3;
+width: 50px;
+height: 18px;
+left: 259px;
+top: 199px;
+
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+line-height: normal;
+font-size: 18px;
+font-variant: small-caps;
+
+color: #FFFFFF;
 }
