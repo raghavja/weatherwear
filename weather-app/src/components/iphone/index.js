@@ -75,22 +75,6 @@ export default class Iphone extends Component {
 		);
 	}
 
-	displayClothes = () => {
-		var temp = this.state.temp;
-
-		if (temp != "") {
-			if (temp < 10) {
-				// return "https://www.ecclesiastical.com/Images/cold-weather_tcm96-36410.jpg";
-			}
-			else if (temp < 16){
-				// return("https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg");
-			}
-			else {
-				// return("https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
-			}
-		}
-	}
-
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
 	var location = parsed_json['city']['name'];
@@ -129,5 +113,21 @@ export default class Iphone extends Component {
 		tsThreeDay: timestampThreeDay
 
 	});
+	}
+
+	displayClothes = () => {
+		var temp = this.state.temp;
+
+		if (temp != "") {
+			if (temp < 10) {
+				// return "https://www.ecclesiastical.com/Images/cold-weather_tcm96-36410.jpg";
+			}
+			else if (temp < 16){
+				// return("https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg");
+			}
+			else {
+				// return("https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+			}
+		}
 	}
 }
