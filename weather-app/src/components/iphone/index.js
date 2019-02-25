@@ -18,10 +18,9 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		// button display state
 		this.setState({ display: true });
-		//set icon to null
-		this.state.icon = NULL;
+		//first day of weekly forecast (one day after current day)
+		this.setState({ dayOfWeek: null});
 	}
-
 
 	// a call to fetch weather data (five days)
 	fetchWeatherData = () => {
@@ -34,13 +33,18 @@ export default class Iphone extends Component {
 		})
 		// once the data grabbed, hide the button
 		this.setState({ display: false });
+		//get next day in week for weekly forecast
+		var timestamp = this.state.tsOneDay;
+		var a = new Date(timestamp*1000);
+		var days = ['SUN','MON','TUE','WED','THR','FRI','SAT'];
+		var nextDay = days[a.getDay()]; //TODO trying to get nextDay to work
+		this.setState({dayOfWeek: nextDay});
 	}
 
 	// the main render method for the iphone component
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-		
 		// display all weather data
 		return (
 			<div class={ style.container }>
@@ -49,9 +53,20 @@ export default class Iphone extends Component {
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
+					<div class={ style.clothes}>clothes</div>
+
+				<div class={style.weekly}>
+					<div class={style.weekOne}>{this.state.dayOfWeek}</div>
+					{/* <div class={style.weekOne}>TUE</div> */}
+					<div class={style.weekTwo}>{this.state.tsTwoDay}</div>
+					<div class={style.weekThree}>{this.state.tsThreeDay}</div>
+					<div class={style.weekFour}>{this.state.tsFourDay}</div>
+					<div class={style.weekFive}>{this.state.tsFiveDay}</div>
+				</div>
+				
 				</div>
 				<div class={ style.details }></div>
-				<div class= { style_iphone.container }> 
+				<div class= { style_iphone.container }>
 					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
 				</div>
 			</div>
@@ -63,12 +78,38 @@ export default class Iphone extends Component {
 	var location = parsed_json['city']['name'];
 	var temp_c = parsed_json['list']['0']['main']['temp'];
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
+	var temp_min = parsed_json['list']['0']['main']['temp_min'];
+	var temp_max = parsed_json['list']['0']['main']['temp_max'];
+	//one day after
+	var timestampOneDay = parsed_json['list']['8']['dt'];
+	var conditionsOneDay = parsed_json['list']['8']['weather']['0']['main'];
+	var temp_minOneDay = parsed_json['list']['8']['main']['temp_min'];
+	var temp_maxOneDay = parsed_json['list']['8']['main']['temp_max'];
+	//two days after
+	var timestampTwoDay = parsed_json['list']['16']['dt'];
+	var conditionsTwoDay = parsed_json['list']['16']['weather']['0']['main'];
+	var temp_minTwoDay = parsed_json['list']['16']['main']['temp_min'];
+	var temp_maxTwoDay = parsed_json['list']['16']['main']['temp_max'];
+	//three days after
+	var timestampThreeDay = parsed_json['list']['16']['dt'];
+	var conditionsThreeDay = parsed_json['list']['16']['weather']['0']['main'];
+	var temp_minThreeDay = parsed_json['list']['16']['main']['temp_min'];
+	var temp_maxThreeDay = parsed_json['list']['16']['main']['temp_max'];
+	
+	//TODO no feels in API
+
+
 	// set states for fields so they could be rendered later on
 	this.setState({
 		locate: location,
 		temp: temp_c,
 		cond : conditions,
+		min : temp_min,
+		max : temp_max,
+		tsOneDay : timestampOneDay,
+		tsTwoDay : timestampTwoDay,
+		tsThreeDay: timestampThreeDay
 
-	});  
+	});
 	}
 }
