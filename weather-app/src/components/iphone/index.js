@@ -56,33 +56,31 @@ export default class Iphone extends Component {
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<div class={ style.temp_min }>{ this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
-      
+
       		<div class={ style.temp_max }>{ this.state.max}</div>
 					<div class={ style.clothes}></div>
-      
+
       		<div class={ style.clothes}>
 							<img src = {this.displayClothes()}></img>
 					</div>
 
-				<div class={style.weekly}>
-					<div class={style.weekOne}>
-						{days[a.getDay()%7]}
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minOneDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxOneDay}</div>
+					<div class={style.weekly}>
+					  <div class={style.weekOne}>{days[a.getDay()%7]}</div>
+					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.minOneDay}</div>
+					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.maxOneDay}</div>
+					  <div class={style.weekTwo}>{days[(a.getDay()+1)%7]}</div>
+					    <div style="position:absolute; bottom: 20px; left: 25%; font-size: 15px;">{this.state.minTwoDay}</div>
+					    <div style="position:absolute; bottom: 20px; left: 32.5%; font-size: 15px;">{this.state.maxTwoDay}</div>
+					  <div class={style.weekThree}>{days[(a.getDay()+2)%7]}</div>
+					    <div style="position:absolute; bottom: 20px; left: 45%; font-size: 15px;">{this.state.minThreeDay}</div>
+					    <div style="position:absolute; bottom: 20px; left: 52.5%; font-size: 15px;">{this.state.maxThreeDay}</div>
+					  <div class={style.weekFour}>{days[(a.getDay()+3)%7]}</div>
+					    <div style="position:absolute; bottom: 20px; left: 65%; font-size: 15px;">{this.state.minFourDay}</div>
+					    <div style="position:absolute; bottom: 20px; left: 72.5%; font-size: 15px;">{this.state.maxFourDay}</div>
+					  <div class={style.weekFive}>{days[(a.getDay()+4)%7]}</div>
+					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.minFiveDay}</div>
+					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.maxFiveDay}</div>
 					</div>
-					<div class={style.weekTwo}>{days[(a.getDay()+1)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 7.5%;">{this.state.minTwoDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxTwoDay}</div>
-					<div class={style.weekThree}>{days[(a.getDay()+2)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minThreeDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxThreeDay}</div>
-					<div class={style.weekFour}>{days[(a.getDay()+3)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minFourDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxFourDay}</div>
-					<div class={style.weekFive}>{days[(a.getDay()+4)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minFiveDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxFiveDay}</div>
-				</div>
 
 				</div>
 				<div class={ style.details }></div>
@@ -103,33 +101,33 @@ export default class Iphone extends Component {
 	//one day after
 	var timestampOneDay = parsed_json['list']['7']['dt'];
 	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
-	var temp_minOneDay = parsed_json['list']['7']['main']['temp_min'];
-	var temp_maxOneDay = parsed_json['list']['7']['main']['temp_max'];
+	var temp_minOneDay = parseInt(parsed_json['list']['7']['main']['temp_min']);
+	var temp_maxOneDay = parseInt(parsed_json['list']['7']['main']['temp_max']);
 	//two days after
 	var timestampTwoDay = parsed_json['list']['15']['dt'];
 	var conditionsTwoDay = parsed_json['list']['15']['weather']['0']['main'];
-	var temp_minTwoDay = parsed_json['list']['15']['main']['temp_min'];
-	var temp_maxTwoDay = parsed_json['list']['15']['main']['temp_max'];
+	var temp_minTwoDay = parseInt(parsed_json['list']['15']['main']['temp_min']);
+	var temp_maxTwoDay = parseInt(parsed_json['list']['15']['main']['temp_max']);
 	//three days after
-   var timestampThreeDay = parsed_json['list']['23']['dt'];
+  var timestampThreeDay = parsed_json['list']['23']['dt'];
 	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
-	var temp_minThreeDay = parsed_json['list']['23']['main']['temp_min'];
-	var temp_maxThreeDay = parsed_json['list']['23']['main']['temp_max'];
+	var temp_minThreeDay = parseInt(parsed_json['list']['23']['main']['temp_min']);
+	var temp_maxThreeDay = parseInt(parsed_json['list']['23']['main']['temp_max']);
 	//four days after
 	var timestampFourDay = parsed_json['list']['31']['dt'];
 	var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
-	var temp_minFourDay = parsed_json['list']['31']['main']['temp_min'];
-	var temp_maxFourDay = parsed_json['list']['31']['main']['temp_max'];
+	var temp_minFourDay = parseInt(parsed_json['list']['31']['main']['temp_min']);
+	var temp_maxFourDay = parseInt(parsed_json['list']['31']['main']['temp_max']);
 	//five days after
 	var timestampFiveDay = parsed_json['list']['39']['dt'];
 	var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
-	var temp_minFiveDay = parsed_json['list']['39']['main']['temp_min'];
-	var temp_maxFiveDay = parsed_json['list']['39']['main']['temp_max'];
-=======
+	var temp_minFiveDay = parseInt(parsed_json['list']['39']['main']['temp_min']);
+	var temp_maxFiveDay = parseInt(parsed_json['list']['39']['main']['temp_max']);
+
 	var timestampThreeDay = parsed_json['list']['16']['dt'];
 	var conditionsThreeDay = parsed_json['list']['16']['weather']['0']['main'];
-	var temp_minThreeDay = parsed_json['list']['16']['main']['temp_min'];
-	var temp_maxThreeDay = parsed_json['list']['16']['main']['temp_max'];
+	var temp_minThreeDay = parseInt(parsed_json['list']['16']['main']['temp_min']);
+	var temp_maxThreeDay = parseInt(parsed_json['list']['16']['main']['temp_max']);
 	//TODO no feels in API
 
 
@@ -144,11 +142,23 @@ export default class Iphone extends Component {
 		minOneDay: temp_minOneDay,
 		maxOneDay: temp_maxOneDay,
 		tsTwoDay : timestampTwoDay,
-		tsThreeDay: timestampThreeDay
+		tsThreeDay: timestampThreeDay,
+
+		minTwoDay: temp_minTwoDay,
+		maxTwoDay: temp_maxTwoDay,
+
+		minThreeDay: temp_minThreeDay,
+		maxThreeDay: temp_maxThreeDay,
+
+		minFourDay: temp_minFourDay,
+		maxFourDay: temp_maxFourDay,
+
+		minFiveDay: temp_minFiveDay,
+		maxFiveDay: temp_maxFiveDay
 
 	});
 	}
-  
+
   displayClothes = () => {
 		var temp = this.state.temp;
 
