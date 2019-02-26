@@ -56,8 +56,13 @@ export default class Iphone extends Component {
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<div class={ style.temp_min }>{ this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
-					<div class={ style.temp_max }>{ this.state.max}</div>
-					<div class={ style.clothes}>{ this.state.clothes}</div>
+
+      		<div class={ style.temp_max }>{ this.state.max}</div>
+					<div class={ style.clothes}></div>
+
+      		<div class={ style.clothes}>
+							<img src = {this.displayClothes()}></img>
+					</div>
 
 					<div class={style.weekly}>
 						<div class={style.weekOne}>{this.state.dayOfWeek}</div>
@@ -120,5 +125,21 @@ export default class Iphone extends Component {
 		clothes: clothing
 
 	});
+	}
+
+  displayClothes = () => {
+		var temp = this.state.temp;
+
+		if (temp != "") {
+			if (temp < 10) {
+				// return "https://www.ecclesiastical.com/Images/cold-weather_tcm96-36410.jpg";
+			}
+			else if (temp < 16){
+				// return("https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg");
+			}
+			else {
+				// return("https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+			}
+		}
 	}
 }
