@@ -50,11 +50,19 @@ export default class Iphone extends Component {
 
 			<div class={ style.container }>
 				<div class={ style.header }>
+					<div class={ style.topbar}></div>
 					<div class={ style.icon }>{ this.state.icon }</div>
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
+					<div class={ style.temp_min }>{ this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
-					<div class={ style.clothes}>clothes</div>
+      
+      		<div class={ style.temp_max }>{ this.state.max}</div>
+					<div class={ style.clothes}></div>
+      
+      		<div class={ style.clothes}>
+							<img src = {this.displayClothes()}></img>
+					</div>
 
 				<div class={style.weekly}>
 					<div class={style.weekOne}>
@@ -75,7 +83,7 @@ export default class Iphone extends Component {
 						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minFiveDay}</div>
 						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxFiveDay}</div>
 				</div>
-				
+
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }>
@@ -88,10 +96,10 @@ export default class Iphone extends Component {
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
 	var location = parsed_json['city']['name'];
-	var temp_c = parsed_json['list']['0']['main']['temp'];
+	var temp_c = parseInt(parsed_json['list']['0']['main']['temp']);
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
-	var temp_min = parsed_json['list']['0']['main']['temp_min'];
-	var temp_max = parsed_json['list']['0']['main']['temp_max'];
+	var temp_min = 'min: ' + String(parseInt(parsed_json['list']['0']['main']['temp_min']));
+	var temp_max = 'max: ' + String(parseInt(parsed_json['list']['0']['main']['temp_max']));
 	//one day after
 	var timestampOneDay = parsed_json['list']['7']['dt'];
 	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
@@ -103,7 +111,7 @@ export default class Iphone extends Component {
 	var temp_minTwoDay = parsed_json['list']['15']['main']['temp_min'];
 	var temp_maxTwoDay = parsed_json['list']['15']['main']['temp_max'];
 	//three days after
-	var timestampThreeDay = parsed_json['list']['23']['dt'];
+   var timestampThreeDay = parsed_json['list']['23']['dt'];
 	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
 	var temp_minThreeDay = parsed_json['list']['23']['main']['temp_min'];
 	var temp_maxThreeDay = parsed_json['list']['23']['main']['temp_max'];
@@ -117,6 +125,11 @@ export default class Iphone extends Component {
 	var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
 	var temp_minFiveDay = parsed_json['list']['39']['main']['temp_min'];
 	var temp_maxFiveDay = parsed_json['list']['39']['main']['temp_max'];
+=======
+	var timestampThreeDay = parsed_json['list']['16']['dt'];
+	var conditionsThreeDay = parsed_json['list']['16']['weather']['0']['main'];
+	var temp_minThreeDay = parsed_json['list']['16']['main']['temp_min'];
+	var temp_maxThreeDay = parsed_json['list']['16']['main']['temp_max'];
 	//TODO no feels in API
 
 
@@ -134,5 +147,21 @@ export default class Iphone extends Component {
 		tsThreeDay: timestampThreeDay
 
 	});
+	}
+  
+  displayClothes = () => {
+		var temp = this.state.temp;
+
+		if (temp != "") {
+			if (temp < 10) {
+				// return "https://www.ecclesiastical.com/Images/cold-weather_tcm96-36410.jpg";
+			}
+			else if (temp < 16){
+				// return("https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg");
+			}
+			else {
+				// return("https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+			}
+		}
 	}
 }
