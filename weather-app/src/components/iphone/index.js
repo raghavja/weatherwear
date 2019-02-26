@@ -50,32 +50,40 @@ export default class Iphone extends Component {
 
 			<div class={ style.container }>
 				<div class={ style.header }>
+					<div class={ style.topbar}></div>
 					<div class={ style.icon }>{ this.state.icon }</div>
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
+					<div class={ style.temp_min }>{ this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
-					<div class={ style.clothes}>clothes</div>
+      
+      		<div class={ style.temp_max }>{ this.state.max}</div>
+					<div class={ style.clothes}></div>
+      
+      		<div class={ style.clothes}>
+							<img src = {this.displayClothes()}></img>
+					</div>
 
 				<div class={style.weekly}>
 					<div class={style.weekOne}>
 						{days[a.getDay()%7]}
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minOneDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxOneDay}</div>
+						<div style="position:absolute; bottom: 10px; left: 5%; font-size: 13px;">{this.state.minOneDay}</div>
+						<div style="position:absolute; bottom: 10px; left: 12%; font-size: 13px;">{this.state.maxOneDay}</div>
 					</div>
 					<div class={style.weekTwo}>{days[(a.getDay()+1)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 7.5%;">{this.state.minTwoDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxTwoDay}</div>
+						<div style="position:absolute; bottom: 10px; left: 25%; font-size: 13px;">{this.state.minTwoDay}</div>
+						<div style="position:absolute; bottom: 10px; left: 32%; font-size: 13px;">{this.state.maxTwoDay}</div>
 					<div class={style.weekThree}>{days[(a.getDay()+2)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minThreeDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxThreeDay}</div>
+						<div style="position:absolute; bottom: 10px; left: 45%; font-size: 13px;">{this.state.minThreeDay}</div>
+						<div style="position:absolute; bottom: 10px; right: 45%; font-size: 13px;">{this.state.maxThreeDay}</div>
 					<div class={style.weekFour}>{days[(a.getDay()+3)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minFourDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxFourDay}</div>
+						<div style="position:absolute; bottom: 10px; right: 32%; font-size: 13px;">{this.state.minFourDay}</div>
+						<div style="position:absolute; bottom: 10px; right: 25%; font-size: 13px;">{this.state.maxFourDay}</div>
 					<div class={style.weekFive}>{days[(a.getDay()+4)%7]}</div>
-						<div style="position:fixed; bottom: 5px; left: 2.5%;">{this.state.minFiveDay}</div>
-						<div style="position:fixed; bottom: 5px; left: 5%;">{this.state.maxFiveDay}</div>
+						<div style="position:absolute; bottom: 10px; right: 12%; font-size: 13px;">{this.state.minFiveDay}</div>
+						<div style="position:absolute; bottom: 10px; right: 5%; font-size: 13px;">{this.state.maxFiveDay}</div>
 				</div>
-				
+
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }>
@@ -90,8 +98,8 @@ export default class Iphone extends Component {
 	var location = parsed_json['city']['name'];
 	var temp_c = parsed_json['list']['0']['main']['temp'];
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
-	var temp_min = parsed_json['list']['0']['main']['temp_min'];
-	var temp_max = parsed_json['list']['0']['main']['temp_max'];
+	var temp_min = 'min: ' + String(parseInt(parsed_json['list']['0']['main']['temp_min']));
+	var temp_max = 'max: ' + String(parseInt(parsed_json['list']['0']['main']['temp_max']));
 	//one day after
 	var timestampOneDay = parsed_json['list']['7']['dt'];
 	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
@@ -100,23 +108,26 @@ export default class Iphone extends Component {
 	//two days after
 	var timestampTwoDay = parsed_json['list']['15']['dt'];
 	var conditionsTwoDay = parsed_json['list']['15']['weather']['0']['main'];
-	var temp_minTwoDay = parsed_json['list']['15']['main']['temp_min'];
-	var temp_maxTwoDay = parsed_json['list']['15']['main']['temp_max'];
+	var temp_minTwoDay =parsed_json['list']['15']['main']['temp_min'];
+	var temp_maxTwoDay =parsed_json['list']['15']['main']['temp_max'];
 	//three days after
-	var timestampThreeDay = parsed_json['list']['23']['dt'];
-	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
-	var temp_minThreeDay = parsed_json['list']['23']['main']['temp_min'];
-	var temp_maxThreeDay = parsed_json['list']['23']['main']['temp_max'];
+	var timestampThreeDay = parsed_json['list']['24']['dt'];
+	var conditionsThreeDay = parsed_json['list']['24']['weather']['0']['main'];
+	var temp_minThreeDay =parsed_json['list']['24']['main']['temp_min'];
+	var temp_maxThreeDay =parsed_json['list']['24']['main']['temp_max'];
 	//four days after
 	var timestampFourDay = parsed_json['list']['31']['dt'];
 	var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
-	var temp_minFourDay = parsed_json['list']['31']['main']['temp_min'];
-	var temp_maxFourDay = parsed_json['list']['31']['main']['temp_max'];
+	var temp_minFourDay =parsed_json['list']['31']['main']['temp_min'];
+	var temp_maxFourDay =parsed_json['list']['31']['main']['temp_max'];
 	//five days after
 	var timestampFiveDay = parsed_json['list']['39']['dt'];
 	var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
-	var temp_minFiveDay = parsed_json['list']['39']['main']['temp_min'];
-	var temp_maxFiveDay = parsed_json['list']['39']['main']['temp_max'];
+	var temp_minFiveDay =parsed_json['list']['39']['main']['temp_min'];
+	var temp_maxFiveDay =parsed_json['list']['39']['main']['temp_max'];
+
+
+	
 	//TODO no feels in API
 
 
@@ -127,12 +138,43 @@ export default class Iphone extends Component {
 		cond : conditions,
 		min : temp_min,
 		max : temp_max,
+
 		tsOneDay : timestampOneDay,
-		minOneDay: temp_minOneDay,
-		maxOneDay: temp_maxOneDay,
+		minOneDay: parseInt(temp_minOneDay, 10),
+		maxOneDay: parseInt(temp_maxOneDay , 10),
+
 		tsTwoDay : timestampTwoDay,
-		tsThreeDay: timestampThreeDay
+		minTwoDay: parseInt(temp_minTwoDay, 10),
+		maxTwoDay: parseInt(temp_maxTwoDay, 10),
+
+		tsThreeDay: timestampThreeDay,
+		minThreeDay: parseInt(temp_minThreeDay, 10),
+		maxThreeDay: parseInt(temp_maxThreeDay, 10),
+
+		tsFourDay: timestampFourDay,
+		minFourDay: parseInt(temp_minFourDay, 10),
+		maxFourDay: parseInt(temp_maxFourDay, 10),
+
+		tsFiveDay: timestampFiveDay,
+		minFiveDay: parseInt(temp_minFiveDay, 10),
+		maxFiveDay: parseInt(temp_maxFiveDay, 10)
 
 	});
+	}
+  
+  displayClothes = () => {
+		var temp = this.state.temp;
+
+		if (temp != "") {
+			if (temp < 10) {
+				// return "https://www.ecclesiastical.com/Images/cold-weather_tcm96-36410.jpg";
+			}
+			else if (temp < 16){
+				// return("https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg");
+			}
+			else {
+				// return("https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+			}
+		}
 	}
 }
