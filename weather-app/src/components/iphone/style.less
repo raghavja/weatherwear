@@ -4,36 +4,40 @@
 	display:flex;
 	flex-direction: column;
 }
-.container { 
+.container {
 	display: flex;
 	flex-direction: column;
-	background-image: url('../../assets/backgrounds/clear-iphone.jpg');
+	//background-image: url('../../assets/backgrounds/clear-iphone.jpg');
 	color: #fff;
 	width: 414px;
 	height: 736px;
 	text-align: center;
 	padding-top: 80px;
 	margin: 0 auto;
+
+	position: relative;
+	background: linear-gradient(180deg, #B3C3D6 0%, rgba(243, 245, 248, 0.348066) 51.93%, rgba(255, 255, 255, 0) 100%), #2A5A99;
 }
 .clothes{
+	position: absolute;
 	flex: 2;
 	width: 230px;
 	height: 264px;
 	left: 92px;
 	top: 349px;
 	align-self: center;
-	margin-top: 100px;
+	// margin-top: 100px;
 
 	background: #FFFFFF;
 	box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.08);
-	border-radius: 5px; 
+	border-radius: 5px;
 }
 .weekly{
 	width: 414px;
 	height: 100px;
 	display: block;
 	bottom: 0;
-	position: fixed;
+	position: absolute;
 	border-style: solid;
 	border-width: 1px;
 }
@@ -78,8 +82,21 @@
 }
 .city {
 	flex: 1;
-	font-size: 1.7em;
-	font-weight: 400;	
+	font-size: 39px;
+	font-weight: 400;
+	margin-top: 25px;
+
+	/*position: absolute;
+	width: 172px;
+	height: 36px;
+	left: 121px;
+	top: 104px;
+
+	font-family: Josefin Sans;
+	line-height: normal;
+	font-size: 36px;
+	text-transform: uppercase;*/
+
 }
 .conditions {
 	flex: 1;
@@ -87,11 +104,23 @@
 }
 .temperature {
 	flex: 2;
-	margin-top: 0;
+	margin-top: 25px;
+	font-size: 100px;
+	font-weight: 300;
+	letter-spacing: -5px;
+/*
+	position: absolute;
+	width: 63.79px;
+	height: 108.95px;
+	left: 171px;
+	top: 166.05px;
+
+	font-family: Josefin Sans;
 	font-size: 4.8em;
 	font-weight: 300;
-	letter-spacing: -12px;
+	letter-spacing: -1px;*/
 }
+
 .filled:after {
 	content: "°";
 	margin: 0 0 0 1rem;
@@ -103,35 +132,48 @@
 }
 .temp_min{
 /* min 1 */
-flex: 1;
-width: 42px;
-height: 18px;
-left: 104px;
-top: 200px;
+	position: absolute;
+	//flex: 1;
+	width: 100px;
+	height: 18px;
+	left: 42px;
+	top: 250px;
 
-font-family: Josefin Sans;
-font-style: normal;
-font-weight: normal;
-line-height: normal;
-font-size: 18px;
-font-variant: small-caps;
+	//font-family: Josefin Sans;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	font-size: 15px;
+	font-variant: small-caps;
 
-color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 .temp_max{
-flex: 3;
-width: 50px;
-height: 18px;
-left: 259px;
-top: 199px;
 
-font-family: Josefin Sans;
-font-style: normal;
-font-weight: normal;
-line-height: normal;
-font-size: 18px;
-font-variant: small-caps;
+	position: absolute;
+	flex: 3;
+	width: 100px;
+	height: 18px;
+	left: 272px;
+	top: 250px;
 
-color: #FFFFFF;
+	//font-family: Josefin Sans;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	font-size: 15px;
+	font-variant: small-caps;
+
+	color: #FFFFFF;
+}
+
+.topbar{
+	position: absolute;
+	width: 414px;
+	height: 38px;
+	left: 0px;
+	top: 0px;
+
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 99.99%, rgba(255, 255, 255, 0) 100%);
 }
