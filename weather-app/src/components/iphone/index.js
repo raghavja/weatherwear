@@ -45,6 +45,7 @@ export default class Iphone extends Component {
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
+
 		// display all weather data
 		return (
 			<div class={ style.container }>
@@ -56,18 +57,19 @@ export default class Iphone extends Component {
 					<div class={ style.temp_min }>{ this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
 					<div class={ style.temp_max }>{ this.state.max}</div>
-					<div class={ style.clothes}></div>
+					<div class={ style.clothes}>{ this.state.clothes}</div>
 
-				<div class={style.weekly}>
-					<div class={style.weekOne}>{this.state.dayOfWeek}</div>
-					{/* <div class={style.weekOne}>TUE</div> */}
-					<div class={style.weekTwo}>{this.state.tsTwoDay}</div>
-					<div class={style.weekThree}>{this.state.tsThreeDay}</div>
-					<div class={style.weekFour}>{this.state.tsFourDay}</div>
-					<div class={style.weekFive}>{this.state.tsFiveDay}</div>
+					<div class={style.weekly}>
+						<div class={style.weekOne}>{this.state.dayOfWeek}</div>
+						{/* <div class={style.weekOne}>TUE</div> */}
+						<div class={style.weekTwo}>{this.state.tsTwoDay}</div>
+						<div class={style.weekThree}>{this.state.tsThreeDay}</div>
+						<div class={style.weekFour}>{this.state.tsFourDay}</div>
+						<div class={style.weekFive}>{this.state.tsFiveDay}</div>
+					</div>
+
 				</div>
 
-				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }>
 					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
@@ -99,6 +101,8 @@ export default class Iphone extends Component {
 	var temp_minThreeDay = parsed_json['list']['16']['main']['temp_min'];
 	var temp_maxThreeDay = parsed_json['list']['16']['main']['temp_max'];
 
+	var clothing = parsed_json['list']['16']['dt_text'];
+
 	//TODO no feels in API
 
 
@@ -111,7 +115,9 @@ export default class Iphone extends Component {
 		max : temp_max,
 		tsOneDay : timestampOneDay,
 		tsTwoDay : timestampTwoDay,
-		tsThreeDay: timestampThreeDay
+		tsThreeDay: timestampThreeDay,
+
+		clothes: clothing
 
 	});
 	}
