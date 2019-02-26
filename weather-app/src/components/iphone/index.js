@@ -49,11 +49,14 @@ export default class Iphone extends Component {
 		return (
 			<div class={ style.container }>
 				<div class={ style.header }>
+					<div class={ style.topbar}></div>
 					<div class={ style.icon }>{ this.state.icon }</div>
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
+					<div class={ style.temp_min }>{ this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
-					<div class={ style.clothes}>clothes</div>
+					<div class={ style.temp_max }>{ this.state.max}</div>
+					<div class={ style.clothes}></div>
 
 				<div class={style.weekly}>
 					<div class={style.weekOne}>{this.state.dayOfWeek}</div>
@@ -63,7 +66,7 @@ export default class Iphone extends Component {
 					<div class={style.weekFour}>{this.state.tsFourDay}</div>
 					<div class={style.weekFive}>{this.state.tsFiveDay}</div>
 				</div>
-				
+
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }>
@@ -76,10 +79,10 @@ export default class Iphone extends Component {
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
 	var location = parsed_json['city']['name'];
-	var temp_c = parsed_json['list']['0']['main']['temp'];
+	var temp_c = parseInt(parsed_json['list']['0']['main']['temp']);
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
-	var temp_min = parsed_json['list']['0']['main']['temp_min'];
-	var temp_max = parsed_json['list']['0']['main']['temp_max'];
+	var temp_min = 'min: ' + String(parseInt(parsed_json['list']['0']['main']['temp_min']));
+	var temp_max = 'max: ' + String(parseInt(parsed_json['list']['0']['main']['temp_max']));
 	//one day after
 	var timestampOneDay = parsed_json['list']['8']['dt'];
 	var conditionsOneDay = parsed_json['list']['8']['weather']['0']['main'];
@@ -95,7 +98,7 @@ export default class Iphone extends Component {
 	var conditionsThreeDay = parsed_json['list']['16']['weather']['0']['main'];
 	var temp_minThreeDay = parsed_json['list']['16']['main']['temp_min'];
 	var temp_maxThreeDay = parsed_json['list']['16']['main']['temp_max'];
-	
+
 	//TODO no feels in API
 
 
