@@ -111,10 +111,10 @@ export default class Iphone extends Component {
 	var temp_minTwoDay =parsed_json['list']['15']['main']['temp_min'];
 	var temp_maxTwoDay =parsed_json['list']['15']['main']['temp_max'];
 	//three days after
-	var timestampThreeDay = parsed_json['list']['24']['dt'];
-	var conditionsThreeDay = parsed_json['list']['24']['weather']['0']['main'];
-	var temp_minThreeDay =parsed_json['list']['24']['main']['temp_min'];
-	var temp_maxThreeDay =parsed_json['list']['24']['main']['temp_max'];
+	var timestampThreeDay = parsed_json['list']['23']['dt'];
+	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
+	var temp_minThreeDay =parsed_json['list']['23']['main']['temp_min'];
+	var temp_maxThreeDay =parsed_json['list']['23']['main']['temp_max'];
 	//four days after
 	var timestampFourDay = parsed_json['list']['31']['dt'];
 	var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
