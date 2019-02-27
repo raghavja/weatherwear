@@ -61,7 +61,7 @@ export default class Iphone extends Component {
 					<div class={ style.clothes}></div>
 
       		<div class={ style.clothes}>
-							<img src = {this.displayClothes()}></img>
+							<img src = {this.displayClothes()} style = "width:100%; height:100%;"></img>
 					</div>
 
 					<div class={style.weekly}>
@@ -163,14 +163,14 @@ export default class Iphone extends Component {
 		var temp = this.state.temp;
 
 		if (temp != "") {
-			if (temp < 10) {
-				// return "https://www.ecclesiastical.com/Images/cold-weather_tcm96-36410.jpg";
+			if (temp <= 10) {
+				 return ("https://www.thoughtco.com/thmb/cRTak9Kc83eAPJ4oD6Y81uzEqnw=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-184405145-5898a68f5f9b5874eea04b4b.jpg");
 			}
-			else if (temp < 16){
-				// return("https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg");
+			else if (temp <= 16){
+				 return("https://assets.rbl.ms/13878792/980x.jpg");
 			}
 			else {
-				// return("https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+				 return("https://ak5.picdn.net/shutterstock/videos/4695185/thumb/1.jpg");
 			}
 		}
 	}
