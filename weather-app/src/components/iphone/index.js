@@ -52,7 +52,11 @@ export default class Iphone extends Component {
 			<div class={ style.container }>
 				<div class={ style.header }>
 					<div class={ style.topbar}></div>
-					<div class={ style.icon }>{ this.state.icon }</div>
+
+					<div class={ style.icon }>
+							<img src = {this.displayCondition(this.state.cond)} style = "width:100%; height:100%;"></img>
+					</div>
+
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<div class={ style.temp_min }>{ this.state.min}</div>
@@ -67,18 +71,33 @@ export default class Iphone extends Component {
 
 					<div class={style.weekly}>
 					  <div class={style.weekOne}>{days[a.getDay()%7]}</div>
+							<div class = {style.iconOne}>
+									<img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img>
+							</div>
 					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.minOneDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.maxOneDay}</div>
 					  <div class={style.weekTwo}>{days[(a.getDay()+1)%7]}</div>
+							<div class = {style.iconTwo}>
+									<img src = {this.displayCondition(this.state.condTwoDay)} style = "width:100%; height:100%;"></img>
+							</div>
 					    <div style="position:absolute; bottom: 20px; left: 25%; font-size: 15px;">{this.state.minTwoDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 32.5%; font-size: 15px;">{this.state.maxTwoDay}</div>
 					  <div class={style.weekThree}>{days[(a.getDay()+2)%7]}</div>
+							<div class = {style.iconThree}>
+									<img src = {this.displayCondition(this.state.condThreeDay)} style = "width:100%; height:100%;"></img>
+							</div>
 					    <div style="position:absolute; bottom: 20px; left: 45%; font-size: 15px;">{this.state.minThreeDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 52.5%; font-size: 15px;">{this.state.maxThreeDay}</div>
 					  <div class={style.weekFour}>{days[(a.getDay()+3)%7]}</div>
+							<div class = {style.iconFour}>
+									<img src = {this.displayCondition(this.state.condFourDay)} style = "width:100%; height:100%;"></img>
+							</div>
 					    <div style="position:absolute; bottom: 20px; left: 65%; font-size: 15px;">{this.state.minFourDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 72.5%; font-size: 15px;">{this.state.maxFourDay}</div>
 					  <div class={style.weekFive}>{days[(a.getDay()+4)%7]}</div>
+							<div class = {style.iconFive}>
+									<img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img>
+							</div>
 					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.minFiveDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.maxFiveDay}</div>
 					</div>
@@ -126,10 +145,6 @@ export default class Iphone extends Component {
 	var temp_minFiveDay = parseInt(parsed_json['list']['39']['main']['temp_min']);
 	var temp_maxFiveDay = parseInt(parsed_json['list']['39']['main']['temp_max']);
 
-	var timestampThreeDay = parsed_json['list']['16']['dt'];
-	var conditionsThreeDay = parsed_json['list']['16']['weather']['0']['main'];
-	var temp_minThreeDay = parseInt(parsed_json['list']['16']['main']['temp_min']);
-	var temp_maxThreeDay = parseInt(parsed_json['list']['16']['main']['temp_max']);
 	//TODO no feels in API
 
 
@@ -140,23 +155,28 @@ export default class Iphone extends Component {
 		cond : conditions,
 		min : temp_min,
 		max : temp_max,
+
 		tsOneDay : timestampOneDay,
 		minOneDay: temp_minOneDay,
 		maxOneDay: temp_maxOneDay,
-		tsTwoDay : timestampTwoDay,
-		tsThreeDay: timestampThreeDay,
+		condOneDay: conditionsOneDay,
+
 
 		minTwoDay: temp_minTwoDay,
 		maxTwoDay: temp_maxTwoDay,
+		condTwoDay: conditionsTwoDay,
 
 		minThreeDay: temp_minThreeDay,
 		maxThreeDay: temp_maxThreeDay,
+		condThreeDay: conditionsThreeDay,
 
 		minFourDay: temp_minFourDay,
 		maxFourDay: temp_maxFourDay,
+		condFourDay: conditionsFourDay,
 
 		minFiveDay: temp_minFiveDay,
-		maxFiveDay: temp_maxFiveDay
+		maxFiveDay: temp_maxFiveDay,
+		condFiveDay: conditionsFiveDay
 
 	});
 	}
@@ -176,4 +196,33 @@ export default class Iphone extends Component {
 			}
 		}
 	}
+
+	//function to determine conditions icon
+	displayCondition = (cond) => {
+		if (cond != "") {
+			if (cond == "Thunderstorm") {
+				return("../../../icons/012-storm.png");
+			}
+			else if (cond == "Drizzle") {
+				return("../../../icons/015-cloud.png");
+			}
+			else if (cond == "Rain") {
+				return("../../../icons/010-raining.png");
+			}
+			else if (cond == "Snow") {
+				return("../../../icons/003-temperature.png");
+			}
+			else if (cond == "Atmosphere") {
+				return("../../../icons/015-cloud.png");
+			}
+			else if (cond == "Clear") {
+				return("../../../icons/016-sun.png");
+			}
+			else if (cond == "Clouds") {
+				return("../../../icons/015-cloud.png");
+			}
+		}
+	}
+
+
 }
