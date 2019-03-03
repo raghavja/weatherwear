@@ -115,7 +115,7 @@ export default class Iphone extends Component {
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
 	var location = parsed_json['city']['name'];
-	var temp_c = parseInt(parsed_json['list']['0']['main']['temp']);
+	var temp_c = parsed_json['list']['0']['main']['temp'];
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
 	var temp_min = 'min: ' + String(parseInt(parsed_json['list']['0']['main']['temp_min']));
 	var temp_max = 'max: ' + String(parseInt(parsed_json['list']['0']['main']['temp_max']));
@@ -157,26 +157,24 @@ export default class Iphone extends Component {
 		max : temp_max,
 
 		tsOneDay : timestampOneDay,
-		minOneDay: temp_minOneDay,
-		maxOneDay: temp_maxOneDay,
-		condOneDay: conditionsOneDay,
+		minOneDay: parseInt(temp_minOneDay, 10),
+		maxOneDay: parseInt(temp_maxOneDay , 10),
 
+		tsTwoDay : timestampTwoDay,
+		minTwoDay: parseInt(temp_minTwoDay, 10),
+		maxTwoDay: parseInt(temp_maxTwoDay, 10),
 
-		minTwoDay: temp_minTwoDay,
-		maxTwoDay: temp_maxTwoDay,
-		condTwoDay: conditionsTwoDay,
+		tsThreeDay: timestampThreeDay,
+		minThreeDay: parseInt(temp_minThreeDay, 10),
+		maxThreeDay: parseInt(temp_maxThreeDay, 10),
 
-		minThreeDay: temp_minThreeDay,
-		maxThreeDay: temp_maxThreeDay,
-		condThreeDay: conditionsThreeDay,
+		tsFourDay: timestampFourDay,
+		minFourDay: parseInt(temp_minFourDay, 10),
+		maxFourDay: parseInt(temp_maxFourDay, 10),
 
-		minFourDay: temp_minFourDay,
-		maxFourDay: temp_maxFourDay,
-		condFourDay: conditionsFourDay,
-
-		minFiveDay: temp_minFiveDay,
-		maxFiveDay: temp_maxFiveDay,
-		condFiveDay: conditionsFiveDay
+		tsFiveDay: timestampFiveDay,
+		minFiveDay: parseInt(temp_minFiveDay, 10),
+		maxFiveDay: parseInt(temp_maxFiveDay, 10)
 
 	});
 	}
