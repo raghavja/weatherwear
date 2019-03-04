@@ -31,8 +31,8 @@ export default class Iphone extends Component {
 		this.setState({ onMainPage: false});
 
 		//SETTINGS PAGE
-		this.setState({ name: ""});
-		this.setState({ gender: ""});
+		this.setState({ name: "sajda"});
+		this.setState({ gender: "female"});
 		//set range
 		this.setState({ hot: [0, 0]});
 		this.setState({ warm: [0, 0]});
@@ -76,7 +76,7 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 
-			<div class={ style.container }>
+			<div class={this.state.onMainPage ? style.container : style.containerSettings }>
 				<div class={ style.header }>
 					<div class={style.topbar}>
 						{/* settings */}
@@ -86,6 +86,7 @@ export default class Iphone extends Component {
 					</div>
 
 				{/* SETTINGS PAGE */}
+          <h2 class = {this.state.onMainPage ? style.no_display : style.title}>Settings</h2>
 					<div class = {style.name}>{this.state.onMainPage ? null : this.state.name}</div>
 					<div class = {style.gender}>{this.state.onMainPage ? null : this.state.gender}</div>
 					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
