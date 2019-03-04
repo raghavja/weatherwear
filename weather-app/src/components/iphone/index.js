@@ -84,31 +84,37 @@ export default class Iphone extends Component {
 							<img src = {this.displayClothes()} style = "width:100%; height:100%;"></img>
 					</div>
 
+					{/* weekly forecast */}
 					<div class={style.weekly}>
+					{/* one day after */}
 					  <div class={style.weekOne}>{days[a.getDay()%7]}</div>
 							<div class = {style.iconOne}>
 									<img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img>
 							</div>
 					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.minOneDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.maxOneDay}</div>
+					  {/* two days after */}
 					  <div class={style.weekTwo}>{days[(a.getDay()+1)%7]}</div>
 							<div class = {style.iconTwo}>
 									<img src = {this.displayCondition(this.state.condTwoDay)} style = "width:100%; height:100%;"></img>
 							</div>
 					    <div style="position:absolute; bottom: 20px; left: 25%; font-size: 15px;">{this.state.minTwoDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 32.5%; font-size: 15px;">{this.state.maxTwoDay}</div>
+					  {/* three days after */}
 					  <div class={style.weekThree}>{days[(a.getDay()+2)%7]}</div>
 							<div class = {style.iconThree}>
 									<img src = {this.displayCondition(this.state.condThreeDay)} style = "width:100%; height:100%;"></img>
 							</div>
 					    <div style="position:absolute; bottom: 20px; left: 45%; font-size: 15px;">{this.state.minThreeDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 52.5%; font-size: 15px;">{this.state.maxThreeDay}</div>
+					  {/* four days after */}
 					  <div class={style.weekFour}>{days[(a.getDay()+3)%7]}</div>
 							<div class = {style.iconFour}>
 									<img src = {this.displayCondition(this.state.condFourDay)} style = "width:100%; height:100%;"></img>
 							</div>
 					    <div style="position:absolute; bottom: 20px; left: 65%; font-size: 15px;">{this.state.minFourDay}</div>
 					    <div style="position:absolute; bottom: 20px; left: 72.5%; font-size: 15px;">{this.state.maxFourDay}</div>
+					  {/* five days after */}
 					  <div class={style.weekFive}>{days[(a.getDay()+4)%7]}</div>
 							<div class = {style.iconFive}>
 									<img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img>
@@ -126,23 +132,24 @@ export default class Iphone extends Component {
 
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
-	var temp_min = -100;
-	var temp_max = 100;
-	var temp_minOneDay;
-	var temp_maxOneDay;
-	var temp_minTwoDay;
-	var temp_maxTwoDay;
-	var temp_minThreeDay;
-	var temp_maxThreeDay;
-	var temp_minFourDay;
-	var temp_maxFourDay;
-	var temp_minFiveDay;
-	var temp_maxFiveDay;
+	var temp_min = 100;
+	var temp_max = -100;
+	var temp_minOneDay = 100;
+	var temp_maxOneDay = -100;
+	var temp_minTwoDay = 100;
+	var temp_maxTwoDay = -100;
+	var temp_minThreeDay = 100;
+	var temp_maxThreeDay = -100;
+	var temp_minFourDay = 100;
+	var temp_maxFourDay = -100;
+	var temp_minFiveDay = 100;
+	var temp_maxFiveDay = -100;
 
 	var location = parsed_json['city']['name'];
 	var temp_c = parseInt(parsed_json['list']['0']['main']['temp'], 10);
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
 
+	// calc min and max for today
 	var temp_mins = [
 		parseInt(parsed_json['list']['0']['main']['temp_min'], 10),
 		parseInt(parsed_json['list']['1']['main']['temp_min'], 10),
@@ -150,8 +157,7 @@ export default class Iphone extends Component {
 		parseInt(parsed_json['list']['3']['main']['temp_min'], 10),
 		parseInt(parsed_json['list']['4']['main']['temp_min'], 10),
 		parseInt(parsed_json['list']['5']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['6']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['7']['main']['temp_min'], 10)
+		parseInt(parsed_json['list']['6']['main']['temp_min'], 10)
 	];
 	var temp_maxs = [
 		parseInt(parsed_json['list']['0']['main']['temp_max'], 10),
@@ -160,68 +166,202 @@ export default class Iphone extends Component {
 		parseInt(parsed_json['list']['3']['main']['temp_max'], 10),
 		parseInt(parsed_json['list']['4']['main']['temp_max'], 10),
 		parseInt(parsed_json['list']['5']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['6']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['7']['main']['temp_max'], 10)
+		parseInt(parsed_json['list']['6']['main']['temp_max'], 10)
 	];
-		{/* TODO: loop isnt working */}
 		var i;
 		for (i = 0; i < 8; i++){
-			console.log("temp min " + temp_min);
-			console.log(temp_mins[i]);
-			if (temp_min < temp_mins[i]){
+			if (temp_mins[i] < temp_min){
 				temp_min = temp_mins[i];
 			}
 		}
-
-
-
-	var temp_min0 = parseInt(parsed_json['list']['0']['main']['temp_min'], 10);
-	var temp_max0 = parseInt(parsed_json['list']['0']['main']['temp_min'], 10);
-	var temp_min1 = parseInt(parsed_json['list']['1']['main']['temp_min'], 10);
-	var temp_max1 = parseInt(parsed_json['list']['1']['main']['temp_min'], 10);
-	var temp_min2 = parseInt(parsed_json['list']['2']['main']['temp_min'], 10);
-	var temp_max2 = parseInt(parsed_json['list']['2']['main']['temp_min'], 10);
-	var temp_min3 = parseInt(parsed_json['list']['3']['main']['temp_min'], 10);
-	var temp_max3 = parseInt(parsed_json['list']['3']['main']['temp_min'], 10);
-	var temp_min4 = parseInt(parsed_json['list']['4']['main']['temp_min'], 10);
-	var temp_max4 = parseInt(parsed_json['list']['4']['main']['temp_min'], 10);
-	var temp_min5 = parseInt(parsed_json['list']['5']['main']['temp_min'], 10);
-	var temp_max5 = parseInt(parsed_json['list']['5']['main']['temp_min'], 10);
-	var temp_min6 = parseInt(parsed_json['list']['6']['main']['temp_min'], 10);
-	var temp_max6 = parseInt(parsed_json['list']['6']['main']['temp_min'], 10);
-	var temp_min7 = parseInt(parsed_json['list']['7']['main']['temp_min'], 10);
-	var temp_max7 = parseInt(parsed_json['list']['7']['main']['temp_min'], 10);
-	
+		for (i = 0; i < 8; i++){
+			if (temp_maxs[i] > temp_max){
+				temp_max = temp_maxs[i];
+			}
+		}
 
 	//one day after
 	var timestampOneDay = parsed_json['list']['7']['dt'];
 	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
-	var temp_minOneDay = parseInt(parsed_json['list']['7']['main']['temp_min'], 10);
-	var temp_maxOneDay = parseInt(parsed_json['list']['7']['main']['temp_max'], 10);
+	
+	// calc min and max for one day after
+	var temp_mins1 = [
+		parseInt(parsed_json['list']['7']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['8']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['9']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['10']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['11']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['12']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['13']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['14']['main']['temp_min'], 10)
+	];
+	var temp_maxs1 = [
+		parseInt(parsed_json['list']['7']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['8']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['9']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['10']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['11']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['12']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['13']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['14']['main']['temp_max'], 10)
+	];
+		for (i = 0; i < 8; i++){
+			console.log(temp_mins1[i]);
+			console.log(temp_minOneDay);
+			console.log(temp_mins1[i] < temp_minOneDay);
+			if (temp_mins1[i] < temp_minOneDay){
+				temp_minOneDay = temp_mins1[i];
+			}
+		}
+		console.log("min one day" + temp_minOneDay);
+		for (i = 0; i < 8; i++){
+			if (temp_maxs1[i] > temp_maxOneDay){
+				temp_maxOneDay = temp_maxs1[i];
+			}
+		}
 	//two days after
 	var timestampTwoDay = parsed_json['list']['15']['dt'];
 	var conditionsTwoDay = parsed_json['list']['15']['weather']['0']['main'];
-	var temp_minTwoDay = parseInt(parsed_json['list']['15']['main']['temp_min'], 10);
-	var temp_maxTwoDay = parseInt(parsed_json['list']['15']['main']['temp_max'], 10);
+
+	// calc min and max for two days after
+	var temp_mins2 = [
+		parseInt(parsed_json['list']['15']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['16']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['17']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['18']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['19']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['20']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['21']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['22']['main']['temp_min'], 10)
+	];
+	var temp_maxs2 = [
+		parseInt(parsed_json['list']['15']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['16']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['17']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['18']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['19']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['20']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['21']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['22']['main']['temp_max'], 10)
+	];
+		for (i = 0; i < 8; i++){
+			if (temp_mins2[i] < temp_minTwoDay){
+				temp_minTwoDay = temp_mins2[i];
+			}
+		}
+		for (i = 0; i < 8; i++){
+			if (temp_maxs2[i] > temp_maxTwoDay){
+				temp_maxTwoDay = temp_maxs2[i];
+			}
+		}
+
 	//three days after
   var timestampThreeDay = parsed_json['list']['23']['dt'];
 	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
-	var temp_minThreeDay = parseInt(parsed_json['list']['23']['main']['temp_min'], 10);
-	var temp_maxThreeDay = parseInt(parsed_json['list']['23']['main']['temp_max'], 10);
+
+	// calc min and max for three days after
+	var temp_mins3 = [
+		parseInt(parsed_json['list']['23']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['24']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['25']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['26']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['27']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['28']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['29']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['30']['main']['temp_min'], 10)
+	];
+	var temp_maxs3 = [
+		parseInt(parsed_json['list']['23']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['24']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['25']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['26']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['27']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['28']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['29']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['30']['main']['temp_max'], 10)
+	];
+		for (i = 0; i < 8; i++){
+			if (temp_mins3[i] < temp_minThreeDay){
+				temp_minThreeDay = temp_mins3[i];
+			}
+		}
+		for (i = 0; i < 8; i++){
+			if (temp_maxs3[i] > temp_maxThreeDay){
+				temp_maxThreeDay = temp_maxs3[i];
+			}
+		}
+
 	//four days after
 	var timestampFourDay = parsed_json['list']['31']['dt'];
 	var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
-	var temp_minFourDay = parseInt(parsed_json['list']['31']['main']['temp_min'], 10);
-	var temp_maxFourDay = parseInt(parsed_json['list']['31']['main']['temp_max'], 10);
+
+	// calc min and max for four days after
+	var temp_mins4 = [
+		parseInt(parsed_json['list']['31']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['32']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['33']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['34']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['35']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['36']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['37']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['38']['main']['temp_min'], 10)
+	];
+	var temp_maxs4 = [
+		parseInt(parsed_json['list']['31']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['32']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['33']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['34']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['35']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['36']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['37']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['38']['main']['temp_max'], 10)
+	];
+		for (i = 0; i < 8; i++){
+			if (temp_mins4[i] < temp_minFourDay){
+				temp_minFourDay = temp_mins4[i];
+			}
+		}
+		for (i = 0; i < 8; i++){
+			if (temp_maxs4[i] > temp_maxFourDay){
+				temp_maxFourDay = temp_maxs4[i];
+			}
+		}
 	//five days after
 	var timestampFiveDay = parsed_json['list']['39']['dt'];
 	var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
-	var temp_minFiveDay = parseInt(parsed_json['list']['39']['main']['temp_min'], 10);
-	var temp_maxFiveDay = parseInt(parsed_json['list']['39']['main']['temp_max'], 10);
 
-	//TODO no feels in API
-
-
+	// calc min and max for five days after
+	var temp_mins5 = [
+		parseInt(parsed_json['list']['8']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['9']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['10']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['11']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['12']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['13']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['14']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['15']['main']['temp_min'], 10)
+	];
+	var temp_maxs5 = [
+		parseInt(parsed_json['list']['8']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['9']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['10']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['11']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['12']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['13']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['14']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['15']['main']['temp_max'], 10)
+	];
+		for (i = 0; i < 8; i++){
+			if (temp_mins5[i] < temp_minFiveDay){
+				temp_minFiveDay = temp_mins5[i];
+			}
+		}
+		for (i = 0; i < 8; i++){
+			if (temp_maxs5[i] > temp_maxFiveDay){
+				temp_maxFiveDay = temp_maxs5[i];
+			}
+		}
+		
 	// set states for fields so they could be rendered later on
 	this.setState({
 		locate: location,
@@ -231,7 +371,7 @@ export default class Iphone extends Component {
 		max : temp_max,
 
 		tsOneDay : timestampOneDay,
-		minOneDay: parseInt(temp_minOneDay, 10),
+		minOneDay: temp_minOneDay,
 		maxOneDay: parseInt(temp_maxOneDay , 10),
 
 		tsTwoDay : timestampTwoDay,
