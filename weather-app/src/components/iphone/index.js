@@ -20,6 +20,7 @@ export default class Iphone extends Component {
 		this.setState({ display: false });
 		//first day of weekly forecast (one day after current day)
 		this.fetchWeatherData();
+		this.setState({ onStartPage: true});
 	}
 
 	// a call to fetch weather data (five days)
@@ -33,6 +34,16 @@ export default class Iphone extends Component {
 		});
 		// once the data grabbed, hide the button
 		//this.setState({ display: false });
+	}
+
+	//switch pages
+	switchPages = () => {
+		if (this.state.onStartPage === true){
+			this.setState({onStartPage: false});
+		}
+		else {
+			this.setState({onStartPage: true});
+		}
 	}
 
 	// the main render method for the iphone component
@@ -51,21 +62,25 @@ export default class Iphone extends Component {
 
 			<div class={ style.container }>
 				<div class={ style.header }>
-					<div class={ style.topbar}></div>
+					<div class={style.topbar}>
+						{/* settings */}
+						<div class= { style_iphone.container }>
+							<Button class={ style_iphone.button } clickFunction={ this.switchPages }/>
+						</div>
+					</div>
 
+					{/* TODO: How to switch back and forth from pages? */}
 					<div class={ style.icon }>
 							<img src = {this.displayCondition(this.state.cond)} style = "width:100%; height:100%;"></img>
 					</div>
 
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
-					<div class={ style.temp_min }>{ this.state.min}</div>
+					<div class={ style.temp_min }>min: { this.state.min}</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
-
-      		<div class={ style.temp_max }>{ this.state.max}</div>
+					<div class={ style.temp_max }>max: { this.state.max}</div>
 					<div class={ style.clothes}></div>
-
-      		<div class={ style.clothes}>
+					<div class={ style.clothes}>
 							<img src = {this.displayClothes()} style = "width:100%; height:100%;"></img>
 					</div>
 
@@ -105,45 +120,104 @@ export default class Iphone extends Component {
 				</div>
 
 				<div class={ style.details }></div>
-				<div class= { style_iphone.container }>
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
-				</div>
 			</div>
 		);
 	}
 
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
+	var temp_min = -100;
+	var temp_max = 100;
+	var temp_minOneDay;
+	var temp_maxOneDay;
+	var temp_minTwoDay;
+	var temp_maxTwoDay;
+	var temp_minThreeDay;
+	var temp_maxThreeDay;
+	var temp_minFourDay;
+	var temp_maxFourDay;
+	var temp_minFiveDay;
+	var temp_maxFiveDay;
+
 	var location = parsed_json['city']['name'];
-	var temp_c = parsed_json['list']['0']['main']['temp'];
+	var temp_c = parseInt(parsed_json['list']['0']['main']['temp'], 10);
 	var conditions = parsed_json['list']['0']['weather']['0']['main'];
-	var temp_min = 'min: ' + String(parseInt(parsed_json['list']['0']['main']['temp_min']));
-	var temp_max = 'max: ' + String(parseInt(parsed_json['list']['0']['main']['temp_max']));
+
+	var temp_mins = [
+		parseInt(parsed_json['list']['0']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['1']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['2']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['3']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['4']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['5']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['6']['main']['temp_min'], 10),
+		parseInt(parsed_json['list']['7']['main']['temp_min'], 10)
+	];
+	var temp_maxs = [
+		parseInt(parsed_json['list']['0']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['1']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['2']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['3']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['4']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['5']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['6']['main']['temp_max'], 10),
+		parseInt(parsed_json['list']['7']['main']['temp_max'], 10)
+	];
+		{/* TODO: loop isnt working */}
+		var i;
+		for (i = 0; i < 8; i++){
+			console.log("temp min " + temp_min);
+			console.log(temp_mins[i]);
+			if (temp_min < temp_mins[i]){
+				temp_min = temp_mins[i];
+			}
+		}
+
+
+
+	var temp_min0 = parseInt(parsed_json['list']['0']['main']['temp_min'], 10);
+	var temp_max0 = parseInt(parsed_json['list']['0']['main']['temp_min'], 10);
+	var temp_min1 = parseInt(parsed_json['list']['1']['main']['temp_min'], 10);
+	var temp_max1 = parseInt(parsed_json['list']['1']['main']['temp_min'], 10);
+	var temp_min2 = parseInt(parsed_json['list']['2']['main']['temp_min'], 10);
+	var temp_max2 = parseInt(parsed_json['list']['2']['main']['temp_min'], 10);
+	var temp_min3 = parseInt(parsed_json['list']['3']['main']['temp_min'], 10);
+	var temp_max3 = parseInt(parsed_json['list']['3']['main']['temp_min'], 10);
+	var temp_min4 = parseInt(parsed_json['list']['4']['main']['temp_min'], 10);
+	var temp_max4 = parseInt(parsed_json['list']['4']['main']['temp_min'], 10);
+	var temp_min5 = parseInt(parsed_json['list']['5']['main']['temp_min'], 10);
+	var temp_max5 = parseInt(parsed_json['list']['5']['main']['temp_min'], 10);
+	var temp_min6 = parseInt(parsed_json['list']['6']['main']['temp_min'], 10);
+	var temp_max6 = parseInt(parsed_json['list']['6']['main']['temp_min'], 10);
+	var temp_min7 = parseInt(parsed_json['list']['7']['main']['temp_min'], 10);
+	var temp_max7 = parseInt(parsed_json['list']['7']['main']['temp_min'], 10);
+	
+
 	//one day after
 	var timestampOneDay = parsed_json['list']['7']['dt'];
 	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
-	var temp_minOneDay = parseInt(parsed_json['list']['7']['main']['temp_min']);
-	var temp_maxOneDay = parseInt(parsed_json['list']['7']['main']['temp_max']);
+	var temp_minOneDay = parseInt(parsed_json['list']['7']['main']['temp_min'], 10);
+	var temp_maxOneDay = parseInt(parsed_json['list']['7']['main']['temp_max'], 10);
 	//two days after
 	var timestampTwoDay = parsed_json['list']['15']['dt'];
 	var conditionsTwoDay = parsed_json['list']['15']['weather']['0']['main'];
-	var temp_minTwoDay = parseInt(parsed_json['list']['15']['main']['temp_min']);
-	var temp_maxTwoDay = parseInt(parsed_json['list']['15']['main']['temp_max']);
+	var temp_minTwoDay = parseInt(parsed_json['list']['15']['main']['temp_min'], 10);
+	var temp_maxTwoDay = parseInt(parsed_json['list']['15']['main']['temp_max'], 10);
 	//three days after
   var timestampThreeDay = parsed_json['list']['23']['dt'];
 	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
-	var temp_minThreeDay = parseInt(parsed_json['list']['23']['main']['temp_min']);
-	var temp_maxThreeDay = parseInt(parsed_json['list']['23']['main']['temp_max']);
+	var temp_minThreeDay = parseInt(parsed_json['list']['23']['main']['temp_min'], 10);
+	var temp_maxThreeDay = parseInt(parsed_json['list']['23']['main']['temp_max'], 10);
 	//four days after
 	var timestampFourDay = parsed_json['list']['31']['dt'];
 	var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
-	var temp_minFourDay = parseInt(parsed_json['list']['31']['main']['temp_min']);
-	var temp_maxFourDay = parseInt(parsed_json['list']['31']['main']['temp_max']);
+	var temp_minFourDay = parseInt(parsed_json['list']['31']['main']['temp_min'], 10);
+	var temp_maxFourDay = parseInt(parsed_json['list']['31']['main']['temp_max'], 10);
 	//five days after
 	var timestampFiveDay = parsed_json['list']['39']['dt'];
 	var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
-	var temp_minFiveDay = parseInt(parsed_json['list']['39']['main']['temp_min']);
-	var temp_maxFiveDay = parseInt(parsed_json['list']['39']['main']['temp_max']);
+	var temp_minFiveDay = parseInt(parsed_json['list']['39']['main']['temp_min'], 10);
+	var temp_maxFiveDay = parseInt(parsed_json['list']['39']['main']['temp_max'], 10);
 
 	//TODO no feels in API
 
