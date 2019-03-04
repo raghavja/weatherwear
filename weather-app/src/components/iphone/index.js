@@ -20,7 +20,6 @@ import clouds from "../../../icons/015-cloud.png";
 
 export default class Iphone extends Component {
 //var Iphone = React.createClass({
-
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
@@ -30,7 +29,7 @@ export default class Iphone extends Component {
 		this.fetchWeatherData();
 		this.setState({ onMainPage: false});
 
-		//SETTINGS PAGE
+		//SETUP
 		this.setState({ name: ""});
 		this.setState({ gender: ""});
 		//set range
@@ -67,7 +66,6 @@ export default class Iphone extends Component {
 
 	// the main render method for the iphone component
 	render() {
-
 		//get next day in week for weekly forecast
 		var timestamp = this.state.tsOneDay;
 		var a = new Date(timestamp*1000);
@@ -82,6 +80,7 @@ export default class Iphone extends Component {
 						{/* settings */}
 						<div class= { style_iphone.container }>
 							<Button class={ style_iphone.button } clickFunction={ this.switchPages }/>
+							<Button2 label="Hello world" kind="raised" accent />
 						</div>
 					</div>
 
