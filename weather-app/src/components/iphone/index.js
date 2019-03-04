@@ -8,6 +8,16 @@ import $ from 'jquery';
 // import the Button component
 import Button from '../button';
 
+//import images
+import thunderstorm from "../../../icons/012-storm.png";
+import drizzle from "../../../icons/015-cloud.png";
+import rain from "../../../icons/010-raining.png";
+import snow from "../../../icons/003-temperature.png";
+import atmosphere from "../../../icons/015-cloud.png";
+import clear from "../../../icons/016-sun.png";
+import clouds from "../../../icons/015-cloud.png";
+
+
 export default class Iphone extends Component {
 //var Iphone = React.createClass({
 
@@ -103,6 +113,7 @@ export default class Iphone extends Component {
 					  <div class={style.weekOne}>{this.state.onMainPage ? days[a.getDay()%7] : null}</div>
 							<div class = {style.iconOne}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img> : null }
 							</div>
+
 					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.onMainPage ? this.state.minOneDay : null}</div>
 					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxOneDay : null}</div>
 					  {/* two days after */}
@@ -187,7 +198,7 @@ export default class Iphone extends Component {
 	//one day after
 	var timestampOneDay = parsed_json['list']['7']['dt'];
 	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
-	
+
 	// calc min and max for one day after
 	var temp_mins1 = [
 		parseInt(parsed_json['list']['7']['main']['temp_min'], 10),
@@ -377,22 +388,27 @@ export default class Iphone extends Component {
 		tsOneDay : timestampOneDay,
 		minOneDay: temp_minOneDay,
 		maxOneDay: temp_maxOneDay,
+		condOneDay: conditionsOneDay,
 
 		tsTwoDay : timestampTwoDay,
 		minTwoDay: temp_minTwoDay,
 		maxTwoDay: temp_maxTwoDay,
+		condTwoDay: conditionsTwoDay,
 
 		tsThreeDay: timestampThreeDay,
 		minThreeDay: temp_minThreeDay,
 		maxThreeDay: temp_maxThreeDay,
+		condThreeDay: conditionsThreeDay,
 
 		tsFourDay: timestampFourDay,
 		minFourDay: temp_minFourDay,
 		maxFourDay: temp_maxFourDay,
+		condFourDay: conditionsFourDay,
 
 		tsFiveDay: timestampFiveDay,
 		minFiveDay: temp_minFiveDay,
-		maxFiveDay: temp_maxFiveDay
+		maxFiveDay: temp_maxFiveDay,
+		condFiveDay: conditionsFiveDay
 
 	});
 	}
@@ -417,26 +433,27 @@ export default class Iphone extends Component {
 	displayCondition = (cond) => {
 		if (cond != "") {
 			if (cond == "Thunderstorm") {
-				return("../../../icons/012-storm.png");
+				return(thunderstorm);
 			}
 			else if (cond == "Drizzle") {
-				return("../../../icons/015-cloud.png");
+				return(drizzle);
 			}
 			else if (cond == "Rain") {
-				return("../../../icons/010-raining.png");
+				return(rain);
 			}
 			else if (cond == "Snow") {
-				return("../../../icons/003-temperature.png");
+				return(snow);
 			}
 			else if (cond == "Atmosphere") {
-				return("../../../icons/015-cloud.png");
+				return(atmosphere);
 			}
 			else if (cond == "Clear") {
-				return("../../../icons/016-sun.png");
+				return(clear);
 			}
 			else if (cond == "Clouds") {
-				return("../../../icons/015-cloud.png");
+				return(clouds);
 			}
+
 		}
 	}
 
