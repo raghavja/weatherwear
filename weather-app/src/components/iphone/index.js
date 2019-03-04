@@ -16,11 +16,20 @@ export default class Iphone extends Component {
 		super(props);
 		// temperature state
 		this.state.temp = "";
-		// button display state
-		this.setState({ display: false });
 		//first day of weekly forecast (one day after current day)
 		this.fetchWeatherData();
-		this.setState({ onStartPage: true});
+		this.setState({ onMainPage: false});
+
+		//SETTINGS PAGE
+		this.setState({ name: ""});
+		this.setState({ gender: ""});
+		//set range
+		this.setState({ hot: [0, 0]});
+		this.setState({ warm: [0, 0]});
+		this.setState({ temperate: [0, 0]});
+		this.setState({ cold: [0, 0]});
+		this.setState({ freezing: [0, 0]});
+
 	}
 
 	// a call to fetch weather data (five days)
@@ -38,11 +47,11 @@ export default class Iphone extends Component {
 
 	//switch pages
 	switchPages = () => {
-		if (this.state.onStartPage === true){
-			this.setState({onStartPage: false});
+		if (this.state.onMainPage === true){
+			this.setState({onMainPage:false});
 		}
 		else {
-			this.setState({onStartPage: true});
+			this.setState({onMainPage: true});
 		}
 	}
 
@@ -53,9 +62,6 @@ export default class Iphone extends Component {
 		var timestamp = this.state.tsOneDay;
 		var a = new Date(timestamp*1000);
 		var days = ['sun','mon','tue','wed','thr','fri','sat'];
-
-		// check if temperature data is fetched, if so add the sign styling to the page
-		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
 
 		// display all weather data
 		return (
@@ -69,58 +75,56 @@ export default class Iphone extends Component {
 						</div>
 					</div>
 
-					{/* TODO: How to switch back and forth from pages? */}
-					<div class={ style.icon }>
-							<img src = {this.displayCondition(this.state.cond)} style = "width:100%; height:100%;"></img>
-					</div>
+				{/* SETTINGS PAGE */}
+					<div class = {style.name}>{this.state.onMainPage ? null : this.state.name}</div>
+					<div class = {style.gender}>{this.state.onMainPage ? null : this.state.gender}</div>
+					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
+					<div class = {style.warm}>{this.state.onMainPage ? null : this.state.warm}</div>
+					<div class = {style.temperate}>{this.state.onMainPage ? null : this.state.temperate}</div>
+					<div class = {style.cold}>{this.state.onMainPage ? null : this.state.cold}</div>
+					<div class = {style.freezing}>{this.state.onMainPage ? null : this.state.freezing}</div>
 
-					<div class={ style.city }>{ this.state.locate }</div>
-					<div class={ style.conditions }>{ this.state.cond }</div>
-					<div class={ style.temp_min }>min: { this.state.min}</div>
-					<span class={ tempStyles }>{ this.state.temp }</span>
-					<div class={ style.temp_max }>max: { this.state.max}</div>
-					<div class={ style.clothes}></div>
-					<div class={ style.clothes}>
-							<img src = {this.displayClothes()} style = "width:100%; height:100%;"></img>
+				{/* MAIN PAGE */}
+					<div class={ style.icon }>
+							{this.state.onMainPage ? <img src = {this.displayCondition(this.state.cond)} style = "width:100%; height:100%;"></img> : null }
+					</div>
+					<div class={ style.city }>{ this.state.onMainPage ? this.state.locate : null }</div>
+					<div class={ style.conditions }>{ this.state.onMainPage ? this.state.cond : null }</div>
+					<div class={ style.temp_min }> {this.state.onMainPage ? this.state.min : null }</div>
+					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }</div>
+					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
+					<div class={ this.state.onMainPage ? style.clothes : null }>
+					{this.state.onMainPage ? <img src = {this.displayClothes()} style = "width:100%; height:100%;"></img> : null }
 					</div>
 
 					{/* weekly forecast */}
 					<div class={style.weekly}>
 					{/* one day after */}
-					  <div class={style.weekOne}>{days[a.getDay()%7]}</div>
-							<div class = {style.iconOne}>
-									<img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img>
+					  <div class={style.weekOne}>{this.state.onMainPage ? days[a.getDay()%7] : null}</div>
+							<div class = {style.iconOne}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img> : null }
 							</div>
-					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.minOneDay}</div>
-					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.maxOneDay}</div>
+					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.onMainPage ? this.state.minOneDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxOneDay : null}</div>
 					  {/* two days after */}
-					  <div class={style.weekTwo}>{days[(a.getDay()+1)%7]}</div>
-							<div class = {style.iconTwo}>
-									<img src = {this.displayCondition(this.state.condTwoDay)} style = "width:100%; height:100%;"></img>
-							</div>
-					    <div style="position:absolute; bottom: 20px; left: 25%; font-size: 15px;">{this.state.minTwoDay}</div>
-					    <div style="position:absolute; bottom: 20px; left: 32.5%; font-size: 15px;">{this.state.maxTwoDay}</div>
+					  <div class={style.weekTwo}>{this.state.onMainPage ? days[(a.getDay()+1)%7] : null }</div>
+							<div class = {style.iconTwo}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condTwoDay)} style = "width:100%; height:100%;"></img> : null }</div>
+					    <div style="position:absolute; bottom: 20px; left: 25%; font-size: 15px;">{this.state.onMainPage ? this.state.minTwoDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 32.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxTwoDay : null}</div>
 					  {/* three days after */}
-					  <div class={style.weekThree}>{days[(a.getDay()+2)%7]}</div>
-							<div class = {style.iconThree}>
-									<img src = {this.displayCondition(this.state.condThreeDay)} style = "width:100%; height:100%;"></img>
-							</div>
-					    <div style="position:absolute; bottom: 20px; left: 45%; font-size: 15px;">{this.state.minThreeDay}</div>
-					    <div style="position:absolute; bottom: 20px; left: 52.5%; font-size: 15px;">{this.state.maxThreeDay}</div>
+					  <div class={style.weekThree}>{this.state.onMainPage ? days[(a.getDay()+2)%7] : null}</div>
+							<div class = {style.iconThree}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condThreeDay)} style = "width:100%; height:100%;"></img> : null } </div>
+					    <div style="position:absolute; bottom: 20px; left: 45%; font-size: 15px;">{this.state.onMainPage ? this.state.minThreeDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 52.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxThreeDay : null}</div>
 					  {/* four days after */}
-					  <div class={style.weekFour}>{days[(a.getDay()+3)%7]}</div>
-							<div class = {style.iconFour}>
-									<img src = {this.displayCondition(this.state.condFourDay)} style = "width:100%; height:100%;"></img>
-							</div>
-					    <div style="position:absolute; bottom: 20px; left: 65%; font-size: 15px;">{this.state.minFourDay}</div>
-					    <div style="position:absolute; bottom: 20px; left: 72.5%; font-size: 15px;">{this.state.maxFourDay}</div>
+					  <div class={style.weekFour}>{this.state.onMainPage ? days[(a.getDay()+3)%7] : null}</div>
+							<div class = {style.iconFour}>{this.state.onMainPage ? <img src = {this.displayCondition(this.state.condFourDay)} style = "width:100%; height:100%;"></img> : null } </div>
+					    <div style="position:absolute; bottom: 20px; left: 65%; font-size: 15px;">{this.state.onMainPage ? this.state.minFourDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 72.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxFourDay : null}</div>
 					  {/* five days after */}
-					  <div class={style.weekFive}>{days[(a.getDay()+4)%7]}</div>
-							<div class = {style.iconFive}>
-									<img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img>
-							</div>
-					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.minFiveDay}</div>
-					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.maxFiveDay}</div>
+					  <div class={style.weekFive}>{this.state.onMainPage ? days[(a.getDay()+4)%7] : null}</div>
+							<div class = {style.iconFive}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img> : null }</div>
+					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.onMainPage ? this.state.minFiveDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxFiveDay : null}</div>
 					</div>
 
 				</div>
@@ -132,6 +136,7 @@ export default class Iphone extends Component {
 
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
+	var i;
 	var temp_min = 100;
 	var temp_max = -100;
 	var temp_minOneDay = 100;
@@ -168,7 +173,6 @@ export default class Iphone extends Component {
 		parseInt(parsed_json['list']['5']['main']['temp_max'], 10),
 		parseInt(parsed_json['list']['6']['main']['temp_max'], 10)
 	];
-		var i;
 		for (i = 0; i < 8; i++){
 			if (temp_mins[i] < temp_min){
 				temp_min = temp_mins[i];
@@ -361,34 +365,34 @@ export default class Iphone extends Component {
 				temp_maxFiveDay = temp_maxs5[i];
 			}
 		}
-		
+
 	// set states for fields so they could be rendered later on
 	this.setState({
 		locate: location,
 		temp: temp_c,
 		cond : conditions,
-		min : temp_min,
-		max : temp_max,
+		min : "min: " + temp_min,
+		max : "max: " + temp_max,
 
 		tsOneDay : timestampOneDay,
 		minOneDay: temp_minOneDay,
-		maxOneDay: parseInt(temp_maxOneDay , 10),
+		maxOneDay: temp_maxOneDay,
 
 		tsTwoDay : timestampTwoDay,
-		minTwoDay: parseInt(temp_minTwoDay, 10),
-		maxTwoDay: parseInt(temp_maxTwoDay, 10),
+		minTwoDay: temp_minTwoDay,
+		maxTwoDay: temp_maxTwoDay,
 
 		tsThreeDay: timestampThreeDay,
-		minThreeDay: parseInt(temp_minThreeDay, 10),
-		maxThreeDay: parseInt(temp_maxThreeDay, 10),
+		minThreeDay: temp_minThreeDay,
+		maxThreeDay: temp_maxThreeDay,
 
 		tsFourDay: timestampFourDay,
-		minFourDay: parseInt(temp_minFourDay, 10),
-		maxFourDay: parseInt(temp_maxFourDay, 10),
+		minFourDay: temp_minFourDay,
+		maxFourDay: temp_maxFourDay,
 
 		tsFiveDay: timestampFiveDay,
-		minFiveDay: parseInt(temp_minFiveDay, 10),
-		maxFiveDay: parseInt(temp_maxFiveDay, 10)
+		minFiveDay: temp_minFiveDay,
+		maxFiveDay: temp_maxFiveDay
 
 	});
 	}
