@@ -84,9 +84,10 @@ module.exports = {
 			}
 		]
 	},
-	postcss: () => {
-		 autoprefixer({ browsers: 'last 2 versions' }),
-  },
+
+	postcss: () => [
+		autoprefixer({ browsers: 'last 2 versions' })
+	],
 
 	plugins: ([
 		new webpack.NoErrorsPlugin(),
@@ -173,11 +174,5 @@ module.exports = {
 			//   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
 			// }
 		}
-	},
-	test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss?sourceMap&sourceComments',
-        ]
-	
+	}
 };
