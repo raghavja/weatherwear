@@ -3,10 +3,13 @@ import { h, render, Component } from 'preact';
 // import stylesheets for ipad & button
 import style from './style';
 import style_iphone from '../button/style_iphone';
+import style_dailyHourly from '../dailyhourly/style_iphone';
 // import jquery for API calls
 import $ from 'jquery';
 // import the Button component
 import Button from '../button';
+//import daily hourly buttons
+import dailyHourly from "../dailyhourly";
 
 //import images
 import thunderstorm from "../../../icons/012-storm.png";
@@ -27,7 +30,11 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		//first day of weekly forecast (one day after current day)
 		this.fetchWeatherData();
-		this.setState({ onMainPage: false});
+		this.setState({ onMainPage: true});
+		//change daily or hourly forecast on bottom bar
+		this.setState({showDaily: true});
+		this.setState({showHourly: false});
+		
 
 		//SETUP
 		this.setState({ name: ""});
@@ -58,9 +65,24 @@ export default class Iphone extends Component {
 	switchPages = () => {
 		if (this.state.onMainPage === true){
 			this.setState({onMainPage:false});
+			this.setState({showDaily: false});
+			this.setState({showHourly : false});
 		}
 		else {
 			this.setState({onMainPage: true});
+			this.setState({showDaily: true});
+			this.setState({showHourly : false});
+		}
+	}
+
+	switchDailyHourly = () => {
+		if (this.state.showDaily === true){
+			this.setState({showDaily: false});
+			this.setState({showHourly : true});
+		}
+		else {
+			this.setState({showDaily: true});
+			this.setState({showHourly: false});
 		}
 	}
 
@@ -80,7 +102,6 @@ export default class Iphone extends Component {
 						{/* settings */}
 						<div class= { style_iphone.container }>
 							<Button class={ style_iphone.button } clickFunction={ this.switchPages }/>
-							<Button2 label="Hello world" kind="raised" accent />
 						</div>
 					</div>
 
@@ -104,6 +125,15 @@ export default class Iphone extends Component {
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 					<div class={ this.state.onMainPage ? style.clothes : null }>
 					{this.state.onMainPage ? <img src = {this.displayClothes()} style = "width:100%; height:100%;"></img> : null }
+					</div>
+
+					<div>
+					<dailyHourly class = {style_dailyHourly.daily} clickFunction={ this.switchDailyHourly }>
+					<p style = "font-size: 18px; text-align: center;">daily</p> 
+					</dailyHourly>
+					<dailyHourly class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
+					<p style = "font-size: 18px; text-align: center;">hourly</p>
+					</dailyHourly>
 					</div>
 
 					{/* weekly forecast */}
@@ -137,10 +167,39 @@ export default class Iphone extends Component {
 					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxFiveDay : null}</div>
 					</div>
 
+					{/* hourly forecast */}
+					<div class={style.weekly}>
+						<div class={style.weekOne}>{this.state.onMainPage ? days[a.getDay()%7] : null}</div>
+							<div class = {style.iconOne}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img> : null }
+							</div>
+
+					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.onMainPage ? this.state.minOneDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxOneDay : null}</div>
+					  {/* two days after */}
+					  <div class={style.weekTwo}>{this.state.onMainPage ? days[(a.getDay()+1)%7] : null }</div>
+							<div class = {style.iconTwo}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condTwoDay)} style = "width:100%; height:100%;"></img> : null }</div>
+					    <div style="position:absolute; bottom: 20px; left: 25%; font-size: 15px;">{this.state.onMainPage ? this.state.minTwoDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 32.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxTwoDay : null}</div>
+					  {/* three days after */}
+					  <div class={style.weekThree}>{this.state.onMainPage ? days[(a.getDay()+2)%7] : null}</div>
+							<div class = {style.iconThree}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condThreeDay)} style = "width:100%; height:100%;"></img> : null } </div>
+					    <div style="position:absolute; bottom: 20px; left: 45%; font-size: 15px;">{this.state.onMainPage ? this.state.minThreeDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 52.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxThreeDay : null}</div>
+					  {/* four days after */}
+					  <div class={style.weekFour}>{this.state.onMainPage ? days[(a.getDay()+3)%7] : null}</div>
+							<div class = {style.iconFour}>{this.state.onMainPage ? <img src = {this.displayCondition(this.state.condFourDay)} style = "width:100%; height:100%;"></img> : null } </div>
+					    <div style="position:absolute; bottom: 20px; left: 65%; font-size: 15px;">{this.state.onMainPage ? this.state.minFourDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 72.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxFourDay : null}</div>
+					  {/* five days after */}
+					  <div class={style.weekFive}>{this.state.onMainPage ? days[(a.getDay()+4)%7] : null}</div>
+							<div class = {style.iconFive}> {this.state.onMainPage ? <img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img> : null }</div>
+					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.onMainPage ? this.state.minFiveDay : null}</div>
+					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.onMainPage ? this.state.maxFiveDay : null}</div>
 				</div>
 
 				<div class={ style.details }></div>
 			</div>
+		</div>
 		);
 	}
 
@@ -375,6 +434,18 @@ export default class Iphone extends Component {
 				temp_maxFiveDay = temp_maxs5[i];
 			}
 		}
+
+
+	{/* hourly forecast */}
+	var time0 = parsed_json['list']['0']["sys"]["dt_txt"];
+	var time1 = parsed_json['list']['1']["sys"]["dt_txt"];
+	var time2 = parsed_json['list']['2']["sys"]["dt_txt"];
+	var time3 = parsed_json['list']['3']["sys"]["dt_txt"];
+	var time4 = parsed_json['list']['4']["sys"]["dt_txt"];
+	var time5 = parsed_json['list']['5']["sys"]["dt_txt"];
+	var time6 = parsed_json['list']['6']["sys"]["dt_txt"];
+	var time7 = parsed_json['list']['7']["sys"]["dt_txt"];
+	var time8 = parsed_json['list']['8']["sys"]["dt_txt"];
 
 	// set states for fields so they could be rendered later on
 	this.setState({
