@@ -33,6 +33,7 @@ export default class Iphone extends Component {
 		//SETTINGS PAGE
 		this.setState({ name: "sajda"});
 		this.setState({ gender: "female"});
+    this.setState({ location: "London"});
 		//set range
 		this.setState({ hot: [0, 0]});
 		this.setState({ warm: [0, 0]});
@@ -87,7 +88,28 @@ export default class Iphone extends Component {
 
 				{/* SETTINGS PAGE */}
           <h2 class = {this.state.onMainPage ? style.no_display : style.title}>Settings</h2>
-					<div class = {style.name}>{this.state.onMainPage ? null : this.state.name}</div>
+          <h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Personal details</h3>
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>name:</h4>
+          <input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} value = {this.state.onMainPage ? null : this.state.name}></input>
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>clothing type:</h4>
+          <div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>female</button>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>male</button>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>other</button>
+          </div>
+          <h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
+          <input type="text" class = {this.state.onMainPage ? style.no_display : style.searchbar} value = {this.state.location}></input>
+          <h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Temperature</h3>
+          <div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>ºC</button>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>ºF</button>
+          </div>
+          <h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Time format</h3>
+          <div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>am/pm</button>
+            <button class={this.state.onMainPage ? style.no_display : style.option_button}>24h</button>
+          </div>
+          <div class = {style.name}>{this.state.onMainPage ? null : this.state.name}</div>
 					<div class = {style.gender}>{this.state.onMainPage ? null : this.state.gender}</div>
 					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
 					<div class = {style.warm}>{this.state.onMainPage ? null : this.state.warm}</div>

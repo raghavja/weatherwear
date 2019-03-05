@@ -1,5 +1,18 @@
 @import '~style/helpers';
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700');
+
+@font-face {
+font-family: 'Josefin Sans';
+src: url('../../assets/josefin-sans/JosefinSans-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'Josefin Sans';
+src: url('../../assets/josefin-sans/JosefinSans-SemiBold.ttf') format('truetype');
+font-weight: bold;
+font-style: normal;
+}
 
 .homepage{
 	display:flex;
@@ -19,7 +32,7 @@
 
 	position: relative;
 	background: linear-gradient(180deg, #B3C3D6 0%, rgba(243, 245, 248, 0.348066) 51.93%, rgba(255, 255, 255, 0) 100%), #2A5A99;
-  font-family: 'Josefin Sans';
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 .clothes{
@@ -282,13 +295,13 @@
 .containerSettings {
   display: flex;
 	flex-direction: column;
+  font-family: 'Josefin Sans', sans-serif;
 	//background-image: url('../../assets/backgrounds/clear-iphone.jpg');
 	// 207
 	color: #fff;
 	width: 414px;
 	height: 736px;
-	text-align: center;
-	padding-top: 80px;
+	padding-top: 4rem;
   padding-right: 2rem;
   padding-left: 2rem;
 	margin: 0 auto;
@@ -297,11 +310,77 @@
 	background: #0065CF;
 }
 .title {
-
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: normal;
 }
 
 .name {
 }
 
 .gender {
+}
+
+.subtitle_settings {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 1em;
+}
+
+.text {
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+  margin-left: 0.5rem;
+  font-weight: normal;
+  font-size: 1em;
+  text-transform: lowercase;
+}
+
+.input_settings {
+  outline: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  color: white;
+  font-size: 1em;
+  margin-bottom: 1rem;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.option_button {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid white;
+  background-color: transparent;
+  border-radius: 50px;
+  color: white;
+  font-size: 1em;
+  margin-bottom: 1rem;
+  font-family: 'Josefin Sans', sans-serif;
+  margin-right: 1rem;
+  transition: 0.3s;
+}
+
+.option_button:active {
+  background-color: white;
+  color: #0065CF;
+}
+
+.searchbar {
+  outline: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid white;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  color: white;
+  font-size: 1em;
+  margin-bottom: 1rem;
+  font-family: 'Josefin Sans', sans-serif;
+  background-image: url(../../../icons/location-icon.png);
+  background-position: 0.5rem 0.4rem;
+  background-repeat: no-repeat;
+  padding-left: 2rem;
+  background-size: 1rem auto;
 }
