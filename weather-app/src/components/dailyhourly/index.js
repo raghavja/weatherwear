@@ -12,10 +12,8 @@ export default class dailyHourly extends Component {
 			};
 		}
 		return (
-			<div>
-				<dailyhourly onClick={cFunction}>
-				</dailyhourly>
-			</div>
+			<button onClick={cFunction}>
+			</button>
 		);
 	}
 }
