@@ -487,6 +487,7 @@ export default class Iphone extends Component {
 	});
 	}
 
+	// function to determine the clothing icon
   displayClothes = (temp) => {
 		if (temp != "") {
 			if (temp <= 10) {
