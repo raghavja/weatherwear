@@ -33,7 +33,7 @@ export default class Iphone extends Component {
 		this.setState({ onMainPage: true});
 		//change daily or hourly forecast on bottom bar
 		this.setState({showDaily: false});
-		this.setState({showHourly: !this.state.showDaily});
+		this.setState({showHourly: true});
 
 		//SETUP
 		this.setState({ name: ""});
@@ -70,22 +70,28 @@ export default class Iphone extends Component {
 			this.setState({onMainPage: false});
 			this.setState({showButtonDaily: false});
 			this.setState({showButtonHourly : false});
+			this.setState({showHourly : false});
+			this.setState({showDaily : false});
 		}
 		else {
 			this.setState({onMainPage: true});
 			this.setState({showButtonDaily: true});
-			this.setState({showButtonHourly : false});
+			this.setState({showButtonHourly : true});
+			this.setState({showHourly : true});
+			this.setState({showDaily : false});
 		}
 	}
 
 	switchDailyHourly = () => {
-		if (this.state.showDaily === true){
-			this.setState({showDaily: false});
-			this.setState({showHourly : true});
-		}
-		else {
-			this.setState({showDaily: true});
-			this.setState({showHourly: false});
+		if (this.state.onMainPage === true){
+			if (this.state.showDaily === true){
+				this.setState({showDaily: false});
+				this.setState({showHourly : true});
+			}
+			else {
+				this.setState({showDaily: true});
+				this.setState({showHourly: false});
+			}
 		}
 	}
 
@@ -175,24 +181,24 @@ export default class Iphone extends Component {
 						<div class={style.weekOne}>{ this.state.showHourly ? <div>now</div> : null}</div>
 							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }
 							</div>
-							<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 8%"> {this.state.showHourly ? this.state.hourTemp0 : null} ° </div>
+							<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 8%"> {this.state.showHourly ? this.state.hourTemp0 : null}</div>
 					  {/* two days after */}
 					  <div class={style.weekTwo}>{ this.state.showHourly ? (this.state.currentHour + 3) % 12: null}</div>
 							<div class = {style.iconTwo}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond1)} style = "width:100%; height:100%;"></img> : null }</div>
-					 		 <div style = "position :absolute; bottom: 15px; font-size: 18px; left: 28%"> {this.state.showHourly ? this.state.hourTemp1 : null} ° </div>
+					 		 <div style = "position :absolute; bottom: 15px; font-size: 18px; left: 28%"> {this.state.showHourly ? this.state.hourTemp1 : null}</div>
 					  {/* three days after */}
 					  <div class={style.weekThree}>{ this.state.showHourly ? (this.state.currentHour + 6) % 12 : null}</div>
 							<div class = {style.iconThree}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond2)} style = "width:100%; height:100%;"></img> : null } </div>
-					 		<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 48%"> {this.state.showHourly ? this.state.hourTemp2 : null} ° </div>
+					 		<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 48%"> {this.state.showHourly ? this.state.hourTemp2 : null}</div>
 					  {/* four days after */}
 					  <div class={style.weekFour}>{ this.state.showHourly ? (this.state.currentHour + 9) % 12 : null}</div>
 							<div class = {style.iconFour}>{this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond3)} style = "width:100%; height:100%;"></img> : null } </div>
-							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 26%"> {this.state.showHourly ? this.state.hourTemp3 : null} ° </div>
+							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 26%"> {this.state.showHourly ? this.state.hourTemp3 : null}</div>
 					  
 					  {/* five days after */}
 					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 12 : null}</div>
 							<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
-							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 6%"> {this.state.showHourly ? this.state.hourTemp3 : null} ° </div>
+							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 6%"> {this.state.showHourly ? this.state.hourTemp3 : null} </div>
 				</div>
 
 				<div class={ style.details }></div>
@@ -433,29 +439,28 @@ export default class Iphone extends Component {
 	{/* hourly forecast */}
 	var time0 = parsed_json['list']['0']["sys"]["dt_txt"];
 	var weatherConditions0 = parsed_json['list']['0']['weather']['0']['main'];
-	console.log("weather" + weatherConditions0);
-	var hourlyTemp0 = parseInt(parsed_json['list']['0']['main']['temp'], 10);
+	var hourlyTemp0 = parseInt(parsed_json['list']['0']['main']['temp'], 10) + "°";
 	var time1 = parsed_json['list']['1']["sys"]["dt_txt"];
 	var weatherConditions1 = parsed_json['list']['1']['weather']['0']['main'];
-	var hourlyTemp1 = parseInt(parsed_json['list']['1']['main']['temp'], 10);
+	var hourlyTemp1 = parseInt(parsed_json['list']['1']['main']['temp'], 10)+ "°";
 	var time2 = parsed_json['list']['2']["sys"]["dt_txt"];
 	var weatherConditions2 = parsed_json['list']['2']['weather']['0']['main'];
-	var hourlyTemp2 = parseInt(parsed_json['list']['2']['main']['temp'], 10);
+	var hourlyTemp2 = parseInt(parsed_json['list']['2']['main']['temp'], 10)+ "°";
 	var time3 = parsed_json['list']['3']["sys"]["dt_txt"];
 	var weatherConditions3 = parsed_json['list']['3']['weather']['0']['main'];
-	var hourlyTemp3 = parseInt(parsed_json['list']['3']['main']['temp'], 10);
+	var hourlyTemp3 = parseInt(parsed_json['list']['3']['main']['temp'], 10)+ "°";
 	var time4 = parsed_json['list']['4']["sys"]["dt_txt"];
 	var weatherConditions4 = parsed_json['list']['4']['weather']['0']['main'];
-	var hourlyTemp4 = parseInt(parsed_json['list']['4']['main']['temp'], 10);
+	var hourlyTemp4 = parseInt(parsed_json['list']['4']['main']['temp'], 10)+ "°";
 	var time5 = parsed_json['list']['5']["sys"]["dt_txt"];
 	var weatherConditions5 = parsed_json['list']['5']['weather']['0']['main'];
-	var hourlyTemp5 = parseInt(parsed_json['list']['5']['main']['temp'], 10);
+	var hourlyTemp5 = parseInt(parsed_json['list']['5']['main']['temp'], 10)+ "°";
 	var time6 = parsed_json['list']['6']["sys"]["dt_txt"];
 	var weatherConditions6 = parsed_json['list']['6']['weather']['0']['main'];
-	var hourlyTemp6 = parseInt(parsed_json['list']['6']['main']['temp'], 10);
+	var hourlyTemp6 = parseInt(parsed_json['list']['6']['main']['temp'], 10)+ "°";
 	var time7 = parsed_json['list']['7']["sys"]["dt_txt"];
 	var weatherConditions7 = parsed_json['list']['7']['weather']['0']['main'];
-	var hourlyTemp7 = parseInt(parsed_json['list']['7']['main']['temp'], 10);
+	var hourlyTemp7 = parseInt(parsed_json['list']['7']['main']['temp'], 10)+ "°";
 	
 	
 	// set states for fields so they could be rendered later on
