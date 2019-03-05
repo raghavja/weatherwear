@@ -2,7 +2,6 @@
 import { h, render, Component } from 'preact';
 import settings from "../../../icons/settings-xxl.png";
 
-
 export default class Button extends Component {
 
 	// rendering a function when the button is clicked
