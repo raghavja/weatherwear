@@ -20,6 +20,10 @@ import atmosphere from "../../../icons/015-cloud.png";
 import clear from "../../../icons/016-sun.png";
 import clouds from "../../../icons/015-cloud.png";
 
+import rainclothing from "../../../icons/rain-clothing.jpg";
+import mediumclothing from "../../../icons/medium-clothing.jpg";
+import hotclothing from "../../../icons/hot-clothing.jpg";
+
 
 export default class Iphone extends Component {
 //var Iphone = React.createClass({
@@ -34,7 +38,7 @@ export default class Iphone extends Component {
 		//change daily or hourly forecast on bottom bar
 		this.setState({showDaily: true});
 		this.setState({showHourly: false});
-		
+
 
 		//SETUP
 		this.setState({ name: ""});
@@ -124,12 +128,12 @@ export default class Iphone extends Component {
 					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }</div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 					<div class={ this.state.onMainPage ? style.clothes : null }>
-					{this.state.onMainPage ? <img src = {this.displayClothes()} style = "width:100%; height:100%;"></img> : null }
+					{this.state.onMainPage ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
 
 					<div>
 					<dailyHourly class = {style_dailyHourly.daily} clickFunction={ this.switchDailyHourly }>
-					<p style = "font-size: 18px; text-align: center;">daily</p> 
+					<p style = "font-size: 18px; text-align: center;">daily</p>
 					</dailyHourly>
 					<dailyHourly class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
 					<p style = "font-size: 18px; text-align: center;">hourly</p>
@@ -483,18 +487,16 @@ export default class Iphone extends Component {
 	});
 	}
 
-  displayClothes = () => {
-		var temp = this.state.temp;
-
+  displayClothes = (temp) => {
 		if (temp != "") {
 			if (temp <= 10) {
-				 return ("https://www.thoughtco.com/thmb/cRTak9Kc83eAPJ4oD6Y81uzEqnw=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-184405145-5898a68f5f9b5874eea04b4b.jpg");
+				 return(rainclothing);
 			}
 			else if (temp <= 16){
-				 return("https://assets.rbl.ms/13878792/980x.jpg");
+				 return(mediumclothing);
 			}
 			else {
-				 return("https://ak5.picdn.net/shutterstock/videos/4695185/thumb/1.jpg");
+				 return(hotclothing);
 			}
 		}
 	}
