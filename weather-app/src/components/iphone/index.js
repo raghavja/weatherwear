@@ -318,7 +318,13 @@ export default class Iphone extends Component {
 					<div class = {this.state.showClothesButton ? style_clothing.clothing : style.no_display}> {this.state.onMainPage ? <Clothing class={this.state.onMainPage ? style_clothing.button : style.no_display } clickFunction = {this.switchDetails }/> : null}</div>
 
 					{/* clothing section */}
-					<div class={ this.state.showClothes ? style.clothes : style.no_display }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
+					<div class={ this.state.showClothes ? style.clothes : style.no_display }>
+						<div style = "width:100%; height: 50%; float:right;">
+							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp) : null} style = "width:80%; height:80%; margin-top: 15%"></img>
+						</div>
+						<div style = "width:100%; height: 50%; float:right;">
+							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp) : null} style = "width:80%; height:80%; margin-top: 5%"></img>
+						</div>
 					</div>
 					{/* details section */}
 					<div class = {this.state.showDetails ? style.details : style.no_display}>{this.state.showDetails ? this.state.details : null}</div>
@@ -710,6 +716,35 @@ export default class Iphone extends Component {
 				}
 				else {
 					return (hotclothing);
+				}
+			}
+		}
+	
+	// function to determine the clothing icon
+	displayClothesTop = (temp) => {
+			if (temp != "") {
+				if (temp <= 10) {
+					return (trench);
+				}
+				else if (temp <= 16){
+					return (sweatshirt);
+				}
+				else {
+					return (shirt);
+				}
+			}
+		}
+
+	displayClothesBottom = (temp) => {
+			if (temp != "") {
+				if (temp <= 10) {
+					return (pants);
+				}
+				else if (temp <= 16){
+					return (pants);
+				}
+				else {
+					return (shorts);
 				}
 			}
 		}
