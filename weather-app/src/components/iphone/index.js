@@ -3,13 +3,15 @@ import { h, render, Component } from 'preact';
 // import stylesheets for ipad & button
 import style from './style';
 import style_iphone from '../button/style_iphone';
-import style_dailyHourly from '../dailyhourly/style_iphone';
+import style_daily from '../daily/style_iphone';
+import style_hourly from '../hourly/style_iphone';
 // import jquery for API calls
 import $ from 'jquery';
 // import the Button component
 import Button from '../button';
 //import daily hourly buttons
-import dailyHourly from "../dailyhourly";
+import Daily from "../daily";
+import Hourly from "../hourly";
 
 //import images
 import thunderstorm from "../../../icons/012-storm.png";
@@ -83,14 +85,25 @@ export default class Iphone extends Component {
 		}
 	}
 
-	switchDailyHourly = () => {
+	switchDaily = () => {
 		if (this.state.showDaily === true){
-			this.setState({showDaily: false});
-			this.setState({showHourly : true});
+			this.setState({showDaily: true});
+			this.setState({showHourly : false});
 		}
 		else {
 			this.setState({showDaily: true});
 			this.setState({showHourly: false});
+		}
+	}
+	
+	switchHourly = () => {
+		if (this.state.showDaily === false){
+			this.setState({showDaily: false});
+			this.setState({showHourly : true});
+		}
+		else {
+			this.setState({showDaily: false});
+			this.setState({showHourly: true});
 		}
 	}
 
@@ -135,14 +148,11 @@ export default class Iphone extends Component {
 					{this.state.onMainPage ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
 
-
-					<div> {this.state.onMainPage ? <dailyHourly class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
-						<p style = "font-size: 18px; text-align: center;">daily</p>
-						</dailyHourly> : null }
+					<div class = { style_daily.daily }>
+					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
 					</div>
-					<div> {this.state.onMainPage ? <dailyHourly class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
-						<p style = "font-size: 18px; text-align: center;">hourly</p>
-						</dailyHourly> : null }
+					<div class = { style_hourly.hourly }>
+						<Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/>
 					</div>
 
 					{/* weekly forecast */}
@@ -194,7 +204,7 @@ export default class Iphone extends Component {
 					  <div class={style.weekFour}>{ this.state.showHourly ? (this.state.currentHour + 9) % 12 : null}</div>
 							<div class = {style.iconFour}>{this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond3)} style = "width:100%; height:100%;"></img> : null } </div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 26%"> {this.state.showHourly ? this.state.hourTemp3 : null} ° </div>
-					  
+
 					  {/* five days after */}
 					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 12 : null}</div>
 							<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
@@ -462,8 +472,8 @@ export default class Iphone extends Component {
 	var time7 = parsed_json['list']['7']["sys"]["dt_txt"];
 	var weatherConditions7 = parsed_json['list']['7']['weather']['0']['main'];
 	var hourlyTemp7 = parseInt(parsed_json['list']['7']['main']['temp'], 10);
-	
-	
+
+
 	// set states for fields so they could be rendered later on
 	this.setState({
 		locate: location,
