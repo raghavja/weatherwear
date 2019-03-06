@@ -1,8 +1,7 @@
 // import preact
 import { h, render, Component } from 'preact';
-import settings from "../../../icons/settings-xxl.png";
 
-export default class Button extends Component {
+export default class Details extends Component {
 
 	// rendering a function when the button is clicked
 	render() {
@@ -14,8 +13,9 @@ export default class Button extends Component {
 		}
 		return (
 			<div>
+
 				<button onClick={cFunction}>
-				<img src = {settings} style = "width: 100%; height: auto;"></img>
+					<p style = "font-size: 9px; text-align: center; width: 170px; font-family: Josefin_Sans-Regular">DETAILS</p>
 				</button>
 			</div>
 		);

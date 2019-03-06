@@ -1,10 +1,9 @@
 // import preact
 import { h, render, Component } from 'preact';
-import settings from "../../../icons/settings-xxl.png";
 
-export default class Button extends Component {
+export default class Daily extends Component {
 
-	// rendering a function when the button is clicked
+	// rendering a function when the dailyhourly is clicked
 	render() {
 		let cFunction = this.props.clickFunction;
 		if (typeof cFunction !== 'function'){
@@ -15,7 +14,7 @@ export default class Button extends Component {
 		return (
 			<div>
 				<button onClick={cFunction}>
-				<img src = {settings} style = "width: 100%; height: auto;"></img>
+					<p style = "font-size: 18px; text-align: center; color: white; font-family: Josefin_Sans-Regular; bottom: -15px; position: absolute; right:40%">daily</p>
 				</button>
 			</div>
 		);
