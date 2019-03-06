@@ -44,20 +44,29 @@ export default class Iphone extends Component {
 		this.setState({showHourly: true});
 
 		//SETUP
-		this.setState({ name: ""});
+		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
 		this.setState({ gender: ""});
 		//set range
-		this.setState({ hot: [0, 0]});
-		this.setState({ warm: [0, 0]});
-		this.setState({ temperate: [0, 0]});
-		this.setState({ cold: [0, 0]});
-		this.setState({ freezing: [0, 0]});
+		this.setState({ hotHigh: 37});
+		this.setState({ hotLow: 29});
+		
+		this.setState({ warmHigh: 29});
+		this.setState({ warmLow: 22});
+		
+		this.setState({ temperateHigh: 21});
+		this.setState({ temperateLow: 12});
+		
+		this.setState({ coldHigh: 12});
+		this.setState({ coldLow: 1});
+		
+		this.setState({ freezingHigh: 0});
+		this.setState({ freezingLow: -73});
 
 		//written text
-		this.setState({ details: "Hello and welcome to Weatherwear! This is your clothing suggestion for today." });
+		this.setState({ details: "" });
 		//show or hide written text
-		this.setState({ showDetails : false });
-		this.setState({ showClothes : true });
+		this.setState({ showDetails : true });
+		this.setState({ showClothes : false });
 		this.setState({ showDetailsButton : true });
 		this.setState({ showClothesButton : false });
 
@@ -107,11 +116,9 @@ export default class Iphone extends Component {
 	}
 
 	switchDaily = () => {
-
 		if (this.state.showDaily !== true){
 			this.setState({showDaily: true});
 			this.setState({showHourly : false});
-
 		}
 	}
 
@@ -130,11 +137,111 @@ export default class Iphone extends Component {
 				this.setState({showClothingButton: true});
 				this.setState({showDetailsButton : false});
 			} else {
-				this.setState({showClothes: true});
 			}
 
 		}
 	}
+
+	 generateText = () => {
+		var text = "";
+		var timeOfDay = "";
+		var conditions = "";
+		var suggestion1 = "";
+		var suggestion2 = "";
+		var suggestion3 = "";
+		var suggestion4 = "";
+	
+
+		//TIME OF DAY
+		// time between 0 and 6
+		console.log(this.state.currentHour);
+		if (this.state.currentHour >= 0 && this.state.currentHour <= 6){
+			timeOfDay = "Hello, ";
+		}
+		//time between 6 and 12: morning
+		if (this.state.currentHour > 6 && this.state.currentHour <= 12){
+			timeOfDay = "Good morning, ";
+		}
+		//time between 12 and 17: afternoon
+		if (this.state.currentHour > 12 && this.state.currentHour <= 17){
+			timeOfDay = "Good afternoon, ";
+		}
+		//time between 17 and 0: evening
+		if (this.state.currentHour > 17 && this.state.currentHour <= 23){
+			timeOfDay = "Good evening, ";
+		}
+	
+
+		//WEATHER CONDITIONS
+		if (this.state.cond !== "") {
+			if (this.state.cond === "Thunderstorm") {
+				conditions = "Today it will thunderstorm. ";
+				suggestion1 = "Make sure to bring a raincoat.";
+			}
+			else if (this.state.cond === "Drizzle") {
+				conditions = "Today there will be light rain. ";
+				suggestion1 = "Make sure to bring an umbrella. ";
+			}
+			else if (this.state.cond === "Rain") {
+				conditions = "Today it will rain. ";
+				suggestion1 = "Make sure to bring a raincoat or umbrella. ";
+			}
+			else if (this.state.cond === "Snow") {
+				conditions = "Today it will snow. ";
+				suggestion1 = "Make sure to wear snow boots and a heavy jacket. ";
+			}
+			else if (this.state.cond === "Atmosphere") {
+				conditions = "";
+				suggestion1 = "";
+			}
+			else if (this.state.cond === "Clear") {
+				conditions = "It's a clear day today! ";
+				suggestion1 = "";
+			}
+			else if (this.state.cond === "Clouds") {
+				conditions = "Today it will be cloudy. ";
+				suggestion1 = "";
+			}
+		}
+	
+
+		//SUGGESTIONS BASED ON TEMPERATURE
+		if (this.state.temp > this.state.freezingLow && this.state.temp <= this.state.freezingHigh){
+			suggestion2 = "Dress in layers today – pants, a heavy jacket, and a sweater will keep you warm. ";
+		}
+		if (this.state.temp > this.state.coldLow && this.state.temp <= this.state.coldHigh){
+			suggestion2 = "It's cold, so dress in layers - a jacket, sweater, and pants are all good options. ";
+		}
+		if (this.state.temp > this.state.temperateLow && this.state.temp <= this.state.temperateHigh){
+			if (this.state.gender === "female"){
+				suggestion2 = "Light layers will be the most comfortable - a dress, sweater, skirt with stockings, or pants. ";
+			} else {
+				suggestion2 = "Light layers will be the most comfortable today. Be sure to wear a sweatshirt or sweater over your t-shirt, and pants.";
+			}
+		}
+		if (this.state.temp > this.state.warmLow && this.state.temp <= this.state.warmHigh){
+			if (this.state.gender === "female"){
+				suggestion2 = "It's warm today, so you can wear a dress, skirt, or shorts with a short-sleeved shirt. ";
+			} else if (this.state.gender == "male" || this.state.gender == "else") {
+				suggestion2 = "It's warm today, so you can wear a t-shirt, shorts, or a light sweater. ";
+			}
+		}
+		if (this.state.temp > this.state.hotLow && this.state.temp <= this.state.hotHigh){
+			if (this.state.gender === "female"){
+				suggestion2 = "It's hot today! Keep cool in a short-sleeved shirt, dress, skirt, or shorts. ";
+			} else if (this.state.gender === "male" || this.state.gender == "else") {
+				suggestion2 = "It's hot today! Keep cool in a short-sleeved shirt and shorts. ";
+			}
+		}
+	 
+
+		text = timeOfDay + this.state.name + "! Right now it is "
+			+ this.state.temp + "° C. The high is " +
+			this.state.max2 + "°C and the low is " + this.state.min2 + "°C. "
+			+ conditions + suggestion1 + suggestion2;
+	
+		this.state.details = text;
+	 }
 
 	// the main render method for the iphone component
 	render() {
@@ -143,6 +250,8 @@ export default class Iphone extends Component {
 		var a = new Date(timestamp*1000);
 		var days = ['sun','mon','tue','wed','thr','fri','sat'];
 		// display all weather data
+		this.generateText();
+
 		return (
 
 			<div class={ style.container }>
@@ -175,8 +284,9 @@ export default class Iphone extends Component {
 
 					{/* details button */}
 					{/* <Button style = "position: absolute; top: 295px; color: #75a9ff; left: 26%; font-size: 12px; width: 198px; height: 14px; background-color: white;" clickFunction = {this.switchDetails()}></Button> */}
-					<Details class={style.detailsButton} clickFunction = {this.switchDetails()}></Details>
-				
+					
+					
+					{/* <div> {this.state.showDetails ? <Details class={style.detailsButton} clickFunction = {this.switchDetails()} /> : null} </div> */}
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
@@ -184,14 +294,9 @@ export default class Iphone extends Component {
 					<div class = {this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div>
 
 
-          {/* daily hourly button */}
-
-					<div class = { style_daily.daily }>
-					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
-					</div>
-					<div class = { style_hourly.hourly }>
-						<Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/>
-					</div>
+          			{/* daily hourly button */}
+					{/* <div class = { style_daily.daily }> {this.state.onMainPage ? <Daily class={style_daily.button} clickFunction = { this.switchDaily }/> : null}</div>
+					<div class = { style_hourly.hourly }> {this.state.onMainPage ? <Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/> : null}</div> */}
 
 					{/* WEEKLY FORECAST */}
 					<div class={style.weekly}>
@@ -514,6 +619,8 @@ export default class Iphone extends Component {
 			cond : conditions,
 			min : "min: " + temp_min,
 			max : "max: " + temp_max,
+			min2 : temp_min,
+			max2 : temp_max,
 
 			tsOneDay : timestampOneDay,
 			minOneDay: temp_minOneDay,
