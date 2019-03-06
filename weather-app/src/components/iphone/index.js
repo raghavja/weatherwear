@@ -279,12 +279,11 @@ export default class Iphone extends Component {
 					<div class={ style.city }>{ this.state.onMainPage ? this.state.locate : null }</div>
 					<div class={ style.conditions }>{ this.state.onMainPage ? this.state.cond : null }</div>
 					<div class={ style.temp_min }> {this.state.onMainPage ? this.state.min : null }</div>
-					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }</div>
+					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }<h style = "font-size: 20px; position: absolute; letter-spacing: 2px">°C</h></div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 
-					{/* details button */}
+					{/* details button */} 
 					{/* <Button style = "position: absolute; top: 295px; color: #75a9ff; left: 26%; font-size: 12px; width: 198px; height: 14px; background-color: white;" clickFunction = {this.switchDetails()}></Button> */}
-					
 					
 					{/* <div> {this.state.showDetails ? <Details class={style.detailsButton} clickFunction = {this.switchDetails()} /> : null} </div> */}
 					{/* clothing section */}
@@ -295,8 +294,8 @@ export default class Iphone extends Component {
 
 
           			{/* daily hourly button */}
-					{/* <div class = { style_daily.daily }> {this.state.onMainPage ? <Daily class={style_daily.button} clickFunction = { this.switchDaily }/> : null}</div>
-					<div class = { style_hourly.hourly }> {this.state.onMainPage ? <Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/> : null}</div> */}
+					<div class = { style_daily.daily }> {this.state.onMainPage ? <Daily class={style_daily.button} clickFunction = { this.switchDaily }/> : null}</div>
+					<div class = { style_hourly.hourly }> {this.state.onMainPage ? <Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/> : null}</div>
 
 					{/* WEEKLY FORECAST */}
 					<div class={style.weekly}>
