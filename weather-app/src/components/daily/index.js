@@ -17,7 +17,6 @@ export default class Daily extends Component {
 					<p style = "font-size: 18px; text-align: center; color: white;">daily</p>
 				</button>
 			</div>
-
 		);
 	}
 }

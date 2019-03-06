@@ -1,6 +1,5 @@
 // import preact
 import { h, render, Component } from 'preact';
-import settings from "../../../icons/settings-xxl.png";
 
 export default class Details extends Component {
 
@@ -15,6 +14,7 @@ export default class Details extends Component {
 		return (
 			<div>
 				<button onClick={cFunction}>
+				details
 				</button>
 			</div>
 		);
