@@ -198,7 +198,7 @@ export default class Iphone extends Component {
 				suggestion1 = "Make sure to wear snow boots and a heavy jacket. ";
 			}
 			else if (this.state.cond === "Atmosphere") {
-				conditions = "";
+				conditions = "It might be foggy with low visibility today. ";
 				suggestion1 = "";
 			}
 			else if (this.state.cond === "Clear") {
@@ -286,7 +286,7 @@ export default class Iphone extends Component {
 					<div class={ style.city }>{ this.state.onMainPage ? this.state.locate : null }</div>
 					<div class={ style.conditions }>{ this.state.onMainPage ? this.state.cond : null }</div>
 					<div class={ style.temp_min }> {this.state.onMainPage ? this.state.min : null }</div>
-					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }<h style = "font-size: 20px; position: absolute; letter-spacing: 2px">°C</h></div>
+					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }{this.state.onMainPage ? <h style = "font-size: 20px; position: absolute; letter-spacing: 2px">°C</h> : null}</div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 
 					{/* details/clothing buttons */}
@@ -340,21 +340,22 @@ export default class Iphone extends Component {
 							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }</div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 8%"> {this.state.showHourly ? this.state.hourTemp0 : null}</div>
 					  {/* two days after */}
-					  <div class={style.weekTwo}>{ this.state.showHourly ? (this.state.currentHour + 3) % 12 : null}  </div>
-	{/* ADDING PM AND AM ??? </div> div> {this.state.currentHour + 3 % 12 === 1 ? <p>pm</p> : null} </div> */}
+					  <div class={style.weekTwo}>{ this.state.showHourly ? (this.state.currentHour + 3) % 24 : null}  </div>
+						{/* <div>pm</div>  */}
+						{/* {this.state.currentHour + 3 % 12 > 0 ? <p>pm</p> : null} </div>  */}
 							<div class = {style.iconTwo}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond1)} style = "width:100%; height:100%;"></img> : null }</div>
 					 		 <div style = "position :absolute; bottom: 15px; font-size: 18px; left: 28%"> {this.state.showHourly ? this.state.hourTemp1 : null}</div>
 					  {/* three days after */}
-					  <div class={style.weekThree}>{ this.state.showHourly ? (this.state.currentHour + 6) % 12 : null}</div>
+					  <div class={style.weekThree}>{ this.state.showHourly ? (this.state.currentHour + 6) % 24 : null}</div>
 							<div class = {style.iconThree}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond2)} style = "width:100%; height:100%;"></img> : null } </div>
 					 		<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 48%"> {this.state.showHourly ? this.state.hourTemp2 : null}</div>
 					  {/* four days after */}
-					  <div class={style.weekFour}>{ this.state.showHourly ? (this.state.currentHour + 9) % 12 : null}</div>
+					  <div class={style.weekFour}>{ this.state.showHourly ? (this.state.currentHour + 9) % 24 : null}</div>
 							<div class = {style.iconFour}>{this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond3)} style = "width:100%; height:100%;"></img> : null } </div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 28%"> {this.state.showHourly ? this.state.hourTemp3 : null}</div>
 
 					  {/* five days after */}
-					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 12 : null}</div>
+					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 24 : null}</div>
 							<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 8%"> {this.state.showHourly ? this.state.hourTemp3 : null} </div>
 					</div>
