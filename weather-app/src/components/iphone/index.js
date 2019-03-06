@@ -185,13 +185,13 @@ export default class Iphone extends Component {
 
 					{/* daily hourly buttons */}
 					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
-						<p style = "font-size: 18px; text-align: center;">daily</p>
-						</Button> : null }
+					<div class = { style_daily.daily }>
+					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
 					</div>
-					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
-						<p style = "font-size: 18px; text-align: center;">hourly</p>
-						</Button> : null }
+					<div class = { style_hourly.hourly }>
+						<Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/>
 					</div>
+
 
 					{/* weekly forecast */}
 					<div class={style.weekly}>
