@@ -297,8 +297,6 @@ export default class Iphone extends Component {
             <button class={this.state.onMainPage ? style.no_display : style.option_button}>am/pm</button>
             <button class={this.state.onMainPage ? style.no_display : style.option_button}>24h</button>
           </div>
-          <div class = {style.name}>{this.state.onMainPage ? null : this.state.name}</div>
-					<div class = {style.gender}>{this.state.onMainPage ? null : this.state.gender}</div>
 					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
 					<div class = {style.warm}>{this.state.onMainPage ? null : this.state.warm}</div>
 					<div class = {style.temperate}>{this.state.onMainPage ? null : this.state.temperate}</div>
@@ -306,32 +304,32 @@ export default class Iphone extends Component {
 					<div class = {style.freezing}>{this.state.onMainPage ? null : this.state.freezing}</div>
 
 				{/* MAIN PAGE */}
-					<div class={ style.icon }>
+					<div class={ this.state.onMainPage ? style.icon : style.no_display }>
 							{this.state.onMainPage ? <img src = {this.displayCondition(this.state.cond)} style = "width:100%; height:100%;"></img> : null }
 					</div>
-					<div class={ style.city }>{ this.state.onMainPage ? this.state.locate : null }</div>
-					<div class={ style.conditions }>{ this.state.onMainPage ? this.state.cond : null }</div>
-					<div class={ style.temp_min }> {this.state.onMainPage ? this.state.min : null }</div>
-					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }<h style = "font-size: 20px; position: absolute; letter-spacing: 2px">°C</h></div>
-					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
+					<div class={ this.state.onMainPage ? style.city : style.no_display }>{ this.state.onMainPage ? this.state.locate : null }</div>
+					<div class={ this.state.onMainPage ? style.conditions : style.no_display }>{ this.state.onMainPage ? this.state.cond : null }</div>
+					<div class={ this.state.onMainPage ? style.temp_min : style.no_display }> {this.state.onMainPage ? this.state.min : null }</div>
+					<div class={ this.state.onMainPage ? style.temperature : style.no_display }>{ this.state.onMainPage ? this.state.temp : null }<h style = "font-size: 20px; position: absolute; letter-spacing: 2px">°C</h></div>
+					<div class={ this.state.onMainPage ? style.temp_max : style.no_display }>{this.state.onMainPage ? this.state.max : null }</div>
 
 					{/* details/clothing buttons */}
-					<div class = { this.state.showDetailsButton ? style_details.details : null}> {this.state.onMainPage ? <Details class={style_details.button} clickFunction = { this.switchDetails }/> : null}</div>
-					<div class = {this.state.showClothesButton ? style_clothing.clothing : null}> {this.state.onMainPage ? <Clothing class={style_clothing.button} clickFunction = {this.switchDetails }/> : null}</div>
+					<div class = { this.state.showDetailsButton ? style_details.details : style.no_display}> {this.state.onMainPage ? <Details class={this.state.onMainPage ? style_details.button : style.no_display } clickFunction = { this.switchDetails }/> : null}</div>
+					<div class = {this.state.showClothesButton ? style_clothing.clothing : style.no_display}> {this.state.onMainPage ? <Clothing class={this.state.onMainPage ? style_clothing.button : style.no_display } clickFunction = {this.switchDetails }/> : null}</div>
 
 					{/* clothing section */}
-					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
+					<div class={ this.state.showClothes ? style.clothes : style.no_display }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
 					{/* details section */}
-					<div class = {this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div>
+					<div class = {this.state.showDetails ? style.details : style.no_display}>{this.state.showDetails ? this.state.details : null}</div>
 
           {/* daily hourly button */}
 
-					<div class = { style_daily.daily }> {this.state.onMainPage ? <Daily class={style_daily.button} clickFunction = { this.switchDaily }/> : null}</div>
-					<div class = { style_hourly.hourly }> {this.state.onMainPage ? <Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/> : null}</div>
+					<div class = {this.state.onMainPage ? style_daily.daily : style.no_display }> {this.state.onMainPage ? <Daily class={style_daily.button} clickFunction = { this.switchDaily }/> : null}</div>
+					<div class = {this.state.onMainPage ? style_hourly.hourly : style.no_display }> {this.state.onMainPage ? <Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/> : null}</div>
 
 					{/* WEEKLY FORECAST */}
-					<div class={style.weekly}>
+					<div class={ this.state.onMainPage ? style.weekly : style.no_display }>
 					{/* one day after */}
 					  <div class={style.weekOne}>{this.state.showDaily ? days[a.getDay()%7] : null}</div>
 							<div class = {style.iconOne}> {this.state.showDaily ? <img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img> : null }</div>
@@ -361,7 +359,7 @@ export default class Iphone extends Component {
 
 					{/* DAILY (HOURLY) FORECAST */}
 
-					<div class={style.weekly}>
+					<div class={ this.state.onMainPage ? style.weekly : style.no_display }>
 						<div class={style.weekOne}>{ this.state.showHourly ? <div>now</div> : null}</div>
 							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }</div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 8%"> {this.state.showHourly ? this.state.hourTemp0 : null}</div>
