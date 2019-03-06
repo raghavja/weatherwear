@@ -5,6 +5,8 @@ import style from './style';
 import style_iphone from '../button/style_iphone';
 import style_daily from '../daily/style_iphone';
 import style_hourly from '../hourly/style_iphone';
+import style_details from  '../details/style_iphone';
+import style_clothing from '../clothing/style_iphone';
 // import jquery for API calls
 import $ from 'jquery';
 // import the Button component
@@ -14,6 +16,7 @@ import Button from '../button';
 import Daily from "../daily";
 import Hourly from "../hourly";
 import Details from "../details";
+import Clothing from "../clothing";
 
 //import images
 import thunderstorm from "../../../icons/012-storm.png";
@@ -49,16 +52,16 @@ export default class Iphone extends Component {
 		//set range
 		this.setState({ hotHigh: 37});
 		this.setState({ hotLow: 29});
-		
+
 		this.setState({ warmHigh: 29});
 		this.setState({ warmLow: 22});
-		
+
 		this.setState({ temperateHigh: 21});
 		this.setState({ temperateLow: 12});
-		
+
 		this.setState({ coldHigh: 12});
 		this.setState({ coldLow: 1});
-		
+
 		this.setState({ freezingHigh: 0});
 		this.setState({ freezingLow: -73});
 
@@ -132,11 +135,15 @@ export default class Iphone extends Component {
 	switchDetails = () => {
 		if (this.state.onMainPage === true){
 			if (this.state.showDetails === true){
+				this.setState({showClothes: true});
+				this.setState({showDetails: false});
+				this.setState({showClothesButton: false});
+				this.setState({showDetailsButton : true});
+			} else {
 				this.setState({showClothes: false});
 				this.setState({showDetails: true});
-				this.setState({showClothingButton: true});
+				this.setState({showClothesButton: true});
 				this.setState({showDetailsButton : false});
-			} else {
 			}
 
 		}
@@ -150,7 +157,7 @@ export default class Iphone extends Component {
 		var suggestion2 = "";
 		var suggestion3 = "";
 		var suggestion4 = "";
-	
+
 
 		//TIME OF DAY
 		// time between 0 and 6
@@ -170,7 +177,7 @@ export default class Iphone extends Component {
 		if (this.state.currentHour > 17 && this.state.currentHour <= 23){
 			timeOfDay = "Good evening, ";
 		}
-	
+
 
 		//WEATHER CONDITIONS
 		if (this.state.cond !== "") {
@@ -203,7 +210,7 @@ export default class Iphone extends Component {
 				suggestion1 = "";
 			}
 		}
-	
+
 
 		//SUGGESTIONS BASED ON TEMPERATURE
 		if (this.state.temp > this.state.freezingLow && this.state.temp <= this.state.freezingHigh){
@@ -233,13 +240,13 @@ export default class Iphone extends Component {
 				suggestion2 = "It's hot today! Keep cool in a short-sleeved shirt and shorts. ";
 			}
 		}
-	 
+
 
 		text = timeOfDay + this.state.name + "! Right now it is "
 			+ this.state.temp + "° C. The high is " +
 			this.state.max2 + "°C and the low is " + this.state.min2 + "°C. "
 			+ conditions + suggestion1 + suggestion2;
-	
+
 		this.state.details = text;
 	 }
 
@@ -282,18 +289,18 @@ export default class Iphone extends Component {
 					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }<h style = "font-size: 20px; position: absolute; letter-spacing: 2px">°C</h></div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 
-					{/* details button */} 
-					{/* <Button style = "position: absolute; top: 295px; color: #75a9ff; left: 26%; font-size: 12px; width: 198px; height: 14px; background-color: white;" clickFunction = {this.switchDetails()}></Button> */}
-					
-					{/* <div> {this.state.showDetails ? <Details class={style.detailsButton} clickFunction = {this.switchDetails()} /> : null} </div> */}
+					{/* details/clothing buttons */}
+					<div class = { this.state.showDetailsButton ? style_details.details : null}> {this.state.onMainPage ? <Details class={style_details.button} clickFunction = { this.switchDetails }/> : null}</div>
+					<div class = {this.state.showClothesButton ? style_clothing.clothing : null}> {this.state.onMainPage ? <Clothing class={style_clothing.button} clickFunction = {this.switchDetails }/> : null}</div>
+
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
 					{/* details section */}
 					<div class = {this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div>
 
+          {/* daily hourly button */}
 
-          			{/* daily hourly button */}
 					<div class = { style_daily.daily }> {this.state.onMainPage ? <Daily class={style_daily.button} clickFunction = { this.switchDaily }/> : null}</div>
 					<div class = { style_hourly.hourly }> {this.state.onMainPage ? <Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/> : null}</div>
 
@@ -708,4 +715,4 @@ export default class Iphone extends Component {
 				}
 			}
 		}
-	}
+}
