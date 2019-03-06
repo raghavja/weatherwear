@@ -10,6 +10,8 @@ import $ from 'jquery';
 import Button from '../button';
 //import daily hourly buttons
 import dailyHourly from "../dailyhourly";
+//import switch details or clothing
+import Details from '../details';
 
 //import images
 import thunderstorm from "../../../icons/012-storm.png";
@@ -54,6 +56,8 @@ export default class Iphone extends Component {
 		//show or hide written text
 		this.setState({ showDetails : false });
 		this.setState({ showClothes : true });
+		this.setState({ showDetailsButton : true });
+		this.setState({ showClothesButton : false });
 
 		//get current time for weekly forecast
 		let newDate = new Date();
@@ -84,6 +88,8 @@ export default class Iphone extends Component {
 			this.setState({showDaily : false});
 			this.setState({showClothes : false});
 			this.setState({showDetails : false});
+			this.setState({showClothesButton : false});
+			this.setState({showDetailsButton : false});
 		}
 		else {
 			this.setState({onMainPage: true});
@@ -93,6 +99,8 @@ export default class Iphone extends Component {
 			this.setState({showDaily : false});
 			this.setState({showClothes : true});
 			this.setState({showDetails : false});
+			this.setState({showClothesButton : false});
+			this.setState({showDetailsButton : true});
 		}
 	}
 
@@ -109,14 +117,32 @@ export default class Iphone extends Component {
 		}
 	}
 
+	switchDetails = () => {
+		if(this.state.onMainPage === true){
+			if(this.state.showClothing === true){
+				this.setState({showClothing: false});
+				this.setState({showDetails: true});
+				this.setState({showClothingButton: true});
+				this.setState({showDetailsButton : false});
+			} else{
+				this.setState({showClothing: true});
+				this.setState({showDetails: false});
+				this.setState({showClothingButton: false});
+				this.setState({showDetailsButton : true});
+			}
+
+		}
+	}
+
 	// the main render method for the iphone component
-	render() {
-		//get next day in week for weekly forecast
+	render() {	
+		// get next day in week for weekly forecast
 		var timestamp = this.state.tsOneDay;
 		var a = new Date(timestamp*1000);
 		var days = ['sun','mon','tue','wed','thr','fri','sat'];
 		// display all weather data
 		return (
+		
 			<div class={ style.container }>
 				<div class={ style.header }>
 					<div class={style.topbar}>
@@ -145,26 +171,29 @@ export default class Iphone extends Component {
 					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }</div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 					
-					{/* details section */}
-					<div class = { this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div> 
-					
 					{/* details button */}
-					<div style = "position: absolute; top: 295px; color:black; left: 50%; font-size: 15px;">details</div>
+					{/* <Button class={style.detailsButton} clickFunction = {this.switchDetails()}></Button> */}
 
+					{/* details section */}
+					<div class = { this.state.showDetails ? style.details : null}>
+					{this.state.showDetails ? <p style = "position: absolute; top: 10%; margin: 20px">{this.state.details}</p> : null}
+					</div>
+				
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
 
-					<div> {this.state.onMainPage ? <dailyHourly class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
+					{/* daily hourly buttons */}
+					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
 						<p style = "font-size: 18px; text-align: center;">daily</p>
-						</dailyHourly> : null }
+						</Button> : null }
 					</div>
-					<div> {this.state.onMainPage ? <dailyHourly class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
+					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
 						<p style = "font-size: 18px; text-align: center;">hourly</p>
-						</dailyHourly> : null }
+						</Button> : null }
 					</div>
 
-					{/* weekly forecast */
+					{/* weekly forecast */}
 					<div class={style.weekly}>
 					{/* one day after */}
 					  <div class={style.weekOne}>{this.state.showDaily ? days[a.getDay()%7] : null}</div>
@@ -191,7 +220,7 @@ export default class Iphone extends Component {
 							<div class = {style.iconFive}> {this.state.showDaily ? <img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img> : null }</div>
 					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.showDaily ? this.state.minFiveDay : null}</div>
 					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.showDaily ? this.state.maxFiveDay : null}</div>
-					{/* </div> */}
+					</div>
 
 					
 					<div class={style.weekly}>
@@ -215,50 +244,52 @@ export default class Iphone extends Component {
 					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 12 : null}</div>
 							<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 8%"> {this.state.showHourly ? this.state.hourTemp3 : null} </div>
+					</div>
 				</div>
 			</div>
-					}
+		);
+	}
 	
 
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
-	var i;
-	var temp_min = 100;
-	var temp_max = -100;
-	var temp_minOneDay = 100;
-	var temp_maxOneDay = -100;
-	var temp_minTwoDay = 100;
-	var temp_maxTwoDay = -100;
-	var temp_minThreeDay = 100;
-	var temp_maxThreeDay = -100;
-	var temp_minFourDay = 100;
-	var temp_maxFourDay = -100;
-	var temp_minFiveDay = 100;
-	var temp_maxFiveDay = -100;
+		var i;
+		var temp_min = 100;
+		var temp_max = -100;
+		var temp_minOneDay = 100;
+		var temp_maxOneDay = -100;
+		var temp_minTwoDay = 100;
+		var temp_maxTwoDay = -100;
+		var temp_minThreeDay = 100;
+		var temp_maxThreeDay = -100;
+		var temp_minFourDay = 100;
+		var temp_maxFourDay = -100;
+		var temp_minFiveDay = 100;
+		var temp_maxFiveDay = -100;
 
-	var location = parsed_json['city']['name'];
-	var temp_c = parseInt(parsed_json['list']['0']['main']['temp'], 10);
-	var conditions = parsed_json['list']['0']['weather']['0']['main'];
+		var location = parsed_json['city']['name'];
+		var temp_c = parseInt(parsed_json['list']['0']['main']['temp'], 10);
+		var conditions = parsed_json['list']['0']['weather']['0']['main'];
 
-	// calc min and max for today
-	var temp_mins = [
-		parseInt(parsed_json['list']['0']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['1']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['2']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['3']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['4']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['5']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['6']['main']['temp_min'], 10)
-	];
-	var temp_maxs = [
-		parseInt(parsed_json['list']['0']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['1']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['2']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['3']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['4']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['5']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['6']['main']['temp_max'], 10)
-	];
+		// calc min and max for today
+		var temp_mins = [
+			parseInt(parsed_json['list']['0']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['1']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['2']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['3']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['4']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['5']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['6']['main']['temp_min'], 10)
+		];
+		var temp_maxs = [
+			parseInt(parsed_json['list']['0']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['1']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['2']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['3']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['4']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['5']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['6']['main']['temp_max'], 10)
+		];
 		for (i = 0; i < 8; i++){
 			if (temp_mins[i] < temp_min){
 				temp_min = temp_mins[i];
@@ -270,31 +301,31 @@ export default class Iphone extends Component {
 			}
 		}
 
-	//one day after
-	var timestampOneDay = parsed_json['list']['7']['dt'];
-	var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
+		//one day after
+		var timestampOneDay = parsed_json['list']['7']['dt'];
+		var conditionsOneDay = parsed_json['list']['7']['weather']['0']['main'];
 
-	// calc min and max for one day after
-	var temp_mins1 = [
-		parseInt(parsed_json['list']['7']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['8']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['9']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['10']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['11']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['12']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['13']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['14']['main']['temp_min'], 10)
-	];
-	var temp_maxs1 = [
-		parseInt(parsed_json['list']['7']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['8']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['9']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['10']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['11']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['12']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['13']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['14']['main']['temp_max'], 10)
-	];
+		// calc min and max for one day after
+		var temp_mins1 = [
+			parseInt(parsed_json['list']['7']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['8']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['9']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['10']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['11']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['12']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['13']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['14']['main']['temp_min'], 10)
+		];
+		var temp_maxs1 = [
+			parseInt(parsed_json['list']['7']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['8']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['9']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['10']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['11']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['12']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['13']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['14']['main']['temp_max'], 10)
+		];
 		for (i = 0; i < 8; i++){
 			if (temp_mins1[i] < temp_minOneDay){
 				temp_minOneDay = temp_mins1[i];
@@ -305,31 +336,31 @@ export default class Iphone extends Component {
 				temp_maxOneDay = temp_maxs1[i];
 			}
 		}
-	//two days after
-	var timestampTwoDay = parsed_json['list']['15']['dt'];
-	var conditionsTwoDay = parsed_json['list']['15']['weather']['0']['main'];
+		//two days after
+		var timestampTwoDay = parsed_json['list']['15']['dt'];
+		var conditionsTwoDay = parsed_json['list']['15']['weather']['0']['main'];
 
-	// calc min and max for two days after
-	var temp_mins2 = [
-		parseInt(parsed_json['list']['15']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['16']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['17']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['18']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['19']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['20']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['21']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['22']['main']['temp_min'], 10)
-	];
-	var temp_maxs2 = [
-		parseInt(parsed_json['list']['15']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['16']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['17']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['18']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['19']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['20']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['21']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['22']['main']['temp_max'], 10)
-	];
+		// calc min and max for two days after
+		var temp_mins2 = [
+			parseInt(parsed_json['list']['15']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['16']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['17']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['18']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['19']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['20']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['21']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['22']['main']['temp_min'], 10)
+		];
+		var temp_maxs2 = [
+			parseInt(parsed_json['list']['15']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['16']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['17']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['18']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['19']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['20']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['21']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['22']['main']['temp_max'], 10)
+		];
 		for (i = 0; i < 8; i++){
 			if (temp_mins2[i] < temp_minTwoDay){
 				temp_minTwoDay = temp_mins2[i];
@@ -341,31 +372,31 @@ export default class Iphone extends Component {
 			}
 		}
 
-	//three days after
-  var timestampThreeDay = parsed_json['list']['23']['dt'];
-	var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
+		//three days after
+		var timestampThreeDay = parsed_json['list']['23']['dt'];
+		var conditionsThreeDay = parsed_json['list']['23']['weather']['0']['main'];
 
-	// calc min and max for three days after
-	var temp_mins3 = [
-		parseInt(parsed_json['list']['23']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['24']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['25']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['26']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['27']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['28']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['29']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['30']['main']['temp_min'], 10)
-	];
-	var temp_maxs3 = [
-		parseInt(parsed_json['list']['23']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['24']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['25']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['26']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['27']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['28']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['29']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['30']['main']['temp_max'], 10)
-	];
+		// calc min and max for three days after
+		var temp_mins3 = [
+			parseInt(parsed_json['list']['23']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['24']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['25']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['26']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['27']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['28']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['29']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['30']['main']['temp_min'], 10)
+		];
+		var temp_maxs3 = [
+			parseInt(parsed_json['list']['23']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['24']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['25']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['26']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['27']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['28']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['29']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['30']['main']['temp_max'], 10)
+		];
 		for (i = 0; i < 8; i++){
 			if (temp_mins3[i] < temp_minThreeDay){
 				temp_minThreeDay = temp_mins3[i];
@@ -377,31 +408,31 @@ export default class Iphone extends Component {
 			}
 		}
 
-	//four days after
-	var timestampFourDay = parsed_json['list']['31']['dt'];
-	var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
+		//four days after
+		var timestampFourDay = parsed_json['list']['31']['dt'];
+		var conditionsFourDay = parsed_json['list']['31']['weather']['0']['main'];
 
-	// calc min and max for four days after
-	var temp_mins4 = [
-		parseInt(parsed_json['list']['31']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['32']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['33']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['34']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['35']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['36']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['37']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['38']['main']['temp_min'], 10)
-	];
-	var temp_maxs4 = [
-		parseInt(parsed_json['list']['31']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['32']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['33']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['34']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['35']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['36']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['37']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['38']['main']['temp_max'], 10)
-	];
+		// calc min and max for four days after
+		var temp_mins4 = [
+			parseInt(parsed_json['list']['31']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['32']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['33']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['34']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['35']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['36']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['37']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['38']['main']['temp_min'], 10)
+		];
+		var temp_maxs4 = [
+			parseInt(parsed_json['list']['31']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['32']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['33']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['34']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['35']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['36']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['37']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['38']['main']['temp_max'], 10)
+		];
 		for (i = 0; i < 8; i++){
 			if (temp_mins4[i] < temp_minFourDay){
 				temp_minFourDay = temp_mins4[i];
@@ -412,31 +443,31 @@ export default class Iphone extends Component {
 				temp_maxFourDay = temp_maxs4[i];
 			}
 		}
-	//five days after
-	var timestampFiveDay = parsed_json['list']['39']['dt'];
-	var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
+		//five days after
+		var timestampFiveDay = parsed_json['list']['39']['dt'];
+		var conditionsFiveDay = parsed_json['list']['39']['weather']['0']['main'];
 
-	// calc min and max for five days after
-	var temp_mins5 = [
-		parseInt(parsed_json['list']['8']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['9']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['10']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['11']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['12']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['13']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['14']['main']['temp_min'], 10),
-		parseInt(parsed_json['list']['15']['main']['temp_min'], 10)
-	];
-	var temp_maxs5 = [
-		parseInt(parsed_json['list']['8']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['9']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['10']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['11']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['12']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['13']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['14']['main']['temp_max'], 10),
-		parseInt(parsed_json['list']['15']['main']['temp_max'], 10)
-	];
+		// calc min and max for five days after
+		var temp_mins5 = [
+			parseInt(parsed_json['list']['8']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['9']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['10']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['11']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['12']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['13']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['14']['main']['temp_min'], 10),
+			parseInt(parsed_json['list']['15']['main']['temp_min'], 10)
+		];
+		var temp_maxs5 = [
+			parseInt(parsed_json['list']['8']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['9']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['10']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['11']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['12']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['13']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['14']['main']['temp_max'], 10),
+			parseInt(parsed_json['list']['15']['main']['temp_max'], 10)
+		];
 		for (i = 0; i < 8; i++){
 			if (temp_mins5[i] < temp_minFiveDay){
 				temp_minFiveDay = temp_mins5[i];
@@ -449,125 +480,125 @@ export default class Iphone extends Component {
 		}
 
 
-	{/* hourly forecast */}
-	var time0 = parsed_json['list']['0']["sys"]["dt_txt"];
-	var weatherConditions0 = parsed_json['list']['0']['weather']['0']['main'];
-	var hourlyTemp0 = parseInt(parsed_json['list']['0']['main']['temp'], 10) + "°";
-	var time1 = parsed_json['list']['1']["sys"]["dt_txt"];
-	var weatherConditions1 = parsed_json['list']['1']['weather']['0']['main'];
-	var hourlyTemp1 = parseInt(parsed_json['list']['1']['main']['temp'], 10)+ "°";
-	var time2 = parsed_json['list']['2']["sys"]["dt_txt"];
-	var weatherConditions2 = parsed_json['list']['2']['weather']['0']['main'];
-	var hourlyTemp2 = parseInt(parsed_json['list']['2']['main']['temp'], 10)+ "°";
-	var time3 = parsed_json['list']['3']["sys"]["dt_txt"];
-	var weatherConditions3 = parsed_json['list']['3']['weather']['0']['main'];
-	var hourlyTemp3 = parseInt(parsed_json['list']['3']['main']['temp'], 10)+ "°";
-	var time4 = parsed_json['list']['4']["sys"]["dt_txt"];
-	var weatherConditions4 = parsed_json['list']['4']['weather']['0']['main'];
-	var hourlyTemp4 = parseInt(parsed_json['list']['4']['main']['temp'], 10)+ "°";
-	var time5 = parsed_json['list']['5']["sys"]["dt_txt"];
-	var weatherConditions5 = parsed_json['list']['5']['weather']['0']['main'];
-	var hourlyTemp5 = parseInt(parsed_json['list']['5']['main']['temp'], 10)+ "°";
-	var time6 = parsed_json['list']['6']["sys"]["dt_txt"];
-	var weatherConditions6 = parsed_json['list']['6']['weather']['0']['main'];
-	var hourlyTemp6 = parseInt(parsed_json['list']['6']['main']['temp'], 10)+ "°";
-	var time7 = parsed_json['list']['7']["sys"]["dt_txt"];
-	var weatherConditions7 = parsed_json['list']['7']['weather']['0']['main'];
-	var hourlyTemp7 = parseInt(parsed_json['list']['7']['main']['temp'], 10)+ "°";
-	
-	
-	// set states for fields so they could be rendered later on
-	this.setState({
-		locate: location,
-		temp: temp_c,
-		cond : conditions,
-		min : "min: " + temp_min,
-		max : "max: " + temp_max,
+		// hourly forecast
+		var time0 = parsed_json['list']['0']["sys"]["dt_txt"];
+		var weatherConditions0 = parsed_json['list']['0']['weather']['0']['main'];
+		var hourlyTemp0 = parseInt(parsed_json['list']['0']['main']['temp'], 10) + "°";
+		var time1 = parsed_json['list']['1']["sys"]["dt_txt"];
+		var weatherConditions1 = parsed_json['list']['1']['weather']['0']['main'];
+		var hourlyTemp1 = parseInt(parsed_json['list']['1']['main']['temp'], 10)+ "°";
+		var time2 = parsed_json['list']['2']["sys"]["dt_txt"];
+		var weatherConditions2 = parsed_json['list']['2']['weather']['0']['main'];
+		var hourlyTemp2 = parseInt(parsed_json['list']['2']['main']['temp'], 10)+ "°";
+		var time3 = parsed_json['list']['3']["sys"]["dt_txt"];
+		var weatherConditions3 = parsed_json['list']['3']['weather']['0']['main'];
+		var hourlyTemp3 = parseInt(parsed_json['list']['3']['main']['temp'], 10)+ "°";
+		var time4 = parsed_json['list']['4']["sys"]["dt_txt"];
+		var weatherConditions4 = parsed_json['list']['4']['weather']['0']['main'];
+		var hourlyTemp4 = parseInt(parsed_json['list']['4']['main']['temp'], 10)+ "°";
+		var time5 = parsed_json['list']['5']["sys"]["dt_txt"];
+		var weatherConditions5 = parsed_json['list']['5']['weather']['0']['main'];
+		var hourlyTemp5 = parseInt(parsed_json['list']['5']['main']['temp'], 10)+ "°";
+		var time6 = parsed_json['list']['6']["sys"]["dt_txt"];
+		var weatherConditions6 = parsed_json['list']['6']['weather']['0']['main'];
+		var hourlyTemp6 = parseInt(parsed_json['list']['6']['main']['temp'], 10)+ "°";
+		var time7 = parsed_json['list']['7']["sys"]["dt_txt"];
+		var weatherConditions7 = parsed_json['list']['7']['weather']['0']['main'];
+		var hourlyTemp7 = parseInt(parsed_json['list']['7']['main']['temp'], 10)+ "°";
+		
+		// set states for fields so they could be rendered later on
+		this.setState({
+			locate: location,
+			temp: temp_c,
+			cond : conditions,
+			min : "min: " + temp_min,
+			max : "max: " + temp_max,
 
-		tsOneDay : timestampOneDay,
-		minOneDay: temp_minOneDay,
-		maxOneDay: temp_maxOneDay,
-		condOneDay: conditionsOneDay,
+			tsOneDay : timestampOneDay,
+			minOneDay: temp_minOneDay,
+			maxOneDay: temp_maxOneDay,
+			condOneDay: conditionsOneDay,
 
-		tsTwoDay : timestampTwoDay,
-		minTwoDay: temp_minTwoDay,
-		maxTwoDay: temp_maxTwoDay,
-		condTwoDay: conditionsTwoDay,
+			tsTwoDay : timestampTwoDay,
+			minTwoDay: temp_minTwoDay,
+			maxTwoDay: temp_maxTwoDay,
+			condTwoDay: conditionsTwoDay,
 
-		tsThreeDay: timestampThreeDay,
-		minThreeDay: temp_minThreeDay,
-		maxThreeDay: temp_maxThreeDay,
-		condThreeDay: conditionsThreeDay,
+			tsThreeDay: timestampThreeDay,
+			minThreeDay: temp_minThreeDay,
+			maxThreeDay: temp_maxThreeDay,
+			condThreeDay: conditionsThreeDay,
 
-		tsFourDay: timestampFourDay,
-		minFourDay: temp_minFourDay,
-		maxFourDay: temp_maxFourDay,
-		condFourDay: conditionsFourDay,
+			tsFourDay: timestampFourDay,
+			minFourDay: temp_minFourDay,
+			maxFourDay: temp_maxFourDay,
+			condFourDay: conditionsFourDay,
 
-		tsFiveDay: timestampFiveDay,
-		minFiveDay: temp_minFiveDay,
-		maxFiveDay: temp_maxFiveDay,
-		condFiveDay: conditionsFiveDay,
+			tsFiveDay: timestampFiveDay,
+			minFiveDay: temp_minFiveDay,
+			maxFiveDay: temp_maxFiveDay,
+			condFiveDay: conditionsFiveDay,
 
-		Time0: time0,
-		weatherCond0: weatherConditions0,
-		hourTemp0: hourlyTemp0,
-		weatherCond1: weatherConditions1,
-		hourTemp1: hourlyTemp1,
-		weatherCond2: weatherConditions2,
-		hourTemp2: hourlyTemp2,
-		weatherCond3: weatherConditions3,
-		hourTemp3: hourlyTemp3,
-		weatherCond4: weatherConditions4,
-		hourTemp4: hourlyTemp4,
-		weatherCond5: weatherConditions5,
-		hourTemp5: hourlyTemp5,
-		weatherCond6: weatherConditions6,
-		hourTemp6: hourlyTemp6,
-		weatherCond7: weatherConditions7,
-		hourTemp7: hourlyTemp7
+			Time0: time0,
+			weatherCond0: weatherConditions0,
+			hourTemp0: hourlyTemp0,
+			weatherCond1: weatherConditions1,
+			hourTemp1: hourlyTemp1,
+			weatherCond2: weatherConditions2,
+			hourTemp2: hourlyTemp2,
+			weatherCond3: weatherConditions3,
+			hourTemp3: hourlyTemp3,
+			weatherCond4: weatherConditions4,
+			hourTemp4: hourlyTemp4,
+			weatherCond5: weatherConditions5,
+			hourTemp5: hourlyTemp5,
+			weatherCond6: weatherConditions6,
+			hourTemp6: hourlyTemp6,
+			weatherCond7: weatherConditions7,
+			hourTemp7: hourlyTemp7
 
-	});
+		});
+	}
 
-	// function to determine the clothing icon
-  displayClothes = (temp) => {
-		if (temp != "") {
-			if (temp <= 10) {
-				 return(rainclothing);
+		// function to determine the clothing icon
+	displayClothes = (temp) => {
+			if (temp != "") {
+				if (temp <= 10) {
+					return (rainclothing);
+				}
+				else if (temp <= 16){
+					return (mediumclothing);
+				}
+				else {
+					return (hotclothing);
+				}
 			}
-			else if (temp <= 16){
-				 return(mediumclothing);
-			}
-			else {
-				 return(hotclothing);
+		}
+
+		//function to determine conditions icon
+		displayCondition = (cond) => {
+			if (cond != "") {
+				if (cond === "Thunderstorm") {
+					return (thunderstorm);
+				}
+				else if (cond === "Drizzle") {
+					return (drizzle);
+				}
+				else if (cond === "Rain") {
+					return (rain);
+				}
+				else if (cond === "Snow") {
+					return (snow);
+				}
+				else if (cond === "Atmosphere") {
+					return (atmosphere);
+				}
+				else if (cond === "Clear") {
+					return (clear);
+				}
+				else if (cond === "Clouds") {
+					return (clouds);
+				}
 			}
 		}
 	}
-
-	//function to determine conditions icon
-	displayCondition = (cond) => {
-		if (cond != "") {
-			if (cond === "Thunderstorm") {
-				return (thunderstorm);
-			}
-			else if (cond === "Drizzle") {
-				return (drizzle);
-			}
-			else if (cond === "Rain") {
-				return (rain);
-			}
-			else if (cond === "Snow") {
-				return (snow);
-			}
-			else if (cond === "Atmosphere") {
-				return (atmosphere);
-			}
-			else if (cond === "Clear") {
-				return (clear);
-			}
-			else if (cond === "Clouds") {
-				return (clouds);
-			}
-		}
-	}
-}

@@ -15,7 +15,6 @@ export default class Details extends Component {
 		return (
 			<div>
 				<button onClick={cFunction}>
-				details
 				</button>
 			</div>
 		);
