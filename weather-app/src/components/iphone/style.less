@@ -1,5 +1,12 @@
 @import '~style/helpers';
 
+@font-face {
+	font-family: 'Josefin_Sans-Regular';
+	src: url('../../../Josefin_Sans/JosefinSans-Regular.eot');
+	src: url('../../../Josefin_Sans/JosefinSans-Regular.woff') format('woff'), 
+	     url('../../../Josefin_Sans/JosefinSans-Regular.ttf') format('truetype'), 
+             url('../../../Josefin_Sans/JosefinSans-Regular.svg') format('svg');
+}
 .homepage{
 	display:flex;
 	flex-direction: column;
@@ -15,6 +22,7 @@
 	text-align: center;
 	padding-top: 80px;
 	margin: 0 auto;
+		font-family: Josefin_Sans-Regular;
 
 	position: relative;
 	background: linear-gradient(180deg, #B3C3D6 0%, rgba(243, 245, 248, 0.348066) 51.93%, rgba(255, 255, 255, 0) 100%), #2A5A99;
@@ -200,14 +208,17 @@
 	//flex: 1;
 	font-size: 39px;
 	font-weight: 400;
-	margin-top: 25px;
+	margin-top: 40px;
+	font-family: Josefin_Sans-Regular;
 
 	/*position: absolute;
 	width: 172px;
 	height: 36px;
 	left: 121px;
 	top: 104px;
-	font-family: Josefin Sans;
+
+	font-family: Josefin_Sans-Regular;
+
 	line-height: normal;
 	font-size: 36px;
 	text-transform: uppercase;*/
@@ -216,7 +227,7 @@
 .icon {
 	position: absolute;
 	left: 182px;
-	top: 50px;
+	top: 60px;
 	width: 50px;
 	height: 50px;
 	filter: invert(100%);
@@ -232,10 +243,11 @@
 
 .temperature {
 	//flex: 2;
-	//margin-top: 25px;
+	margin-top: 25px;
 	font-size: 100px;
 	font-weight: 300;
 	letter-spacing: -5px;
+	font-family: Josefin_Sans-Regular;
 
 /*
 	position: absolute;
@@ -243,7 +255,9 @@
 	height: 108.95px;
 	left: 171px;
 	top: 166.05px;
-	font-family: Josefin Sans;
+
+	font-family: Josefin_Sans-Regular;
+
 	font-size: 4.8em;
 	font-weight: 300;
 	letter-spacing: -1px;*/
@@ -266,8 +280,9 @@
 	height: 18px;
 	left: 42px;
 	top: 250px;
+	font-family: Josefin_Sans-Regular;
 
-	//font-family: Josefin Sans;
+	//font-family: Josefin_Sans-Regular;
 	font-style: normal;
 	font-weight: normal;
 	line-height: normal;
@@ -284,8 +299,9 @@
 	height: 18px;
 	left: 272px;
 	top: 250px;
+	font-family: Josefin_Sans-Regular;
 
-	//font-family: Josefin Sans;
+	//font-family: Josefin_Sans-Regular;
 	font-style: normal;
 	font-weight: normal;
 	line-height: normal;

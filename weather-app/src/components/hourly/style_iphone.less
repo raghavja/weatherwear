@@ -1,20 +1,28 @@
 @import '~style/helpers';
 
-
+@font-face {
+	font-family: 'Josefin_Sans-Regular';
+	src: url('../../../Josefin_Sans/JosefinSans-Regular.eot');
+	src: url('../../../Josefin_Sans/JosefinSans-Regular.woff') format('woff'), 
+	     url('../../../Josefin_Sans/JosefinSans-Regular.ttf') format('truetype'), 
+             url('../../../Josefin_Sans/JosefinSans-Regular.svg') format('svg');
+}
 
 .hourly {
   width: 207px;
-  height: 45px;
+  height: 25px;
   position: absolute;
   bottom: 15%;
   left: 0%;
   border-bottom: 1px solid white;
+  font-family: Josefin_Sans-Regular;
   // background-color: white;
 }
 
 .hourly button {
   width: 207px;
   height: 45px;
+    border-right: 1px solid white;
   background-color: Transparent;
   border: none;
 

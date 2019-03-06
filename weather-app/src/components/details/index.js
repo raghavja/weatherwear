@@ -13,8 +13,9 @@ export default class Details extends Component {
 		}
 		return (
 			<div>
+
 				<button onClick={cFunction}>
-					<p style = "font-size: 9px; text-align: center; width: 170px;">DETAILS</p>
+					<p style = "font-size: 9px; text-align: center; width: 170px; font-family: Josefin_Sans-Regular">DETAILS</p>
 				</button>
 			</div>
 		);

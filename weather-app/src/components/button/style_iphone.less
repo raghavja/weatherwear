@@ -1,15 +1,24 @@
 @import '~style/helpers';
-
+@font-face {
+	font-family: 'Josefin_Sans-Regular';
+	src: url('../../../Josefin_Sans/JosefinSans-Regular.eot');
+	src: url('../../../Josefin_Sans/JosefinSans-Regular.woff') format('woff'), 
+	     url('../../../Josefin_Sans/JosefinSans-Regular.ttf') format('truetype'), 
+             url('../../../Josefin_Sans/JosefinSans-Regular.svg') format('svg');
+}
 .container {
   width: 40px;
   height: 40px;
   position: absolute;
+  font-family: Josefin_Sans-Regular;
   // background-color: black;
 }
 .container button {
+  background-color: transparent;
   width: 40px;
   height: 40px;
   top: 50%;
   left: 50%;
+
   background-color: Transparent;
 }

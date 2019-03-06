@@ -14,7 +14,7 @@ export default class Daily extends Component {
 		return (
 			<div>
 				<button onClick={cFunction}>
-					<p style = "font-size: 18px; text-align: center; color: white;">daily</p>
+					<p style = "font-size: 18px; text-align: center; color: white; font-family: Josefin_Sans-Regular; bottom: -15px; position: absolute; right:40%">daily</p>
 				</button>
 			</div>
 		);
