@@ -107,19 +107,18 @@ export default class Iphone extends Component {
 	}
 
 	switchDaily = () => {
-		if (this.state.onMainPage === true) {
-			if (this.state.showDaily === true){
-				this.setState({showDaily: true});
-				this.setState({showHourly : false});
-			}
+
+		if (this.state.showDaily !== true){
+			this.setState({showDaily: true});
+			this.setState({showHourly : false});
+
 		}
 	}
+
 	switchHourly = () => {
-		if ( this.state.onMainPage === true) {
+		if (this.state.showDaily === true){
 			this.setState({showDaily: false});
 			this.setState({showHourly : true});
-			console.log(this.state.showDaily);
-			console.log(this.state.showHourly);
 		}
 	}
 
@@ -136,10 +135,6 @@ export default class Iphone extends Component {
 
 		}
 	}
-	
-	switchClothing = () => {
-
-	}
 
 	// the main render method for the iphone component
 	render() {
@@ -149,7 +144,7 @@ export default class Iphone extends Component {
 		var days = ['sun','mon','tue','wed','thr','fri','sat'];
 		// display all weather data
 		return (
-		
+
 			<div class={ style.container }>
 				<div class={ style.header }>
 					<div class={style.topbar}>
@@ -177,7 +172,7 @@ export default class Iphone extends Component {
 					<div class={ style.temp_min }> {this.state.onMainPage ? this.state.min : null }</div>
 					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }</div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
-					
+
 					{/* details button */}
 					{/* <Button style = "position: absolute; top: 295px; color: #75a9ff; left: 26%; font-size: 12px; width: 198px; height: 14px; background-color: white;" clickFunction = {this.switchDetails()}></Button> */}
 					<Details class={style.detailsButton} clickFunction = {this.switchDetails()}></Details>
@@ -188,7 +183,9 @@ export default class Iphone extends Component {
 					{/* details section */}
 					<div class = {this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div>
 
-					{/* daily hourly buttons */}
+
+          {/* daily hourly button */}
+
 					<div class = { style_daily.daily }>
 					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
 					</div>
@@ -226,6 +223,7 @@ export default class Iphone extends Component {
 					</div>
 
 					{/* DAILY (HOURLY) FORECAST */}
+
 					<div class={style.weekly}>
 						<div class={style.weekOne}>{ this.state.showHourly ? <div>now</div> : null}</div>
 							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }</div>
@@ -243,7 +241,7 @@ export default class Iphone extends Component {
 					  <div class={style.weekFour}>{ this.state.showHourly ? (this.state.currentHour + 9) % 12 : null}</div>
 							<div class = {style.iconFour}>{this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond3)} style = "width:100%; height:100%;"></img> : null } </div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 28%"> {this.state.showHourly ? this.state.hourTemp3 : null}</div>
-					  
+
 					  {/* five days after */}
 					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 12 : null}</div>
 							<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
@@ -253,7 +251,7 @@ export default class Iphone extends Component {
 			</div>
 		);
 	}
-	
+
 
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
@@ -508,7 +506,7 @@ export default class Iphone extends Component {
 		var time7 = parsed_json['list']['7']["sys"]["dt_txt"];
 		var weatherConditions7 = parsed_json['list']['7']['weather']['0']['main'];
 		var hourlyTemp7 = parseInt(parsed_json['list']['7']['main']['temp'], 10)+ "°";
-		
+
 		// set states for fields so they could be rendered later on
 		this.setState({
 			locate: location,
