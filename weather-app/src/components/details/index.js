@@ -13,7 +13,7 @@ export default class Details extends Component {
 		}
 		return (
 			<div>
-				<button onClick={cFunction}>
+				<button onClick={cFunction} style = "font-family: Josefin_Sans-Regular;">
 				details
 				</button>
 			</div>
