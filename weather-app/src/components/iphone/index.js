@@ -13,6 +13,7 @@ import Button from '../button';
 
 import Daily from "../daily";
 import Hourly from "../hourly";
+import Details from "../details";
 
 //import images
 import thunderstorm from "../../../icons/012-storm.png";
@@ -106,42 +107,42 @@ export default class Iphone extends Component {
 	}
 
 	switchDaily = () => {
-		if (this.state.showDaily === true){
-			this.setState({showDaily: true});
-			this.setState({showHourly : false});
+		if (this.state.onMainPage === true) {
+			if (this.state.showDaily === true){
+				this.setState({showDaily: true});
+				this.setState({showHourly : false});
+			}
+		}
+	}
+	switchHourly = () => {
+		if ( this.state.onMainPage === true) {
+			this.setState({showDaily: false});
+			this.setState({showHourly : true});
+			console.log(this.state.showDaily);
+			console.log(this.state.showHourly);
 		}
 	}
 
 	switchDetails = () => {
-		if(this.state.onMainPage === true){
-			if(this.state.showClothing === true){
-				this.setState({showClothing: false});
+		if (this.state.onMainPage === true){
+			if (this.state.showDetails === true){
+				this.setState({showClothes: false});
 				this.setState({showDetails: true});
 				this.setState({showClothingButton: true});
 				this.setState({showDetailsButton : false});
-			} else{
-				this.setState({showClothing: true});
-				this.setState({showDetails: false});
-				this.setState({showClothingButton: false});
-				this.setState({showDetailsButton : true});
+			} else {
+				this.setState({showClothes: true});
 			}
 
 		}
 	}
 	
-	switchHourly = () => {
-		if (this.state.showDaily === false){
-			this.setState({showDaily: false});
-			this.setState({showHourly : true});
-		}
-		else {
-			this.setState({showDaily: false});
-			this.setState({showHourly: true});
-		}
+	switchClothing = () => {
+
 	}
 
 	// the main render method for the iphone component
-	render() {	
+	render() {
 		// get next day in week for weekly forecast
 		var timestamp = this.state.tsOneDay;
 		var a = new Date(timestamp*1000);
@@ -178,19 +179,16 @@ export default class Iphone extends Component {
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
 					
 					{/* details button */}
-					{/* <Button class={style.detailsButton} clickFunction = {this.switchDetails()}></Button> */}
-
-          {* daily hourly button *}
-					<div class = { style_daily.daily }>
-					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
-					</div>
+					{/* <Button style = "position: absolute; top: 295px; color: #75a9ff; left: 26%; font-size: 12px; width: 198px; height: 14px; background-color: white;" clickFunction = {this.switchDetails()}></Button> */}
+					<Details class={style.detailsButton} clickFunction = {this.switchDetails()}></Details>
 				
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
 					</div>
+					{/* details section */}
+					<div class = {this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div>
 
 					{/* daily hourly buttons */}
-					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
 					<div class = { style_daily.daily }>
 					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
 					</div>
@@ -198,8 +196,7 @@ export default class Iphone extends Component {
 						<Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/>
 					</div>
 
-
-					{/* weekly forecast */}
+					{/* WEEKLY FORECAST */}
 					<div class={style.weekly}>
 					{/* one day after */}
 					  <div class={style.weekOne}>{this.state.showDaily ? days[a.getDay()%7] : null}</div>
@@ -228,13 +225,14 @@ export default class Iphone extends Component {
 					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.showDaily ? this.state.maxFiveDay : null}</div>
 					</div>
 
-					
+					{/* DAILY (HOURLY) FORECAST */}
 					<div class={style.weekly}>
 						<div class={style.weekOne}>{ this.state.showHourly ? <div>now</div> : null}</div>
 							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }</div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 8%"> {this.state.showHourly ? this.state.hourTemp0 : null}</div>
 					  {/* two days after */}
-					  <div class={style.weekTwo}>{ this.state.showHourly ? (this.state.currentHour + 3) % 12: null}</div>
+					  <div class={style.weekTwo}>{ this.state.showHourly ? (this.state.currentHour + 3) % 12 : null}  </div>
+	{/* ADDING PM AND AM ??? </div> div> {this.state.currentHour + 3 % 12 === 1 ? <p>pm</p> : null} </div> */}
 							<div class = {style.iconTwo}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond1)} style = "width:100%; height:100%;"></img> : null }</div>
 					 		 <div style = "position :absolute; bottom: 15px; font-size: 18px; left: 28%"> {this.state.showHourly ? this.state.hourTemp1 : null}</div>
 					  {/* three days after */}
