@@ -39,7 +39,6 @@ export default class Iphone extends Component {
 		this.setState({showDaily: false});
 		this.setState({showHourly: true});
 
-
 		//SETUP
 		this.setState({ name: ""});
 		this.setState({ gender: ""});
@@ -49,6 +48,12 @@ export default class Iphone extends Component {
 		this.setState({ temperate: [0, 0]});
 		this.setState({ cold: [0, 0]});
 		this.setState({ freezing: [0, 0]});
+
+		//written text
+		this.setState({ details: "Hello and welcome to Weatherwear! This is your clothing suggestion for today." });
+		//show or hide written text
+		this.setState({ showDetails : false });
+		this.setState({ showClothes : true });
 
 		//get current time for weekly forecast
 		let newDate = new Date();
@@ -77,6 +82,8 @@ export default class Iphone extends Component {
 			this.setState({showButtonHourly : false});
 			this.setState({showHourly : false});
 			this.setState({showDaily : false});
+			this.setState({showClothes : false});
+			this.setState({showDetails : false});
 		}
 		else {
 			this.setState({onMainPage: true});
@@ -84,6 +91,8 @@ export default class Iphone extends Component {
 			this.setState({showButtonHourly : true});
 			this.setState({showHourly : true});
 			this.setState({showDaily : false});
+			this.setState({showClothes : true});
+			this.setState({showDetails : false});
 		}
 	}
 
@@ -106,15 +115,13 @@ export default class Iphone extends Component {
 		var timestamp = this.state.tsOneDay;
 		var a = new Date(timestamp*1000);
 		var days = ['sun','mon','tue','wed','thr','fri','sat'];
-
 		// display all weather data
 		return (
-
 			<div class={ style.container }>
 				<div class={ style.header }>
 					<div class={style.topbar}>
-						{/* settings */}
-						<div class= { style_iphone.container }>
+						{/* settings button */}
+						<div class = { style_iphone.container }>
 							<Button class={ style_iphone.button } clickFunction={ this.switchPages }/>
 						</div>
 					</div>
@@ -137,10 +144,16 @@ export default class Iphone extends Component {
 					<div class={ style.temp_min }> {this.state.onMainPage ? this.state.min : null }</div>
 					<div class={ style.temperature }>{ this.state.onMainPage ? this.state.temp : null }</div>
 					<div class={ style.temp_max }>{this.state.onMainPage ? this.state.max : null }</div>
-					<div class={ this.state.onMainPage ? style.clothes : null }>
-					{this.state.onMainPage ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
-					</div>
+					
+					{/* details section */}
+					<div class = { this.state.showDetails ? style.details : null}>{this.state.showDetails ? this.state.details : null}</div> 
+					
+					{/* details button */}
+					<div style = "position: absolute; top: 295px; color:black; left: 50%; font-size: 15px;">details</div>
 
+					{/* clothing section */}
+					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
+					</div>
 
 					<div> {this.state.onMainPage ? <dailyHourly class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
 						<p style = "font-size: 18px; text-align: center;">daily</p>
@@ -151,13 +164,11 @@ export default class Iphone extends Component {
 						</dailyHourly> : null }
 					</div>
 
-					{/* weekly forecast */}
+					{/* weekly forecast */
 					<div class={style.weekly}>
 					{/* one day after */}
 					  <div class={style.weekOne}>{this.state.showDaily ? days[a.getDay()%7] : null}</div>
-							<div class = {style.iconOne}> {this.state.showDaily ? <img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img> : null }
-							</div>
-
+							<div class = {style.iconOne}> {this.state.showDaily ? <img src = {this.displayCondition(this.state.condOneDay)} style = "width:100%; height:100%;"></img> : null }</div>
 					    <div style="position:absolute; bottom: 20px; left: 5%; font-size: 15px;">{this.state.showDaily ? this.state.minOneDay : null}</div>
 					    <div style="position:absolute; bottom: 20px; left: 12.5%; font-size: 15px;">{this.state.showDaily ? this.state.maxOneDay : null}</div>
 					  {/* two days after */}
@@ -180,13 +191,12 @@ export default class Iphone extends Component {
 							<div class = {style.iconFive}> {this.state.showDaily ? <img src = {this.displayCondition(this.state.condFiveDay)} style = "width:100%; height:100%;"></img> : null }</div>
 					    <div style="position:absolute; bottom: 20px; left: 85%; font-size: 15px;">{this.state.showDaily ? this.state.minFiveDay : null}</div>
 					    <div style="position:absolute; bottom: 20px; left: 92.5%; font-size: 15px;">{this.state.showDaily ? this.state.maxFiveDay : null}</div>
-					</div>
+					{/* </div> */}
 
-					{/* hourly forecast */}
+					
 					<div class={style.weekly}>
 						<div class={style.weekOne}>{ this.state.showHourly ? <div>now</div> : null}</div>
-							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }
-							</div>
+							<div class = {style.iconOne}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond0)} style = "width:100%; height:100%;"></img> : null }</div>
 							<div style = "position :absolute; bottom: 15px; font-size: 18px; left: 8%"> {this.state.showHourly ? this.state.hourTemp0 : null}</div>
 					  {/* two days after */}
 					  <div class={style.weekTwo}>{ this.state.showHourly ? (this.state.currentHour + 3) % 12: null}</div>
@@ -199,19 +209,16 @@ export default class Iphone extends Component {
 					  {/* four days after */}
 					  <div class={style.weekFour}>{ this.state.showHourly ? (this.state.currentHour + 9) % 12 : null}</div>
 							<div class = {style.iconFour}>{this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond3)} style = "width:100%; height:100%;"></img> : null } </div>
-							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 26%"> {this.state.showHourly ? this.state.hourTemp3 : null}</div>
+							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 28%"> {this.state.showHourly ? this.state.hourTemp3 : null}</div>
 					  
 					  {/* five days after */}
 					  <div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 12 : null}</div>
 							<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
-							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 6%"> {this.state.showHourly ? this.state.hourTemp3 : null} </div>
+							<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 8%"> {this.state.showHourly ? this.state.hourTemp3 : null} </div>
 				</div>
-
-				<div class={ style.details }></div>
 			</div>
-		</div>
-		);
-	}
+					}
+	
 
 	//parse for 5 day forecast
 	parseResponse = (parsed_json) => {
@@ -521,7 +528,6 @@ export default class Iphone extends Component {
 		hourTemp7: hourlyTemp7
 
 	});
-	}
 
 	// function to determine the clothing icon
   displayClothes = (temp) => {
@@ -562,9 +568,6 @@ export default class Iphone extends Component {
 			else if (cond === "Clouds") {
 				return (clouds);
 			}
-
 		}
 	}
-
-
 }
