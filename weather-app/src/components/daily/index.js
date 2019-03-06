@@ -1,7 +1,7 @@
 // import preact
 import { h, render, Component } from 'preact';
 
-export default class dailyHourly extends Component {
+export default class Daily extends Component {
 
 	// rendering a function when the dailyhourly is clicked
 	render() {
@@ -12,8 +12,12 @@ export default class dailyHourly extends Component {
 			};
 		}
 		return (
-			<button onClick={cFunction}>
-			</button>
+			<div>
+				<button onClick={cFunction}>
+					<p style = "font-size: 18px; text-align: center; color: white;">daily</p>
+				</button>
+			</div>
+
 		);
 	}
 }

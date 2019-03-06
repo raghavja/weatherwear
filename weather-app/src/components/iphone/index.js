@@ -3,15 +3,16 @@ import { h, render, Component } from 'preact';
 // import stylesheets for ipad & button
 import style from './style';
 import style_iphone from '../button/style_iphone';
-import style_dailyHourly from '../dailyhourly/style_iphone';
+import style_daily from '../daily/style_iphone';
+import style_hourly from '../hourly/style_iphone';
 // import jquery for API calls
 import $ from 'jquery';
 // import the Button component
 import Button from '../button';
 //import daily hourly buttons
-import dailyHourly from "../dailyhourly";
-//import switch details or clothing
-import Details from '../details';
+
+import Daily from "../daily";
+import Hourly from "../hourly";
 
 //import images
 import thunderstorm from "../../../icons/012-storm.png";
@@ -104,16 +105,10 @@ export default class Iphone extends Component {
 		}
 	}
 
-	switchDailyHourly = () => {
-		if (this.state.onMainPage === true){
-			if (this.state.showDaily === true){
-				this.setState({showDaily: false});
-				this.setState({showHourly : true});
-			}
-			else {
-				this.setState({showDaily: true});
-				this.setState({showHourly: false});
-			}
+	switchDaily = () => {
+		if (this.state.showDaily === true){
+			this.setState({showDaily: true});
+			this.setState({showHourly : false});
 		}
 	}
 
@@ -131,6 +126,17 @@ export default class Iphone extends Component {
 				this.setState({showDetailsButton : true});
 			}
 
+		}
+	}
+	
+	switchHourly = () => {
+		if (this.state.showDaily === false){
+			this.setState({showDaily: false});
+			this.setState({showHourly : true});
+		}
+		else {
+			this.setState({showDaily: false});
+			this.setState({showHourly: true});
 		}
 	}
 
@@ -174,23 +180,12 @@ export default class Iphone extends Component {
 					{/* details button */}
 					{/* <Button class={style.detailsButton} clickFunction = {this.switchDetails()}></Button> */}
 
-					{/* details section */}
-					<div class = { this.state.showDetails ? style.details : null}>
-					{this.state.showDetails ? <p style = "position: absolute; top: 10%; margin: 20px">{this.state.details}</p> : null}
+          {* daily hourly button *}
+					<div class = { style_daily.daily }>
+					  <Daily class={style_daily.button} clickFunction = { this.switchDaily }/>
 					</div>
-				
-					{/* clothing section */}
-					<div class={ this.state.showClothes ? style.clothes : null }> {this.state.showClothes ? <img src = {this.displayClothes(this.state.temp)} style = "width:100%; height:100%;"></img> : null }
-					</div>
-
-					{/* daily hourly buttons */}
-					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.daily} clickFunction = { this.switchDailyHourly }>
-						<p style = "font-size: 18px; text-align: center;">daily</p>
-						</Button> : null }
-					</div>
-					<div> {this.state.onMainPage ? <Button class = {style_dailyHourly.hourly} clickFunction={ this.switchDailyHourly }>
-						<p style = "font-size: 18px; text-align: center;">hourly</p>
-						</Button> : null }
+					<div class = { style_hourly.hourly }>
+						<Hourly class={style_hourly.button} clickFunction = { this.switchHourly }/>
 					</div>
 
 					{/* weekly forecast */}
@@ -478,7 +473,6 @@ export default class Iphone extends Component {
 				temp_maxFiveDay = temp_maxs5[i];
 			}
 		}
-
 
 		// hourly forecast
 		var time0 = parsed_json['list']['0']["sys"]["dt_txt"];
