@@ -32,6 +32,11 @@ import shirt from "../../../icons/shirt.png";
 import shorts from "../../../icons/shorts.png";
 import jeans from "../../../icons/jeans.png";
 import coat from "../../../icons/coat.png";
+import bigjacket from "../../../icons/bigjacket.png";
+import womenshirt from "../../../icons/womenshirt.png";
+import womenjeans from "../../../icons/womenjeans.png";
+import womenjacket from "../../../icons/womenjacket.png";
+import skirt from "../../../icons/skirt.png";
 
 
 export default class Iphone extends Component {
@@ -52,7 +57,7 @@ export default class Iphone extends Component {
 
 		//SETUP
 		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
-		this.setState({ gender: ""});
+		this.setState({ gender: "female"});
     	this.setState({ location: "London"});
 
 		//set range
@@ -712,31 +717,47 @@ export default class Iphone extends Component {
 	// function to determine the clothing icon
 	displayClothesTop = (temp) => {
 			if (temp != "") {
-				if (temp <= 10) {
-					return (coat);
-				}
-				else if (temp <= 16){
-					return (hoodie);
-				}
-				else {
-					return (shirt);
+				if (this.state.gender == "female") {
+					if (temp < coldHigh) {
+						return (bigjacket);
+					} else if (temp < warmHigh) {
+						return (womenjacket);
+					} else {
+						return (womenshirt);
+					}
+				} else {
+					if (temp < coldHigh) {
+						return (coat);
+					} else if (temp < warmHigh) {
+						return (hoodie);
+					} else {
+						return (shirt);
+					}
 				}
 			}
 		}
 
 	displayClothesBottom = (temp) => {
-			if (temp != "") {
-				if (temp <= 10) {
-					return (jeans);
+		if (temp != "") {
+			if (this.state.gender == "female") {
+				if (temp < coldHigh) {
+					return (womenjeans);
+				} else if (temp < warmHigh) {
+					return (womenjeans);
+				} else {
+					return (skirt);
 				}
-				else if (temp <= 16){
+			} else {
+				if (temp < coldHigh) {
 					return (jeans);
-				}
-				else {
+				} else if (temp < warmHigh) {
+					return (jeans);
+				} else {
 					return (shorts);
 				}
 			}
 		}
+	}
 
 		//function to determine conditions icon
 		displayCondition = (cond) => {
