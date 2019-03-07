@@ -32,6 +32,11 @@ import shirt from "../../../icons/shirt.png";
 import shorts from "../../../icons/shorts.png";
 import jeans from "../../../icons/jeans.png";
 import coat from "../../../icons/coat.png";
+import bigjacket from "../../../icons/bigjacket.png";
+import womenshirt from "../../../icons/womenshirt.png";
+import womenjeans from "../../../icons/womenjeans.png";
+import womenjacket from "../../../icons/womenjacket.png";
+import skirt from "../../../icons/skirt.png";
 
 
 export default class Iphone extends Component {
@@ -43,7 +48,7 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		//first day of weekly forecast (one day after current day)
 		this.fetchWeatherData();
-		this.setState({ onMainPage: false});
+		this.setState({ onMainPage: true});
 		//change daily or hourly forecast on bottom bar
 		this.setState({showDaily: false});
 		this.setState({showHourly: true});
@@ -52,7 +57,7 @@ export default class Iphone extends Component {
 
 		//SETUP
 		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
-		this.setState({ gender: ""});
+		this.setState({ gender: "male"});
     	this.setState({ location: "London"});
 
 		//set range
@@ -283,9 +288,9 @@ export default class Iphone extends Component {
 				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} value = {this.state.onMainPage ? null : this.state.name}></input>
 				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>clothing type:</h4>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button} clickFunction = {this.state.gender = "female"}>female</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button} clickFunction = {this.state.gender = "male"}>male</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button} clickFunction = {this.state.gender = "other"}>other</button>
+					<button class={this.state.onMainPage ? style.no_display : style.option_button}>female</button>
+					<button class={this.state.onMainPage ? style.no_display : style.option_button}>male</button>
+					<button class={this.state.onMainPage ? style.no_display : style.option_button}>other</button>
 				</div>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
 				<input type="text" class = {this.state.onMainPage ? style.no_display : style.searchbar} value = {this.state.location}></input>
@@ -324,10 +329,10 @@ export default class Iphone extends Component {
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : style.no_display }>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp) : null} style = "width:80%; height:80%; margin-top: 15%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 11%;"></img>
 						</div>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp) : null} style = "width:80%; height:80%; margin-top: 5%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 3%;"></img>
 						</div>
 					</div>
 					{/* details section */}
@@ -710,33 +715,51 @@ export default class Iphone extends Component {
 	}
 
 	// function to determine the clothing icon
-	displayClothesTop = (temp) => {
+	displayClothesTop = (temp, coldHigh, warmHigh, gender) => {
 			if (temp != "") {
-				if (temp <= 10) {
-					return (coat);
-				}
-				else if (temp <= 16){
-					return (hoodie);
-				}
-				else {
-					return (shirt);
+				console.log(gender);
+				if (gender == "female") {
+					if (temp < coldHigh) {
+						return (bigjacket);
+					} else if (temp < warmHigh) {
+						return (womenjacket);
+					} else {
+						return (womenshirt);
+					}
+				} else {
+					if (temp < coldHigh) {
+						return (coat);
+					} else if (temp < warmHigh) {
+						return (hoodie);
+					} else {
+						return (shirt);
+					}
 				}
 			}
 		}
 
-	displayClothesBottom = (temp) => {
-			if (temp != "") {
-				if (temp <= 10) {
-					return (jeans);
+	displayClothesBottom = (temp, coldHigh, warmHigh, gender) => {
+		if (temp != "") {
+			console.log(gender);
+			if (gender == "female") {
+				if (temp < coldHigh) {
+					return (womenjeans);
+				} else if (temp < warmHigh) {
+					return (womenjeans);
+				} else {
+					return (skirt);
 				}
-				else if (temp <= 16){
+			} else {
+				if (temp < coldHigh) {
 					return (jeans);
-				}
-				else {
+				} else if (temp < warmHigh) {
+					return (jeans);
+				} else {
 					return (shorts);
 				}
 			}
 		}
+	}
 
 		//function to determine conditions icon
 		displayCondition = (cond) => {
