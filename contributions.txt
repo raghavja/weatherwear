@@ -1,0 +1,21 @@
+Ariana: 
+  - Parsing weather information from API
+  - Weekly and daily forecast
+  - Settings, daily/hourly, details/clothing buttons
+  - Details text generation 
+  - Calculate min/max temps
+
+Vaishali:
+  - Layout and formatting of main page
+  - Functionality of daily/hourly and details/clothing buttons
+  - Function to return condition icons
+  - Rendering and placement of condition icons
+
+Ana: 
+
+
+Raghav: 
+
+
+
+Rohan: 
