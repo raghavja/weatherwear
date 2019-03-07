@@ -48,7 +48,7 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		//first day of weekly forecast (one day after current day)
 		this.fetchWeatherData();
-		this.setState({ onMainPage: false});
+		this.setState({ onMainPage: true});
 		//change daily or hourly forecast on bottom bar
 		this.setState({showDaily: false});
 		this.setState({showHourly: true});
@@ -329,10 +329,10 @@ export default class Iphone extends Component {
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : style.no_display }>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp) : null} style = "width:80%; height:80%; margin-top: 15%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height:80%; margin-top: 15%;"></img>
 						</div>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp) : null} style = "width:80%; height:80%; margin-top: 5%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height:80%; margin-top: 5%;"></img>
 						</div>
 					</div>
 					{/* details section */}
@@ -715,9 +715,9 @@ export default class Iphone extends Component {
 	}
 
 	// function to determine the clothing icon
-	displayClothesTop = (temp) => {
+	displayClothesTop = (temp, coldHigh, warmHigh, gender) => {
 			if (temp != "") {
-				if (this.state.gender == "female") {
+				if (gender == "female") {
 					if (temp < coldHigh) {
 						return (bigjacket);
 					} else if (temp < warmHigh) {
@@ -737,9 +737,9 @@ export default class Iphone extends Component {
 			}
 		}
 
-	displayClothesBottom = (temp) => {
+	displayClothesBottom = (temp, coldHigh, warmHigh, gender) => {
 		if (temp != "") {
-			if (this.state.gender == "female") {
+			if (gender == "female") {
 				if (temp < coldHigh) {
 					return (womenjeans);
 				} else if (temp < warmHigh) {
