@@ -717,6 +717,7 @@ export default class Iphone extends Component {
 	// function to determine the clothing icon
 	displayClothesTop = (temp, coldHigh, warmHigh, gender) => {
 			if (temp != "") {
+				console.log(gender);
 				if (gender == "female") {
 					if (temp < coldHigh) {
 						return (bigjacket);
@@ -739,6 +740,7 @@ export default class Iphone extends Component {
 
 	displayClothesBottom = (temp, coldHigh, warmHigh, gender) => {
 		if (temp != "") {
+			console.log(gender);
 			if (gender == "female") {
 				if (temp < coldHigh) {
 					return (womenjeans);
