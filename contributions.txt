@@ -14,8 +14,10 @@ Vaishali:
 Ana: 
 
 
-Raghav: 
-
-
+Raghav:
+  - Created clothing section
+  - Added icons for clothing
+  - Programmed logic for when to display different clothes
+  - Helped create setup screens
 
 Rohan: 
