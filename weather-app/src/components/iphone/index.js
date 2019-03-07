@@ -57,7 +57,7 @@ export default class Iphone extends Component {
 
 		//SETUP
 		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
-		this.setState({ gender: "female"});
+		this.setState({ gender: "male"});
     	this.setState({ location: "London"});
 
 		//set range
@@ -288,9 +288,9 @@ export default class Iphone extends Component {
 				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} value = {this.state.onMainPage ? null : this.state.name}></input>
 				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>clothing type:</h4>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button} clickFunction = {this.state.gender = "female"}>female</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button} clickFunction = {this.state.gender = "male"}>male</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button} clickFunction = {this.state.gender = "other"}>other</button>
+					<button class={this.state.onMainPage ? style.no_display : style.option_button}>female</button>
+					<button class={this.state.onMainPage ? style.no_display : style.option_button}>male</button>
+					<button class={this.state.onMainPage ? style.no_display : style.option_button}>other</button>
 				</div>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
 				<input type="text" class = {this.state.onMainPage ? style.no_display : style.searchbar} value = {this.state.location}></input>
@@ -329,10 +329,10 @@ export default class Iphone extends Component {
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : style.no_display }>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height:80%; margin-top: 15%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 11%;"></img>
 						</div>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height:80%; margin-top: 5%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 3%;"></img>
 						</div>
 					</div>
 					{/* details section */}
