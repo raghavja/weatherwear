@@ -57,8 +57,9 @@ export default class Iphone extends Component {
 
 		//SETUP
 		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
-		this.setState({ gender: "male"});
+		this.setState({ gender: "female"});
     	this.setState({ location: "London"});
+      this.setState({genderArr: [true, false, false]});
 
 		//set range
 		this.setState({ hotHigh: 37});
@@ -261,6 +262,8 @@ export default class Iphone extends Component {
 		this.state.details = text;
 	 }
 
+
+
 	// the main render method for the iphone component
 	render() {
 		// get next day in week for weekly forecast
@@ -283,14 +286,15 @@ export default class Iphone extends Component {
 
 			{/* SETTINGS PAGE */}
 				<h2 class = {this.state.onMainPage ? style.no_display : style.title}>Settings</h2>
+        <input id="typeinp" type="range" min="0" max="5" defaultValue="3" step="1"/>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Personal details</h3>
 				<h4 class = {this.state.onMainPage ? style.no_display : style.text}></h4>
-				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} value = {this.state.onMainPage ? null : this.state.name}></input>
+				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} onChange={ this.setName }value = {this.state.name}></input>
 				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>clothing type:</h4>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>female</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>male</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>other</button>
+					<button class={this.state.genderArr[0] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(0)}>female</button>
+					<button class={this.state.genderArr[1] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(1)}>male</button>
+					<button class={this.state.genderArr[2] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(2)}>other</button>
 				</div>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
 				<input type="text" class = {this.state.onMainPage ? style.no_display : style.searchbar} value = {this.state.location}></input>
@@ -298,11 +302,6 @@ export default class Iphone extends Component {
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
 					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºC</button>
 					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºF</button>
-				</div>
-				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Time format</h3>
-				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>am/pm</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>24h</button>
 				</div>
 
 
@@ -764,6 +763,44 @@ export default class Iphone extends Component {
 			}
 		}
 	}
+
+  setName(e) {
+    this.setState({
+      name: e.target.value,
+    });
+    console.log(this.state.name);
+  }
+
+  changeGender = (i) => {
+    const genderArr = this.state.genderArr.slice();
+    if (i == 0) {
+      genderArr[0] = true;
+      genderArr[1] = false;
+      genderArr[2] = false;
+      this.setState({
+        genderArr : genderArr,
+        gender : "female",
+      });
+    }
+    else if (i == 1) {
+      genderArr[0] = false;
+      genderArr[1] = true;
+      genderArr[2] = false;
+      this.setState({
+        genderArr : genderArr,
+        gender : "male",
+      });
+    }
+    else {
+      genderArr[0] = false;
+      genderArr[1] = false;
+      genderArr[2] = true;
+      this.setState({
+        genderArr : genderArr,
+        gender : "other",
+      });
+    }
+  }
 
 		//function to determine conditions icon
 		displayCondition = (cond) => {
