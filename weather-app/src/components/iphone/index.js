@@ -47,7 +47,6 @@ export default class Iphone extends Component {
 		// temperature state
 		this.state.temp = "";
 		//first day of weekly forecast (one day after current day)
-		this.fetchWeatherData();
 		this.setState({ onMainPage: true});
 		//change daily or hourly forecast on bottom bar
 		this.setState({showDaily: false});
@@ -58,27 +57,27 @@ export default class Iphone extends Component {
 		//SETUP
 		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
 		this.setState({ gender: "female"});
-    	this.setState({ location: "London"});
-      this.setState({genderArr: [true, false, false]});
-      this.setState({farenheit: false});
-      this.setState({celcius: true});
+    	this.setState({ locate: "London"});
+		this.setState({genderArr: [true, false, false]});
+		this.setState({farenheit: false});
+		this.setState({celcius: true});
 
 		//set range
-    this.setState({ hot: 29});
+    	this.setState({ hot: 29});
 		this.setState({ hotHigh: 37});
 		this.setState({ hotLow: 29});
 
 		this.setState({ warmHigh: 29});
 		this.setState({ warmLow: 22});
-    this.setState({ warm: 22});
+    	this.setState({ warm: 22});
 
 		this.setState({ temperateHigh: 21});
 		this.setState({ temperateLow: 12});
-    this.setState({ temperate: 12});
+    	this.setState({ temperate: 12});
 
 		this.setState({ coldHigh: 12});
 		this.setState({ coldLow: 1});
-    this.setState({ cold: 1});
+    	this.setState({ cold: 1});
 
 		this.setState({ freezingHigh: 0});
 		this.setState({ freezingLow: -73});
@@ -95,10 +94,29 @@ export default class Iphone extends Component {
 		let newDate = new Date();
 		let hour = newDate.getHours();
 		this.setState({currentHour : hour});
+
+		this.fetchWeatherData();
 	}
 	// a call to fetch weather data (five days)
 	fetchWeatherData = () => {
-		let url = "http://api.openweathermap.org/data/2.5/forecast?q=London&units=metric&APPID=d9e40108811d59eb9e2cd8a46c08ab5d";
+		
+		let url = "http://api.openweathermap.org/data/2.5/forecast?q=London&units=metric&APPID=7b318df401a487a9f365782e26ded481";
+		// console.log("url" + url);
+		if (this.state.locate == "London") {
+			url = "http://api.openweathermap.org/data/2.5/forecast?q=London&units=metric&APPID=7b318df401a487a9f365782e26ded481";
+		}
+		else if (this.state.locate == "México City") {
+			url = "http://api.openweathermap.org/data/2.5/forecast?id=3530597&units=metric&APPID=7b318df401a487a9f365782e26ded481";
+		}
+		else if (this.state.locate == "New York") {
+			url = "http://api.openweathermap.org/data/2.5/forecast?id=5128581&units=metric&APPID=7b318df401a487a9f365782e26ded481";
+		}
+		else if (this.state.locate == "Los Angeles") {
+			url = "http://api.openweathermap.org/data/2.5/forecast?id=5368381&units=metric&APPID=7b318df401a487a9f365782e26ded481";
+		}
+		// console.log(url);
+	
+		
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -166,7 +184,6 @@ export default class Iphone extends Component {
 
 		}
 	}
-
 	 generateText = () => {
 		var text = "";
 		var timeOfDay = "";
@@ -267,9 +284,6 @@ export default class Iphone extends Component {
 
 		this.state.details = text;
 	 }
-
-
-
 	// the main render method for the iphone component
 	render() {
 		// get next day in week for weekly forecast
@@ -304,10 +318,10 @@ export default class Iphone extends Component {
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
 
             <select value={this.state.location} class = {this.state.onMainPage ? style.no_display : style.searchbar} onChange={this.changeCountry}>
-              <option value="London">   London</option>
-              <option value="New York">   New York</option>
-              <option value="Los Angeles">   Los Angeles</option>
-              <option value="Mexico City">    México City</option>
+              <option value="London">London</option>
+              <option value="New York">New York</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="México City">México City</option>
             </select>
 
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Temperature</h3>
@@ -798,7 +812,6 @@ export default class Iphone extends Component {
     this.setState({
       name: e.target.value,
     });
-    console.log(this.state.name);
   }
 
   changeGender = (i) => {
@@ -836,7 +849,8 @@ export default class Iphone extends Component {
     this.setState({
       locate : e.target.value,
     });
-
+	console.log(this.state.locate);
+	this.fetchWeatherData();
   }
 
   //not implemented yet, only interface
