@@ -12,6 +12,9 @@ Vaishali:
   - Rendering and placement of condition icons
 
 Ana: 
+  - Design of non-functional prototype
+  - Layout and formatting of settings page
+  - Implementation of functionality in settings page inputs
 
 
 Raghav:
