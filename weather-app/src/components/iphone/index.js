@@ -297,7 +297,14 @@ export default class Iphone extends Component {
 					<button class={this.state.genderArr[2] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(2)}>other</button>
 				</div>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
-				<input type="text" class = {this.state.onMainPage ? style.no_display : style.searchbar} value = {this.state.location}></input>
+
+            <select value={this.state.location} class = {this.state.onMainPage ? style.no_display : style.searchbar} onChange={this.changeCountry}>
+              <option value="London">   London</option>
+              <option value="New York">   New York</option>
+              <option value="Los Angeles">   Los Angeles</option>
+              <option value="Mexico City">    México City</option>
+            </select>
+
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Temperature</h3>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
 					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºC</button>
@@ -764,7 +771,7 @@ export default class Iphone extends Component {
 		}
 	}
 
-  setName(e) {
+  setName = (e) => {
     this.setState({
       name: e.target.value,
     });
@@ -800,6 +807,12 @@ export default class Iphone extends Component {
         gender : "other",
       });
     }
+  }
+
+  changeCountry = (e) => {
+    this.setState({
+      location : e.target.value,
+    });
   }
 
 		//function to determine conditions icon
