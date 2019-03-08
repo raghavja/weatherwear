@@ -286,9 +286,8 @@ export default class Iphone extends Component {
 
 			{/* SETTINGS PAGE */}
 				<h2 class = {this.state.onMainPage ? style.no_display : style.title}>Settings</h2>
-        <input id="typeinp" type="range" min="0" max="5" defaultValue="3" step="1"/>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Personal details</h3>
-				<h4 class = {this.state.onMainPage ? style.no_display : style.text}></h4>
+				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>name:</h4>
 				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} onChange={ this.setName }value = {this.state.name}></input>
 				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>clothing type:</h4>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
@@ -310,6 +309,8 @@ export default class Iphone extends Component {
 					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºC</button>
 					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºF</button>
 				</div>
+
+
 
 
 					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
