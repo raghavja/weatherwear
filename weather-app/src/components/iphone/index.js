@@ -312,9 +312,6 @@ export default class Iphone extends Component {
 					<button class={this.state.farenheit ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('f')}>ºF</button>
 				</div>
 
-
-
-
 					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
 					<div class = {style.warm}>{this.state.onMainPage ? null : this.state.warm}</div>
 					<div class = {style.temperate}>{this.state.onMainPage ? null : this.state.temperate}</div>
@@ -814,8 +811,9 @@ export default class Iphone extends Component {
 
   changeCountry = (e) => {
     this.setState({
-      location : e.target.value,
+      locate : e.target.value,
     });
+
   }
 
   //not implemented yet, only interface
