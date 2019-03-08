@@ -32,7 +32,7 @@ font-style: normal;
 		font-family: Josefin_Sans-Regular;
 
 	position: relative;
-	background: linear-gradient(180deg, #B3C3D6 0%, rgba(243, 245, 248, 0.348066) 51.93%, rgba(255, 255, 255, 0) 100%), #2A5A99;
+	background: linear-gradient(180deg, #0065CF 0%, rgba(139, 172, 206, 0.453039) 70.72%, rgba(255, 255, 255, 0) 100%), #47A8FF;
   font-family: 'Josefin Sans', sans-serif;
 }
 
@@ -213,8 +213,7 @@ font-style: normal;
 
 .city {
 	//flex: 1;
-	font-size: 40px;
-	font-weight: 400;
+	font-size: 2rem;
 	margin-top: 40px;
 	font-family: Josefin_Sans-Regular;
 	text-transform: uppercase;
@@ -249,13 +248,14 @@ font-style: normal;
 
 }
 
+
 .temperature {
 	//flex: 2;
-	margin-top: 15px;
-	font-size: 100px;
-	font-weight: 300;
+	margin-top: 0.5rem;
+	font-size: 9rem;
 	letter-spacing: -5px;
 	font-family: Josefin_Sans-Regular;
+
 
 /*
 	position: absolute;
@@ -381,10 +381,10 @@ font-style: normal;
 
 .input_settings {
   outline: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border: 2px solid white;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
+  border-radius: 5px;
   color: white;
   font-size: 1em;
   margin-bottom: 1rem;
@@ -409,19 +409,34 @@ font-style: normal;
   color: #0065CF;
 }
 
+.option_button_active {
+  background-color: white;
+  color: #0065CF;
+  padding: 0.5rem 1.5rem;
+  border: 2px solid white;
+  border-radius: 50px;
+  font-size: 1em;
+  margin-bottom: 1rem;
+  font-family: 'Josefin Sans', sans-serif;
+  margin-right: 1rem;
+  transition: 0.3s;
+}
+
 .searchbar {
   outline: none;
   padding: 0.5rem 1rem;
   border: 2px solid white;
   background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
+  border-radius: 5px;
   color: white;
   font-size: 1em;
   margin-bottom: 1rem;
   font-family: 'Josefin Sans', sans-serif;
   background-image: url(../../../icons/location-icon.png);
-  background-position: 0.5rem 0.4rem;
+  background-position: 19rem 0.4rem;
   background-repeat: no-repeat;
   padding-left: 2rem;
   background-size: 1rem auto;
+  height: 2.4rem;
+  width: 100%;
 }

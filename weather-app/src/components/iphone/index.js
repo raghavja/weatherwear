@@ -57,8 +57,11 @@ export default class Iphone extends Component {
 
 		//SETUP
 		this.setState({ name: "Ariana"}); //TODO CHANGE THIS LATER
-		this.setState({ gender: "male"});
+		this.setState({ gender: "female"});
     	this.setState({ location: "London"});
+      this.setState({genderArr: [true, false, false]});
+      this.setState({farenheit: false});
+      this.setState({celcius: true});
 
 		//set range
 		this.setState({ hotHigh: 37});
@@ -261,6 +264,8 @@ export default class Iphone extends Component {
 		this.state.details = text;
 	 }
 
+
+
 	// the main render method for the iphone component
 	render() {
 		// get next day in week for weekly forecast
@@ -284,26 +289,30 @@ export default class Iphone extends Component {
 			{/* SETTINGS PAGE */}
 				<h2 class = {this.state.onMainPage ? style.no_display : style.title}>Settings</h2>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Personal details</h3>
-				<h4 class = {this.state.onMainPage ? style.no_display : style.text}></h4>
-				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} value = {this.state.onMainPage ? null : this.state.name}></input>
+				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>name:</h4>
+				<input type="text" class = {this.state.onMainPage ? style.no_display : style.input_settings} onChange={ this.setName }value = {this.state.name}></input>
 				<h4 class = {this.state.onMainPage ? style.no_display : style.text}>clothing type:</h4>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>female</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>male</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>other</button>
+					<button class={this.state.genderArr[0] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(0)}>female</button>
+					<button class={this.state.genderArr[1] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(1)}>male</button>
+					<button class={this.state.genderArr[2] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(2)}>other</button>
 				</div>
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
-				<input type="text" class = {this.state.onMainPage ? style.no_display : style.searchbar} value = {this.state.location}></input>
+
+            <select value={this.state.location} class = {this.state.onMainPage ? style.no_display : style.searchbar} onChange={this.changeCountry}>
+              <option value="London">   London</option>
+              <option value="New York">   New York</option>
+              <option value="Los Angeles">   Los Angeles</option>
+              <option value="Mexico City">    México City</option>
+            </select>
+
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Temperature</h3>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºC</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºF</button>
+					<button class={this.state.celcius ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('c')}>ºC</button>
+					<button class={this.state.farenheit ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('f')}>ºF</button>
 				</div>
-				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Time format</h3>
-				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>am/pm</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>24h</button>
-				</div>
+
+
 
 
 					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
@@ -329,10 +338,10 @@ export default class Iphone extends Component {
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : style.no_display }>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 11%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender, this.state.cond) : null} style = "width:80%; height: 80%; margin-top: 11%;"></img>
 						</div>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 3%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender, this.state.cond) : null} style = "width:80%; height: 80%; margin-top: 3%;"></img>
 						</div>
 					</div>
 					{/* details section */}
@@ -715,12 +724,16 @@ export default class Iphone extends Component {
 	}
 
 	// function to determine the clothing icon
-	displayClothesTop = (temp, coldHigh, warmHigh, gender) => {
+	displayClothesTop = (temp, coldHigh, warmHigh, gender, cond) => {
 			if (temp != "") {
 				console.log(gender);
 				if (gender == "female") {
 					if (temp < coldHigh) {
-						return (bigjacket);
+						if (cond != "Rain" || cond != "Snow") {
+							return (womenjacket)
+						} else {
+							return (bigjacket);
+						}
 					} else if (temp < warmHigh) {
 						return (womenjacket);
 					} else {
@@ -738,7 +751,7 @@ export default class Iphone extends Component {
 			}
 		}
 
-	displayClothesBottom = (temp, coldHigh, warmHigh, gender) => {
+	displayClothesBottom = (temp, coldHigh, warmHigh, gender, cond) => {
 		if (temp != "") {
 			console.log(gender);
 			if (gender == "female") {
@@ -760,6 +773,67 @@ export default class Iphone extends Component {
 			}
 		}
 	}
+
+  setName = (e) => {
+    this.setState({
+      name: e.target.value,
+    });
+    console.log(this.state.name);
+  }
+
+  changeGender = (i) => {
+    const genderArr = this.state.genderArr.slice();
+    if (i == 0) {
+      genderArr[0] = true;
+      genderArr[1] = false;
+      genderArr[2] = false;
+      this.setState({
+        genderArr : genderArr,
+        gender : "female",
+      });
+    }
+    else if (i == 1) {
+      genderArr[0] = false;
+      genderArr[1] = true;
+      genderArr[2] = false;
+      this.setState({
+        genderArr : genderArr,
+        gender : "male",
+      });
+    }
+    else {
+      genderArr[0] = false;
+      genderArr[1] = false;
+      genderArr[2] = true;
+      this.setState({
+        genderArr : genderArr,
+        gender : "other",
+      });
+    }
+  }
+
+  changeCountry = (e) => {
+    this.setState({
+      location : e.target.value,
+    });
+  }
+
+  //not implemented yet, only interface
+  changeUnits = (i) => {
+    if (i == 'f') {
+
+      this.setState({
+        farenheit : true,
+        celcius : false,
+      });
+    }
+    else {
+      this.setState({
+        farenheit : false,
+        celcius : true,
+      });
+    }
+  }
 
 		//function to determine conditions icon
 		displayCondition = (cond) => {
