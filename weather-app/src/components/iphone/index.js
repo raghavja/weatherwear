@@ -60,6 +60,8 @@ export default class Iphone extends Component {
 		this.setState({ gender: "female"});
     	this.setState({ location: "London"});
       this.setState({genderArr: [true, false, false]});
+      this.setState({farenheit: false});
+      this.setState({celcius: true});
 
 		//set range
 		this.setState({ hotHigh: 37});
@@ -306,8 +308,8 @@ export default class Iphone extends Component {
 
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Temperature</h3>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºC</button>
-					<button class={this.state.onMainPage ? style.no_display : style.option_button}>ºF</button>
+					<button class={this.state.celcius ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('c')}>ºC</button>
+					<button class={this.state.farenheit ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('f')}>ºF</button>
 				</div>
 
 
@@ -814,6 +816,23 @@ export default class Iphone extends Component {
     this.setState({
       location : e.target.value,
     });
+  }
+
+  //not implemented yet, only interface
+  changeUnits = (i) => {
+    if (i == 'f') {
+
+      this.setState({
+        farenheit : true,
+        celcius : false,
+      });
+    }
+    else {
+      this.setState({
+        farenheit : false,
+        celcius : true,
+      });
+    }
   }
 
 		//function to determine conditions icon
