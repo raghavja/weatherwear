@@ -834,8 +834,9 @@ export default class Iphone extends Component {
 
   changeCountry = (e) => {
     this.setState({
-      location : e.target.value,
+      locate : e.target.value,
     });
+
   }
 
   //not implemented yet, only interface
