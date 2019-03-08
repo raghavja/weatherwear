@@ -64,17 +64,21 @@ export default class Iphone extends Component {
       this.setState({celcius: true});
 
 		//set range
+    this.setState({ hot: 29});
 		this.setState({ hotHigh: 37});
 		this.setState({ hotLow: 29});
 
 		this.setState({ warmHigh: 29});
 		this.setState({ warmLow: 22});
+    this.setState({ warm: 22});
 
 		this.setState({ temperateHigh: 21});
 		this.setState({ temperateLow: 12});
+    this.setState({ temperate: 12});
 
 		this.setState({ coldHigh: 12});
 		this.setState({ coldLow: 1});
+    this.setState({ cold: 1});
 
 		this.setState({ freezingHigh: 0});
 		this.setState({ freezingLow: -73});
@@ -311,12 +315,31 @@ export default class Iphone extends Component {
 					<button class={this.state.celcius ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('c')}>ºC</button>
 					<button class={this.state.farenheit ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('f')}>ºF</button>
 				</div>
+        <div class = {this.state.onMainPage ? style.no_display : style.sliders}>
 
-					<div class = {style.hot}>{this.state.onMainPage ? null : this.state.hot}</div>
-					<div class = {style.warm}>{this.state.onMainPage ? null : this.state.warm}</div>
-					<div class = {style.temperate}>{this.state.onMainPage ? null : this.state.temperate}</div>
-					<div class = {style.cold}>{this.state.onMainPage ? null : this.state.cold}</div>
-					<div class = {style.freezing}>{this.state.onMainPage ? null : this.state.freezing}</div>
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>hot:</h4>
+          <p class = {style.firstP}>from </p>
+          <input type="number" name="quantity" value= {this.state.hot} min={this.state.warm} max="100" onChange={ this.setHot } ></input>
+          <p> to max</p>
+
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>warm:</h4>
+          <p class = {style.firstP}>from </p>
+          <input type="number" name="quantity" value= {this.state.warm} min={this.state.temperate} max={this.state.hot} onChange={ this.setWarm }></input>
+          <p> to {this.state.hot}</p>
+
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>just right:</h4>
+          <p class = {style.firstP}>from </p>
+          <input type="number" name="quantity" value= {this.state.temperate} min={this.state.cold} max={this.state.warm} onChange={ this.setTemp }></input>
+          <p> to {this.state.warm}</p>
+
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>cold:</h4>
+          <p class = {style.firstP}>from </p>
+          <input type="number" name="quantity" value= {this.state.cold} min={this.state.freezing} max={this.state.cold} onChange={ this.setCold }></input>
+          <p> to {this.state.temperate}</p>
+
+          <h4 class = {this.state.onMainPage ? style.no_display : style.text}>freezing:</h4>
+          <p class = {style.firstP}>from {this.state.cold} to min</p>
+        </div>
 
 				{/* MAIN PAGE */}
 					<div class={ this.state.onMainPage ? style.icon : style.no_display }>
@@ -831,6 +854,38 @@ export default class Iphone extends Component {
         celcius : true,
       });
     }
+  }
+
+  setHot = (e) => {
+    this.setState({
+      hotLow : e.target.value,
+      hot : e.target.value,
+      warmHigh : e.target.value,
+    });
+  }
+
+  setWarm = (e) => {
+    this.setState({
+      warmLow : e.target.value,
+      warm : e.target.value,
+      temperateHigh : e.target.value,
+    });
+  }
+
+  setTemp = (e) => {
+    this.setState({
+      temperateLow : e.target.value,
+      temperate : e.target.value,
+      coldHigh : e.target.value,
+    });
+  }
+
+  setCold = (e) => {
+    this.setState({
+      coldLow : e.target.value,
+      cold : e.target.value,
+      freezingHigh : e.target.value,
+    });
   }
 
 		//function to determine conditions icon
