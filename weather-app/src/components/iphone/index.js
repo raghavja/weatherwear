@@ -329,10 +329,10 @@ export default class Iphone extends Component {
 					{/* clothing section */}
 					<div class={ this.state.showClothes ? style.clothes : style.no_display }>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 11%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesTop(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender, this.state.cond) : null} style = "width:80%; height: 80%; margin-top: 11%;"></img>
 						</div>
 						<div style = "width:100%; height: 50%; float:right;">
-							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender) : null} style = "width:80%; height: 80%; margin-top: 3%;"></img>
+							<img src = {this.state.showClothes ? this.displayClothesBottom(this.state.temp,this.state.coldHigh,this.state.warmHigh, this.state.gender, this.state.cond) : null} style = "width:80%; height: 80%; margin-top: 3%;"></img>
 						</div>
 					</div>
 					{/* details section */}
@@ -715,12 +715,16 @@ export default class Iphone extends Component {
 	}
 
 	// function to determine the clothing icon
-	displayClothesTop = (temp, coldHigh, warmHigh, gender) => {
+	displayClothesTop = (temp, coldHigh, warmHigh, gender, cond) => {
 			if (temp != "") {
 				console.log(gender);
 				if (gender == "female") {
 					if (temp < coldHigh) {
-						return (bigjacket);
+						if (cond != "Rain" || cond != "Snow") {
+							return (womenjacket)
+						} else {
+							return (bigjacket);
+						}
 					} else if (temp < warmHigh) {
 						return (womenjacket);
 					} else {
@@ -738,7 +742,7 @@ export default class Iphone extends Component {
 			}
 		}
 
-	displayClothesBottom = (temp, coldHigh, warmHigh, gender) => {
+	displayClothesBottom = (temp, coldHigh, warmHigh, gender, cond) => {
 		if (temp != "") {
 			console.log(gender);
 			if (gender == "female") {
