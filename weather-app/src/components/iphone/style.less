@@ -339,11 +339,12 @@ font-style: normal;
 	// 207
 	color: #fff;
 	width: 414px;
-	height: 736px;
+	height: auto;
 	padding-top: 4rem;
   padding-right: 2rem;
   padding-left: 2rem;
 	margin: 0 auto;
+  margin-bottom: 2rem;
 
 	position: relative;
 	background: #0065CF;
@@ -377,7 +378,7 @@ font-style: normal;
   text-transform: lowercase;
 }
 
-.input_settings {
+.input_settings, input[type="number"] {
   outline: none;
   padding: 0.5rem;
   border: 2px solid white;
@@ -421,8 +422,9 @@ font-style: normal;
 }
 
 .searchbar {
+  -webkit-appearance: none;
   outline: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border: 2px solid white;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
@@ -431,22 +433,58 @@ font-style: normal;
   margin-bottom: 1rem;
   font-family: 'Josefin Sans', sans-serif;
   background-image: url(../../../icons/location-icon.png);
-  background-position: 19rem 0.4rem;
+  background-position: 0.5rem 0.4rem;
   background-repeat: no-repeat;
-  padding-left: 2rem;
+  padding-left: 2.3rem;
   background-size: 1rem auto;
-  height: 2.4rem;
   width: 100%;
 }
-.sliders h4{
-  margin-top: 0.5rem;
+.sliders {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin: auto;
+}
+
+.sliders > div{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.sliders div h4{
+  display: inline-block;
+  margin: 0;
   font-weight: bold;
+  padding: 0.5rem;
+  height: 2em;
 }
 .sliders p {
   display: inline;
-  font-size: 14px;
+  padding: 0.5rem;
+  line-height: 1em;
+  margin: 0;
 }
 
-.firstP {
-  margin-left: 2rem;
+.sliders input {
+  margin: auto 0.5rem;
+  width: 3.5rem;
+}
+
+.color_hot {
+  color: #FF9696;
+}
+
+.color_warm {
+  color: #FFC69D;
+}
+
+.color_temp {
+  color: #FFF7AB;
+}
+.color_cold {
+  color: #B8F8FC;
+}
+.color_freezing {
+  color: #C8E5FF;
 }

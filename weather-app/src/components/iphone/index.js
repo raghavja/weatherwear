@@ -309,45 +309,67 @@ export default class Iphone extends Component {
 					<button class={this.state.genderArr[1] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(1)}>male</button>
 					<button class={this.state.genderArr[2] ? style.option_button_active : style.option_button} onClick={() => this.changeGender(2)}>other</button>
 				</div>
-				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
 
-            <select value={this.state.location} class = {this.state.onMainPage ? style.no_display : style.searchbar} onChange={this.changeCountry}>
-              <option value="London">London</option>
-              <option value="New York">New York</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="México City">México City</option>
-            </select>
+        <h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Location</h3>
+
+        <div class = {this.state.onMainPage ? style.no_display : ""}>
+          <select class = {style.searchbar} onChange={this.changeCountry}>
+            <option value="London" selected>London</option>
+            <option value="New York">New York</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="México City">México City</option>
+          </select>
+        </div>
 
 				<h3 class = {this.state.onMainPage ? style.no_display : style.subtitle_settings}>Temperature</h3>
 				<div class = {this.state.onMainPage ? style.no_display : style.option_button_container}>
 					<button class={this.state.celcius ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('c')}>ºC</button>
 					<button class={this.state.farenheit ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('f')}>ºF</button>
 				</div>
-       		 <div class = {this.state.onMainPage ? style.no_display : style.sliders}>
+        <p class = {this.state.onMainPage ? style.no_display : ""}>Set your temperature range for each type of weather</p>
+        <div class = {this.state.onMainPage ? style.no_display : style.sliders}>
 
-			<h4 class = {this.state.onMainPage ? style.no_display : style.text}>hot:</h4>
-			<p class = {style.firstP}>from </p>
-			<input type="number" name="quantity" value= {this.state.hot} min={this.state.warm} max="100" onChange={ this.setHot } ></input>
-			<p> to max</p>
+          <div>
+      			<h4 class = {style.text, style.color_hot}>hot:</h4>
+            <div>
+        			<p class = {style.firstP}>from </p>
+        			<input type="number" name="quantity" value= {this.state.hot} min={this.state.warm} max="100" onChange={ this.setHot } ></input>
+        			<p> to max</p>
+            </div>
+          </div>
 
-			<h4 class = {this.state.onMainPage ? style.no_display : style.text}>warm:</h4>
-			<p class = {style.firstP}>from </p>
-			<input type="number" name="quantity" value= {this.state.warm} min={this.state.temperate} max={this.state.hot} onChange={ this.setWarm }></input>
-			<p> to {this.state.hot}</p>
+          <div>
+      			<h4 class = {style.text, style.color_warm}>warm:</h4>
+            <div>
+        			<p class = {style.firstP}>from </p>
+        			<input type="number" name="quantity" value= {this.state.warm} min={this.state.temperate} max={this.state.hot} onChange={ this.setWarm }></input>
+        			<p> to {this.state.hot}</p>
+            </div>
+          </div>
 
-			<h4 class = {this.state.onMainPage ? style.no_display : style.text}>just right:</h4>
-			<p class = {style.firstP}>from </p>
-			<input type="number" name="quantity" value= {this.state.temperate} min={this.state.cold} max={this.state.warm} onChange={ this.setTemp }></input>
-			<p> to {this.state.warm}</p>
+          <div>
+      			<h4 class = {style.text, style.color_temp}>just right:</h4>
+            <div>
+        			<p class = {style.firstP}>from </p>
+        			<input type="number" name="quantity" value= {this.state.temperate} min={this.state.cold} max={this.state.warm} onChange={ this.setTemp }></input>
+        			<p> to {this.state.warm}</p>
+            </div>
+          </div>
 
-			<h4 class = {this.state.onMainPage ? style.no_display : style.text}>cold:</h4>
-			<p class = {style.firstP}>from </p>
-			<input type="number" name="quantity" value= {this.state.cold} min={this.state.freezing} max={this.state.cold} onChange={ this.setCold }></input>
-			<p> to {this.state.temperate}</p>
+          <div>
+      			<h4 class = {style.text, style.color_cold}>cold:</h4>
+            <div>
+        			<p class = {style.firstP}>from </p>
+        			<input type="number" name="quantity" value= {this.state.cold} min={this.state.freezing} max={this.state.temperate} onChange={ this.setCold }></input>
+        			<p> to {this.state.temperate}</p>
+            </div>
+          </div>
 
-			<h4 class = {this.state.onMainPage ? style.no_display : style.text}>freezing:</h4>
-			<p class = {style.firstP}>from {this.state.cold} to min</p>
-			</div>
+          <div>
+      			<h4 class = {style.text, style.color_freezing}>freezing:</h4>
+      			<p class = {style.firstP}>from min to {this.state.cold}</p>
+          </div>
+  			</div>
 
 			{/* MAIN PAGE */}
 			<div class={ this.state.onMainPage ? style.icon : style.no_display }>
@@ -434,7 +456,7 @@ export default class Iphone extends Component {
 					<div class={style.weekFive}>{ this.state.showHourly ? (this.state.currentHour + 12) % 24 : null}</div>
 						<div class = {style.iconFive}> {this.state.showHourly ? <img src = {this.displayCondition(this.state.weatherCond4)} style = "width:100%; height:100%;"></img> : null }</div>
 						<div style = "position :absolute; bottom: 15px; font-size: 18px; right: 8%"> {this.state.showHourly ? this.state.hourTemp3 : null} </div>
-				</div>
+				  </div>
 				</div>
 			</div>
 		);
