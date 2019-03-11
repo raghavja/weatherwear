@@ -326,7 +326,7 @@ export default class Iphone extends Component {
 					<button class={this.state.celcius ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('c')}>ºC</button>
 					<button class={this.state.farenheit ? style.option_button_active : style.option_button} onClick={() => this.changeUnits('f')}>ºF</button>
 				</div>
-
+        <p class = {this.state.onMainPage ? style.no_display : ""}>Set your temperature range for each type of weather</p>
         <div class = {this.state.onMainPage ? style.no_display : style.sliders}>
 
           <div>
